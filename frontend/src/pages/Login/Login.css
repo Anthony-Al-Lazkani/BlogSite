@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;700&display=swap");
+
+* {
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Titillium Web", sans-serif;
+}
+
+.Container {
+    min-height: 90vh;
+    width: 100%;
+    background: url('../../Images/LoginBackgroundImage.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.LoginContainer {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    width : 500px;
+    background: transparent;
+    backdrop-filter: blur(150px);
+    border-radius: 20px;
+    /* box-shadow:  8px 8px 8px 2px lightblue; */
+    transition: 1s;
+    align-items: center;
+}
+
+.LoginContainer:hover {
+    box-shadow: 8px 8px 8px 5px #29335c;
+}
+
+.title {
+    padding-top: 20px;
+    font-size: 20px;
+    color: #29335c;
+}
