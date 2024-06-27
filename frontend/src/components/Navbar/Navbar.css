@@ -28,10 +28,15 @@ nav a {
 	margin: 0 1rem;
 	color: var(--textColor);
 	text-decoration: none;
+	font-size: 18px;
+	line-height: 15px;
+	transition: 200ms ease-in;
 }
 
 nav a:hover {
-	color: var(--secondaryColor);
+	color: #FFDB58;
+	padding: 1px;
+	font-size: 18.4px;
 }
 
 header .nav-btn {
@@ -50,6 +55,7 @@ header div,
 nav {
 	display: flex;
 	align-items: center;
+
 }
 
 @media only screen and (max-width: 1024px) {
