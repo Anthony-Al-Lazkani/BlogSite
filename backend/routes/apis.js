@@ -4,7 +4,8 @@ const {
     getArticle,
     getArticles,
     deleteArticle,
-    updateArticle
+    updateArticle,
+    createComment
 } = require('../controllers/articleController')
 
 
@@ -18,6 +19,9 @@ router.get('/:id', getArticle)
 
 // POST an article
 router.post('/', createArticle)
+
+// POST a comment
+router.post('/:id/comments', createComment)
 
 // DELETE an article
 router.delete('/:id', deleteArticle)

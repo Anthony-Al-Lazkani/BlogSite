@@ -1,4 +1,5 @@
 const Article = require('../database/articlesModel')
+const Comment = require('../database/commentsModel')
 const mongoose = require('mongoose')
 
 
@@ -31,15 +32,44 @@ const getArticle = async (req, res) => {
 
 // CREATE a new article
 const createArticle = async (req, res) => {
-    const {title, author, description, genre} = req.body
+    const {title, author, content, genre, comments} = req.body
 
     try{
-        const article = await Article.create({title, author, description, genre})
+        const article = await Article.create({title, author, content, genre, comments})
         res.status(200).json(article)
     }catch(error){
         res.status(400).json({error : error.message})
     }
 }
+
+// CREATE a new comment
+const createComment = async (req, res) => {
+    const { author, comment } = req.body;
+    const articleId = req.params.id; // article ID passed in URL params
+  
+    try {
+      // Create the comment
+      const newComment = await Comment.create({ author, comment });
+  
+      // Find the article by ID and update its comments array
+      const updatedArticle = await Article.findByIdAndUpdate(
+        articleId,
+        { $push: { comments: newComment } },
+        { new: true } // To return the updated article
+      );
+  
+      // Check if article exists
+      if (!updatedArticle) {
+        return res.status(404).json({ error: 'Article not found' });
+      }
+  
+      // Respond with the newly created comment
+      res.status(201).json(newComment);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
+  
 
 
 // DELETE an article
@@ -90,5 +120,6 @@ module.exports = {
     getArticle,
     getArticles,
     deleteArticle,
-    updateArticle
+    updateArticle,
+    createComment
 }
