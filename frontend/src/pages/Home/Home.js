@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
-import Photo1 from '../../Images/photo1.jpg';
-import Photo2 from '../../Images/photo2.jpeg';
-import Photo3 from '../../Images/resorts.jpeg';
-import Photo4 from '../../Images/photo4.jpeg';
-import Photo5 from '../../Images/photo5.jpg';
+import Photo1 from '../../images/hi3.jpg';
+import Photo2 from '../../images/hi4.jpeg';
+import Photo3 from '../../images/hi5.jpg';
+// import Photo4 from '../../images/pic4.jpg';
+// import Photo5 from '../../images/photo5.jpg';
 
 
 function Home() {
@@ -21,8 +21,8 @@ function Home() {
         history('/login');
     }
 
-    const images = [Photo1, Photo2, Photo3, Photo4, Photo5];
-
+    const images = [Photo1, Photo2, Photo3];
+    //Photo2, Photo3, Photo4, Photo5
 
 
     const properties = {
@@ -47,9 +47,8 @@ function Home() {
                     ))}
                 </Slide>
                 <div className="Front-Page-Content">
-                    <h1 className="Font-Page-Header-Text">WELCOME TO LEBANON</h1>
-                    <p>Enrich your vacation with tours full of delicious food, places, and elegent hotels,
-                        <br></br>Press the bell icon to learn more.
+                    <h1 className="Font-Page-Header-Text">Your Story. Your Community. Your Voice.</h1>
+                    <p>Join a vibrant community where your stories come to life. Explore diverse perspectives, engage in meaningful discussions, and share your voice with the world.
                     </p>
                     <div>
                         <button type="button" onClick={goToaboutus}><span></span>LEARN MORE</button>
@@ -60,29 +59,26 @@ function Home() {
 
             <section className="Services">
                 <h1>Services We Offer</h1>
-                <p>Explore Lebanon with our website! Discover the latest news, exclusive hotel features, and must-visit tourism spots. Your gateway to a vibrant and unforgettable Lebanese experience starts here. Explore, stay informed, and plan your next adventure with us!</p>
 
                 <div className="Row">
                     <div className="Services-Col">
-                        <h3>Restaurants</h3>
-                        <p>We provide the best restaurants based on the place, view, quality of the food and the experience of your life
-                            in different culture throughout lebanon to make you come to lebanon again.
+                        <h3>Create a blog</h3>
+                        <p>Share your unique perspectives, receive valuable feedback, and engage with like-minded individuals. It's a great way to grow personally and professionally while contributing to a vibrant community of writers.
                         </p>
                     </div>
                     <div className="Services-Col">
-                        <h3>Hotels</h3>
-                        <p>Discover the epitome of luxury and comfort in Lebanon with our curated selection of hotels, each offering a distinct blend of opulence, hospitality, and cultural richness. Immerse yourself in a world where impeccable service meets breathtaking views, ensuring an unforgettable stay.
+                        <h3>Explore Blogs</h3>
+                        <p>Exploring blogs on our platform lets you discover diverse perspectives and gain new insights. Engage with a wide range of topics, connect with passionate writers, and expand your knowledge. It's a great way to stay informed, inspired, and connected with a vibrant community.
                         </p>
                     </div>
                     <div className="Services-Col">
-                        <h3>Resorts</h3>
-                        <p>"Escape to a world of unparalleled luxury and tranquility with our handpicked selection of resorts in Lebanon. Nestled amidst the breathtaking landscapes and cultural richness of this enchanting country, our resorts redefine the meaning of indulgence.
-                        </p>
+                        <h3>Give us your feedback</h3>
+                        <p>Your feedback is valuable to us! Please share your thoughts and suggestions to help us improve our platform and better serve your needs. We appreciate hearing from you and strive to create an exceptional experience for our community.</p>
                     </div>
                 </div>
             </section>
 
-            <section className="Facilities">
+            {/* <section className="Facilities">
                 <h1>What you can find?</h1>
 
                 <div className="Row">
@@ -103,11 +99,11 @@ function Home() {
                         <p>Lebanon's beaches beckon with their Mediterranean charm, boasting crystal-clear waters, golden sands, and vibrant seaside culture, creating an idyllic coastal escape.</p>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
 
             <section className="cta">
-                <h1>For more information about LConnect I encourage you to Contact Us <br />by pressing the button below !</h1>
+                <h1>Have questions, suggestions, or feedback? We'd love to hear from you! <br />Feel free to reach out to our team by pressing the button below !</h1>
                 <Link to="/ContactUs"><button>CONTACT US</button></Link>
             </section>
 

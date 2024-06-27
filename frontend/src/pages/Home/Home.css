@@ -306,7 +306,7 @@ p {
 }
 
 .Beach-Image {
-    background-image: url(../../Images/lala.png);
+    background-image: url(../../images/lala.png);
     height: 400px;
     width: 400px;
     background-repeat: no-repeat;
@@ -316,7 +316,7 @@ p {
 }
 
 .Hotel-Image {
-    background-image: url(../../Images/hotelfacilities.jpg);
+    background-image: url(../../images/hotelfacilities.jpg);
     height: 400px;
     width: 400px;
     background-repeat: no-repeat;
@@ -326,7 +326,7 @@ p {
 }
 
 .Food-Image {
-    background-image: url(../../Images/food.jpg);
+    background-image: url(../../images/food.jpg);
     height: 400px;
     width: 400px;
     background-repeat: no-repeat;
@@ -354,7 +354,7 @@ p {
 .cta {
     margin: 100px auto;
     width: 80%;
-    background-image: url(../../Images/nature.jpeg);
+    background-image: url(../../images/nature.jpeg);
     background-position: center;
     background-size: cover;
     border-radius: 15px;
