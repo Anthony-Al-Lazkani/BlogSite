@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Box = styled.div`
 	padding: 5% 2.5%;
-	background: #29335c;
+	background: #e0f2f1;
 	// position: absolute;
 	bottom: 0;
 	width: 100%;
@@ -56,6 +56,7 @@ export const FooterLink = styled.a`
 		transition: 300ms ease-in;
 		padding-left : 10px;
 		font-weight: bold;
+		text-decoration: underline;
 	}
 `;
 

@@ -7,6 +7,7 @@ import ContactUs from './pages/ContactUS/ContactUs';
 import Login from './pages/Login/Login';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import Blogs from './pages/Blogs/blogs'
 
 function App() {
   return (

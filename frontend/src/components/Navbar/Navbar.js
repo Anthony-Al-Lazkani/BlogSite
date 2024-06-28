@@ -1,8 +1,7 @@
 import { useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { Links } from "react-router-dom";
 import "./Navbar.css"
-
-
 
 function Navbar1() {
 	const navRef = useRef();
@@ -18,7 +17,7 @@ function Navbar1() {
 			<h3>GROUP A</h3>
 			<nav ref={navRef}>
 				<a href="/">Home</a>
-				<a href="/Blogs">Blogs</a>
+				<a href="./components/BlogForms">Blogs</a>
 				<a href="/Contact Us">Contact Us</a>
 				<a href="/Login">Login</a>
 				<button
