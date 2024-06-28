@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
-import Photo1 from '../../images/hi3.jpg';
-import Photo2 from '../../images/hi4.jpeg';
-import Photo3 from '../../images/hi5.jpg';
+import Photo1 from '../../Images/hi3.jpg';
+import Photo2 from '../../Images/hi4.jpeg';
+import Photo3 from '../../Images/hi5.jpg';
 // import Photo4 from '../../images/pic4.jpg';
 // import Photo5 from '../../images/photo5.jpg';
 

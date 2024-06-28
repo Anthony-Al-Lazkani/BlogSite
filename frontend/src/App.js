@@ -5,6 +5,7 @@ import Home from './pages/Home/Home';
 import Blogs from './pages/Blogs/Blogs';
 import ContactUs from './pages/ContactUS/ContactUs';
 import Login from './pages/Login/Login';
+import SignUp from './pages/SignUp/SignUp';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 
@@ -20,6 +21,7 @@ function App() {
             <Route path='/Blogs' element={<Blogs />} />
             <Route path='/ContactUs' element={<ContactUs />} />
             <Route path='/Login' element={<Login />} />
+            <Route path='/SignUp' element={<SignUp />} />
           </Routes>
         </div>
         <Footer />
