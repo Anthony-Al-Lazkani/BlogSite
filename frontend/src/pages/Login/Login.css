@@ -9,34 +9,158 @@
 .Container {
     min-height: 90vh;
     width: 100%;
-    background: url('../../Images/LoginBackgroundImage.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     align-items: center;
     justify-content: center;
     display: flex;
+    background-image: -webkit-linear-gradient(30deg, #fff 50%, #004E95 50%);
 }
 
 .LoginContainer {
     display: flex;
     flex-direction: column;
-    height: 500px;
-    width : 500px;
+    height: 400px;
+    width : 400px;
     background: transparent;
-    backdrop-filter: blur(150px);
+    backdrop-filter: blur(250px);
     border-radius: 20px;
-    /* box-shadow:  8px 8px 8px 2px lightblue; */
     transition: 1s;
     align-items: center;
+    animation: background-switch 3s 1;
 }
 
+@keyframes background-switch {
+    0% {
+        backdrop-filter: blur(0px);
+    }
+    10% {
+        backdrop-filter: blur(25px);
+    }
+    20% {
+        backdrop-filter: blur(50px);
+    }
+    30% {
+        backdrop-filter: blur(75px);
+    }
+    40% {
+        backdrop-filter: blur(100px);
+    }
+    50% {
+        backdrop-filter: blur(125px);
+    }
+    60% {
+        backdrop-filter: blur(150px);
+    }
+    70% {
+        backdrop-filter: blur(175px);
+    }
+    80% {
+        backdrop-filter: blur(200px);
+    }
+    90% {
+        backdrop-filter: blur(225px);
+    }
+    100% {
+        backdrop-filter: blur(250px);
+    }
+  }
+
 .LoginContainer:hover {
-    box-shadow: 8px 8px 8px 5px #29335c;
+    box-shadow: 8px 8px 8px 5px #29335c;    
 }
 
 .title {
     padding-top: 20px;
     font-size: 20px;
     color: #29335c;
+    margin-bottom: 10%;
 }
+
+.Underline-Login{
+    position: absolute;
+    height: 3px;
+    background-color: #fff;
+    display: flex;
+    width: 25%;
+    /* margin: 10px 0%; */
+    animation: slide 2s 1;
+    left: 37%;
+
+}
+
+@keyframes slide {
+    0% {
+      width: 0%;
+    }
+    10% {
+      width: 4%;
+    }
+    20% {
+      width: 8%;
+    }
+    30% {
+      width: 12%;
+    }
+    40% {
+      width: 16%;
+    }
+    50% {
+        width: 20%;
+    }
+    60% {
+        width: 21%;
+    }
+    70% {
+        width: 22%;
+    }
+    80% {
+        width: 23%;
+    }
+    90% {
+        width: 24%;
+    }
+    100% {
+        width: 25%;
+    }
+  }
+
+  .inputBox {
+    width: 100%;
+    /* background-color: red; */
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+
+  .Input input {
+    width: 250px;
+    height: 35px;
+    border-radius: 8px;
+    /* border: 3px solid #3090c9; */
+    display: flex;
+    align-items: center;
+    /* margin: auto; */
+    background: whitesmoke;
+    border: none;
+    font-size: 1.1em;
+    font-weight: 300;
+    margin-top: 20px;
+    padding: 10px;
+    outline: none;
+    border-bottom: 2px solid white;
+    color: black;
+  }
+
+  .Icons {
+    display: flex;
+    position: absolute;
+    font-size: 20px;
+    color: white;
+    right: 0;
+}
+
