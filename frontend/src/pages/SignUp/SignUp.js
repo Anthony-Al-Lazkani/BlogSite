@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 
 
+
 function SignUp() {
     const [isFocused, setIsFocused] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
