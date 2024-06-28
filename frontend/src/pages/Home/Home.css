@@ -1,12 +1,12 @@
 * {
     margin: 0;
-    padding: 0;
+    padding: 50px;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background: #040720;
+    background: #e0f2f1;
 }
 
 a {
@@ -15,17 +15,19 @@ a {
 }
 
 p {
-    color: #777;
+    color: #e0f2f1;
 }
 
 .header {
     display: flex;
     position: relative;
+    top:0;
+    left:0;
     width: 100%;
-    height: 80px;
+    height: 100px;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(20px);
-    padding: 60px 3%;
+    padding: 100px 10%;
     justify-content: space-between;
     align-items: center;
     z-index: 999;
@@ -110,19 +112,21 @@ p {
 .Front-Page {
     width: 100%;
     height: 100vh;
-    /* background-image: linear-gradient(rgba(0,0,139,0.25), rgba(0,0,0,139.25)), url(../images/raouche2.jpg);
+    background-image: linear-gradient(rgba(0,0,139,0.25), rgba(0,0,0,139.25)), url(../../images/nature.jpeg);
     background-size: cover;
-    background-position: center; */
-}
+    background-position: center; 
+    position: relative;
+    z-index:1
+} 
 
 .Font-Page-Header-Text {
     color: #fff;
     font-weight: 700;
-    text-shadow: 1px 1px #000;
+    text-shadow: 2px 1px #29335c;
 }
 
 .Front-Page-Content {
-    text-shadow: 1px 1px #000;
+    text-shadow: 1px 1px #29335c;
 }
 
 
@@ -148,6 +152,7 @@ p {
     line-height: 25px;
     color: #fff;
     font-size: 1em;
+    text-shadow: 2px 2px #29335c;
 }
 
 
@@ -157,6 +162,7 @@ p {
     text-align: center;
     margin: 20px 10px;
     border-radius: 25px;
+    text-shadow: 1px 1px #000;
     font-weight: bold;
     border: 2px solid #3090C7;
     background: transparent;
@@ -210,14 +216,14 @@ p {
 
 
 .Services h1 {
-    font-size: 36px;
+    font-size: 40px;
     font-weight: 600;
 }
 
 
 .Services p {
     color: #777;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 300;
     line-height: 22px;
     padding: 10px;
@@ -240,12 +246,12 @@ p {
 
 .Services-Col {
     flex-basis: 31%;
-    background: #fff3f3;
+    background: #ffefd5;
     border-radius: 10px;
-    margin-bottom: 5%;
+    margin-bottom: 8%;
     padding: 20px 12px;
     box-sizing: border-box;
-    transition: .4s;
+    transition: .3s;
 }
 
 .Services-Col:hover {
@@ -280,7 +286,7 @@ p {
 }
 
 .Facilities p {
-    color: #777;
+    color: #e0f2f1;
 }
 
 
@@ -354,7 +360,7 @@ p {
 .cta {
     margin: 100px auto;
     width: 80%;
-    background-image: url(../../images/nature.jpeg);
+    background-image: url(../../images/back_home.jpg);
     background-position: center;
     background-size: cover;
     border-radius: 15px;
@@ -370,7 +376,7 @@ p {
     font-size: 40px;
     font-weight: bold;
     line-height: 50px;
-    color: #fff;
+    color: #000;
     margin-bottom: 40px;
     padding: 0;
 }
@@ -385,14 +391,14 @@ p {
     font-size: 1.07em;
     font-weight: bold;
     line-height: 25px;
-    color: #fff3f3;
+    color: #e0f2f1;
     cursor: pointer;
     transition: .5s;
     text-align: center;
 }
 
 .cta button:hover {
-    background-color: green;
+    background-color: #3090C7;
 }
   
 
