@@ -2,10 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 // Import Pages and Components
 import Home from './pages/Home/Home';
-import About from './pages/About/About';
+import Blogs from './pages/Blogs/Blogs';
+import ContactUs from './pages/ContactUS/ContactUs';
+import Login from './pages/Login/Login';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
-import Blogs from './pages/Blogs/blogs'
+
 
 function App() {
   return (
@@ -15,8 +17,9 @@ function App() {
         <div className="pages">
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/About' element={<About />} />
             <Route path='/Blogs' element={<Blogs />} />
+            <Route path='/ContactUs' element={<ContactUs />} />
+            <Route path='/Login' element={<Login />} />
           </Routes>
         </div>
         <Footer />
