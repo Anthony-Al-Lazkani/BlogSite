@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
     margin: 0;
     padding: 0;
@@ -441,3 +442,28 @@ p {
   .react-slideshow-container .arrow {
     display: none;
   }
+=======
+.home {
+    /* Ensure the home page content is positioned relative */
+    position: relative;
+    width: 100%;
+    min-height: 100vh; /* Ensure the home page fills the viewport height */
+    padding-bottom: 100px; /* Adjust padding to accommodate footer */
+
+    /* Additional styling as needed */
+}
+
+.image-container {
+    /* Apply background image styles */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../images/blog.png'); /* Adjust path to your image */
+    background-size: cover;
+    background-position: center;
+    z-index: -1; /* Ensure background is behind content */
+}
+
+>>>>>>> ThaliaAtallah
