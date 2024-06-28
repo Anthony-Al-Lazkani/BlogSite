@@ -89,11 +89,13 @@ const deleteArticle = async (req, res) => {
 
     if (!article) {
         return res.status(400).json({error : "Sorry ! Article Unavailable"})
-    }
+    
 
     res.status(200).json(article)
 }
+}
 
+// Delete a comment
 const deleteComment = async (req, res) => {
   const { id } = req.params;
 
@@ -112,7 +114,7 @@ const deleteComment = async (req, res) => {
 
     // Find the article containing the comment and update the comments array
     const updatedArticle = await Article.findByIdAndUpdate(
-      req.body._id,
+      deletedComment.articleId,
       { $pull: { comments: { _id: id } } },
       { new: true }
     );
