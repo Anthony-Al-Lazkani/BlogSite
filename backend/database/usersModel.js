@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
 //unique username, unique email, and password
 const usersSchema = new mongoose.Schema({
@@ -20,6 +21,7 @@ const usersSchema = new mongoose.Schema({
     },
 
 }, { timestamps : true })
+
 
 
 module.exports = mongoose.model('User', usersSchema)

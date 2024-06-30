@@ -1,5 +1,6 @@
 const User = require('../database/usersModel');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 //CreateUser
 const createUser = async (req, res) => {
@@ -17,8 +18,12 @@ const createUser = async (req, res) => {
             return res.status(400).json({message: 'Invalid parameter'});
         }
 
+        //hashing the password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        
         //creating new user
-        const user = await User.create({username,email,password})
+        const user = await User.create({username,email,password:hashedPassword})
         res.status(201).json({message: 'Create user successful', user: user})
     }
     catch (error) {
@@ -39,7 +44,8 @@ const signIn = async (req,res) => {
         }
 
         //check if password matches email
-        if (password !== existingUser.password){
+        const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+        if (!isPasswordValid) {
             return res.status(400).json({ message: 'Invalid username or password' });
         }
 
