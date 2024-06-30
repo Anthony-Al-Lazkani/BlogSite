@@ -1,6 +1,43 @@
 const User = require('../database/usersModel');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+// Load environment variables from .env file
+require('dotenv').config();
+
+//JWT key
+const JWT_SECRET = process.env.JWT_SECRET;
+
+//function to create token for a user
+function createToken(userId) {
+    const payload = {
+        exp: Math.floor(Date.now() / 1000) + (4 * 24 * 60 * 60), // 4 days expiration
+        iat: Math.floor(Date.now() / 1000),
+        sub: userId
+    };
+    return jwt.sign(payload, JWT_SECRET, { algorithm: 'HS256' });
+}
+
+//function to extract auth token for a user
+function extractAuthToken(authenticatedRequest) {
+    const authHeader = authenticatedRequest.headers.authorization;
+    if (authHeader && authHeader.split(' ')[0] === 'Bearer') {
+        return authHeader.split(' ')[1];
+    } else {
+        return null;
+    }
+}
+
+//function to decode token for a user
+function decodeToken(token) {
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        return decoded.sub;
+    } catch (error) {
+        return null; // Handle invalid tokens or expired tokens
+    }
+}
 
 //CreateUser
 const createUser = async (req, res) => {
@@ -24,9 +61,15 @@ const createUser = async (req, res) => {
         
         //creating new user
         const user = await User.create({username,email,password:hashedPassword})
-        res.status(201).json({message: 'Create user successful', user: user})
+        
+        // Generate JWT token
+        const token = createToken(user._id);
+
+        //successful sign-up
+        res.status(201).json({message: 'Create user successful', token, user: user})
     }
     catch (error) {
+        //failed sign-up
         res.status(500).json({ message: 'Error creating user', error: error.message });
     }
 }
@@ -49,10 +92,14 @@ const signIn = async (req,res) => {
             return res.status(400).json({ message: 'Invalid username or password' });
         }
 
-        // Successful sign-in
-        res.status(200).json({ message: 'Sign in successful', user: existingUser });
+        //generate JWT token
+        const token = createToken(existingUser._id);
+
+        //successful sign-in
+        res.status(200).json({ message: 'Sign in successful', token, user: existingUser });
     } 
     catch (error) {
+        //failed sign-in
         res.status(500).json({ message: 'Error signing in', error: error.message });
     }
 };
