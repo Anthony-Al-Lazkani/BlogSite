@@ -14,7 +14,8 @@ const {
 const {
     signIn,
     createUser,
-    contact_us
+    contact_us,
+    getUser
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -57,6 +58,8 @@ router.post('/signIn', signIn)
 
 //Post contact_us
 router.post('/contact_us',contact_us)
+
+router.post('/getUser',getUser)
 
 
 module.exports = router

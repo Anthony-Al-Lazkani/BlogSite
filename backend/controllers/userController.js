@@ -161,11 +161,39 @@ const contact_us = async (req,res) => {
         res.status(200).json({ message: 'Email sent successfully', info: info.response }); 
     });
 
+};
+
+const getUser = async (req, res) => {
+    const token = extractAuthToken(req);
+
+    // If no token found, respond with 403
+    if (!token) {
+        return res.sendStatus(403);
+    }
+
+    // Decode the token to get the user ID
+    const userId = decodeToken(token);
+    if (!userId) {
+        return res.sendStatus(403);
+    }
+
+    // Search the database for the user by ID
+    const user = await User.findById(userId);
+
+    // If user not found, respond with 404
+    if (!user) {
+        return res.status(404).json({ message: 'Invalid process' });
+    }
+
+    // Respond with the user details
+    res.status(200).json({ user });
 
 };
+
 
 module.exports = {
     createUser,
     signIn,
-    contact_us
+    contact_us,
+    getUser
 }
