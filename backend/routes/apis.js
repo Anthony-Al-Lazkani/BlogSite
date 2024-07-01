@@ -8,7 +8,8 @@ const {
 } = require('../controllers/articleController')
 const {
     signIn,
-    createUser
+    createUser,
+    contact_us
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -33,6 +34,9 @@ router.post('/createUser', createUser)
 
 //Post sign in
 router.post('/signIn', signIn)
+
+//Post contact_us
+router.post('/contact_us',contact_us)
 
 
 module.exports = router

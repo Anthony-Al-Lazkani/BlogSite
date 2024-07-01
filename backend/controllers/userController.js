@@ -2,6 +2,8 @@ const User = require('../database/usersModel');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const { use } = require('../routes/apis');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -126,7 +128,47 @@ const signIn = async (req,res) => {
     }
 };
 
+const contact_us = async (req,res) => {
+    
+    const { email } = req.body;
+
+    // Validate that email is provided
+    if (!email) {
+        return res.status(400).json({ message: 'Email is required' });
+    }
+
+    //sending mail using nodemailer
+    const transporter = nodemailer.createTransport({
+        service: "Gmail",
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: 'Message from contact us',
+        text: 'Hi, Thank you for contacting us! How can we assist you.'
+    };
+    console.log('Email:', process.env.EMAIL);
+    console.log('Password:', process.env.PASSWORD);
+    transporter.sendMail(mailOptions, (error,info) => {
+        if (error) {
+            return res.status(500).json({ message: 'Error sending email', error: error.message });
+        }
+        res.status(200).json({ message: 'Email sent successfully', info: info.response }); 
+    });
+
+
+};
+
 module.exports = {
     createUser,
-    signIn
+    signIn,
+    contact_us
 }
