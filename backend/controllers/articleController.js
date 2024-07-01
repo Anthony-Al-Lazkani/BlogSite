@@ -240,7 +240,7 @@ const deleteComment = async (req, res) => {
     // Find the article containing the comment and update the comments array
     const updatedArticle = await Article.findByIdAndUpdate(
       deletedComment.articleId,
-      { $pull: { comments: { _id: id } } },
+      { $pull: { comments: { articleId: deletedComment.articleId } } },
       { new: true }
     );
 
@@ -314,37 +314,99 @@ const updateArticle = async (req, res) => {
 const likeArticle = async (req, res) => {
   const { id } = req.params;
 
-  try {
-    const article = await Article.findById(id);
-    if (!article) {
-      return res.status(404).json({ error: 'Article not found' });
-    }
+  const token = extractAuthToken(req);
 
-    article.likes += 1;
-    await article.save();
-    res.status(200).json({ message: 'Article liked successfully', article });
+  // If no token found, respond with 403
+  if (!token) {
+      return res.sendStatus(403);
+  }
+
+  // Decode the token to get the user ID
+  const userId = decodeToken(token);
+  if (!userId) {
+      return res.sendStatus(403);
+  }
+
+  try {
+      // Find the user
+      const user = await User.findById(userId);
+      const username = user.username;
+
+      // Find the article
+      const article = await Article.findById(id);
+      if (!article) {
+          return res.status(404).json({ error: 'Article not found' });
+      }
+
+      // Check if user has already liked the article
+      const likedIndex = article.liked_by.indexOf(username);
+      if (likedIndex === -1) {
+          // If user hasn't liked the article, add like and username to liked_by array
+          article.likes += 1;
+          article.liked_by.push(username);
+      } else {
+          // If user has already liked the article, remove like and username from liked_by array
+          article.likes -= 1;
+          article.liked_by.splice(likedIndex, 1);
+      }
+
+      // Save the updated article
+      await article.save();
+
+      res.status(200).json({ message: 'Article liked successfully', article });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error.message });
   }
 };
+
 
 // Dislike an article
 const dislikeArticle = async (req, res) => {
   const { id } = req.params;
 
+  const token = extractAuthToken(req);
+
+  // If no token found, respond with 403
+  if (!token) {
+    return res.sendStatus(403);
+  }
+
+  // Decode the token to get the user ID
+  const userId = decodeToken(token);
+  if (!userId) {
+    return res.sendStatus(403);
+  }
+
   try {
     const article = await Article.findById(id);
     if (!article) {
       return res.status(404).json({ error: 'Article not found' });
     }
 
-    article.dislikes += 1;
+    // Find the user by their username
+    const user = await User.findById(userId);
+    const username = user.username;
+
+    // Check if the user has already disliked the article
+    if (article.disliked_by.includes(username)) {
+      // If user has already disliked, remove the dislike
+      article.dislikes -= 1;
+      const indexToRemove = article.disliked_by.indexOf(username);
+      article.disliked_by.splice(indexToRemove, 1);
+    } else {
+      // If user has not disliked, add the dislike
+      article.dislikes += 1;
+      article.disliked_by.push(username);
+    }
+
     await article.save();
-    res.status(200).json({ message: 'Article disliked successfully', article });
+    res.status(200).json({ message: 'Article dislike status updated successfully', article });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
+
 
 
 
