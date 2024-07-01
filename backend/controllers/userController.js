@@ -41,8 +41,7 @@ function decodeToken(token) {
     }
 }
 
-//middleware to authenticate the token
-function authenticateToken(req, res, next) {
+/*
     //extract token
     const token = extractAuthToken(req);
 
@@ -61,7 +60,7 @@ function authenticateToken(req, res, next) {
         // If token is invalid or expired, respond with 403 (Forbidden)
         return res.sendStatus(403);
     }
-}
+*/
 
 //CreateUser
 const createUser = async (req, res) => {
@@ -155,8 +154,6 @@ const contact_us = async (req,res) => {
         subject: 'Message from contact us',
         text: 'Hi, Thank you for contacting us! How can we assist you.'
     };
-    console.log('Email:', process.env.EMAIL);
-    console.log('Password:', process.env.PASSWORD);
     transporter.sendMail(mailOptions, (error,info) => {
         if (error) {
             return res.status(500).json({ message: 'Error sending email', error: error.message });
