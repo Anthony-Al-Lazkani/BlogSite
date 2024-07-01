@@ -17,8 +17,8 @@ function Navbar1() {
 			<h3>GROUP A</h3>
 			<nav ref={navRef}>
 				<a href="/">Home</a>
-				<a href="./components/BlogForms">Blogs</a>
-				<a href="/Contact Us">Contact Us</a>
+				<a href="/Blogs">Blogs</a>
+				<a href="/Contact">Contact Us</a>
 				<a href="/Login">Login</a>
 				<button
 					className="nav-btn nav-close-btn"

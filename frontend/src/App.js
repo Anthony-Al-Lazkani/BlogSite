@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 // Import Pages and Components
 import Home from './pages/Home/Home';
 import Blogs from './pages/Blogs/Blogs';
-import ContactUs from './pages/ContactUS/ContactUs';
 import Login from './pages/Login/Login';
+import SignUp from './pages/SignUp/SignUp';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import Contact from './pages/Contact/Contact';
 
 
 function App() {
@@ -18,8 +19,9 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/Blogs' element={<Blogs />} />
-            <Route path='/ContactUs' element={<ContactUs />} />
             <Route path='/Login' element={<Login />} />
+            <Route path='/SignUp' element={<SignUp />} />
+            <Route path='/Contact' element={<Contact />} />
           </Routes>
         </div>
         <Footer />

@@ -4,20 +4,20 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-
+ 
 body {
     background: #e0f2f1;
 }
-
+ 
 a {
     text-decoration: none;
     cursor: pointer;
 }
-
+ 
 p {
     color: #e0f2f1;
 }
-
+ 
 .header {
     display: flex;
     position: relative;
@@ -32,25 +32,25 @@ p {
     align-items: center;
     z-index: 999;
 }
-
+ 
 .Logo {
     font-size: 1.7em;
     user-select: none;
 }
-
+ 
 .Logo h2,a {
     font-weight: 700;
     color: #fff;
 }
-
+ 
 .Logo span {
     color: #3090C7;
 }
-
+ 
 .Navbar-links {
     list-style-type: none;
 }
-
+ 
 .Navbar-links li {
     display: inline-block;
     padding: 0px 40px;
@@ -61,30 +61,30 @@ p {
     text-transform: uppercase;
     font-weight: 500;
 }
-
+ 
 .Navbar-links a {
     color: white;
     transition: all .3s ease 0s;
 }
-
-
+ 
+ 
 .Navbar-links a:hover,
 .Navbar-links a.active {
     color: #3090C7;
 }
-
-
-
+ 
+ 
+ 
 .Profile-Icon {
     font-size: 2.3em;
     position: relative;
 }
-
+ 
 .Profile-Icon a {
     color: white;
     transition: all .3s ease 0s;
 }
-
+ 
 .Profile-Icon a::after {
     content: '';
     height: 3px;
@@ -97,39 +97,39 @@ p {
     right: 0%;
     transition: .4s;
 }
-
+ 
 .Profile-Icon a:hover,
 .Profile-Icon a.active {
     color: #3090C7;
 }
-
+ 
 .Profile-Icon a:hover::after {
     color: #3090C7;
     width: 100%;
     left: 0;
 }
-
+ 
 .Front-Page {
     width: 100%;
     height: 100vh;
     background-image: linear-gradient(rgba(0,0,139,0.25), rgba(0,0,0,139.25)), url("../../Images/nature.jpeg");
     background-size: cover;
-    background-position: center; 
+    background-position: center;
     position: relative;
     z-index:1
-} 
-
+}
+ 
 .Font-Page-Header-Text {
     color: white;
     font-weight: 700;
     text-shadow: 2px 1px #000;
 }
-
+ 
 .Front-Page-Content {
     text-shadow: 1px 1px #000;
 }
-
-
+ 
+ 
 .Front-Page-Content {
     width: 100%;
     position: absolute;
@@ -138,13 +138,13 @@ p {
     text-align: center;
     color: #000;
 }
-
+ 
 .Front-Page-Content h1 {
     font-size: 80px;
     margin-top: 80px;
     font-weight: 1000;
 }
-
+ 
 .Front-Page-Content p {
     margin: 20px auto;
     font-weight: 600;
@@ -153,8 +153,8 @@ p {
     color: white;
     font-size: 1em;
 }
-
-
+ 
+ 
 .Front-Page-Content button {
     width: 200px;
     padding: 15px 0;
@@ -173,15 +173,15 @@ p {
     position: relative;
     overflow: hidden;
 }
-
+ 
 .Front-Page-Content button:hover span {
     width: 100%;
 }
-
+ 
 .Front-Page-Content button:hover {
     border: none;
 }
-
+ 
 .Front-Page-Content span {
     background: #3090C7;
     height: 100%;
@@ -193,8 +193,8 @@ p {
     z-index: -1;
     transition: .5s;
 }
-
-
+ 
+ 
 @media only screen and (max-width: 893px) {
     .Front-Page-Content h1 {
         font-size: 30px;
@@ -202,8 +202,8 @@ p {
         font-weight: 1000;
     }
 }
-
-
+ 
+ 
 .Services {
     width: 100%;
     margin: auto;
@@ -212,14 +212,14 @@ p {
     padding-top: 100px;
     background-color: #fff;
 }
-
-
+ 
+ 
 .Services h1 {
     font-size: 40px;
     font-weight: 600;
 }
-
-
+ 
+ 
 .Services p {
     color: #777;
     font-size: 15px;
@@ -227,14 +227,14 @@ p {
     line-height: 22px;
     padding: 10px;
 }
-
-
+ 
+ 
 .Row {
     margin-top: 5%;
     display: flex;
     justify-content: space-between;
 }
-
+ 
 .Services-Col h3 {
     color: #000;
     font-weight: 600;
@@ -242,7 +242,7 @@ p {
     text-align: center;
     margin: 10px 0;
 }
-
+ 
 .Services-Col {
     flex-basis: 31%;
     background: #ffefd5;
@@ -252,20 +252,20 @@ p {
     box-sizing: border-box;
     transition: .3s;
 }
-
+ 
 .Services-Col:hover {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 20%);
-
+ 
 }
-
-
-
-
+ 
+ 
+ 
+ 
 @media only screen and (max-width : 1064px) {
     .Row {
         flex-direction: column;
     }
-
+ 
 }
 
 
@@ -276,8 +276,8 @@ p {
     padding-top: 100px;
     text-align: center;
 }
-
-
+ 
+ 
 .cta {
     margin: 100px auto;
     width: 80%;
@@ -288,11 +288,11 @@ p {
     text-align: center;
     padding: 100px 0;
 }
-
+ 
 .cta:hover {
     box-shadow: 0 0 20px 0 #3090C7;
 }
-
+ 
 .cta h1 {
     font-size: 40px;
     font-weight: bold;
@@ -301,7 +301,7 @@ p {
     margin-bottom: 40px;
     padding: 0;
 }
-
+ 
 .cta button {
     background-color: transparent;
     backdrop-filter:blur(2px);
@@ -318,43 +318,43 @@ p {
     text-align: center;
     text-shadow:2px 2px #000
 }
-
+ 
 .cta button:hover {
     background-color: #3090C7;
 }
-  
-
+ 
+ 
 @media only screen and (max-width : 700px) {
     .cta h1 {
         font-size: 24px;
     }
-
+ 
     .Beach-Image {
         height: 300px;
         width: 100%;
     }
-    
+   
     .Hotel-Image {
         height: 300px;
         width: 100%;
     }
-    
+   
     .Food-Image {
         height: 300px;
         width: 100%;
     }
 }
-
-
+ 
+ 
 @media only screen and (max-width : 1280px) {
     .Facilities {
         width: 100%;
     }
 }
-
-
-  
-
+ 
+ 
+ 
+ 
 .each-slide-effect > div {
     display: flex;
     align-items: center;
@@ -365,7 +365,7 @@ p {
     height: 100vh;
     width: 100%;
   }
-  
+ 
   .react-slideshow-container .arrow {
     display: none;
   }

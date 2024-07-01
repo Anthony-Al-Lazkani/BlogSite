@@ -42,7 +42,7 @@ function Login() {
                 </form>
 
                 <div className="RegisterLink">
-                    <p>Don't have an account ? <span><Link to='/'>Sign Up</Link></span></p>
+                    <p>Don't have an account ? <span><Link to='/SignUp'>Sign Up</Link></span></p>
                 </div>
 
                 <div className="LoginButton">
