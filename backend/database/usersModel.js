@@ -20,6 +20,16 @@ const usersSchema = new mongoose.Schema({
         required : true
     },
 
+    friends : {
+        type: [String],
+        default: []
+    },
+
+    pending_friends : {
+        type: [String],
+        default: []
+    }
+
 }, { timestamps : true })
 
 

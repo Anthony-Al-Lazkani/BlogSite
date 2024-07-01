@@ -41,10 +41,11 @@ const articleSchema = new mongoose.Schema({
         type: [String], // Array of strings
         default: []     // Default value is an empty array
     },
+    
     disliked_by: {
         type: [String], // Array of strings
         default: []     // Default value is an empty array
-    }
+    },
     
 }, { timestamps : true })
 

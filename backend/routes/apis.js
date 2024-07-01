@@ -16,7 +16,11 @@ const {
     signIn,
     createUser,
     contact_us,
-    getUser
+    getUser,
+    addFriend,
+    acceptFriend,
+    rejectFriend,
+    removeFriend
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -47,6 +51,18 @@ router.post('/createArticle', createArticle)
 
 // POST a comment
 router.post('/:id/createComment', createComment)
+
+//POST accept a friend request
+router.post('/:id/acceptFriend', acceptFriend)
+
+//DELETE reject a friend request
+router.post('/:id/rejectFriend', rejectFriend)
+
+//DELETE remove a friend
+router.post('/:id/removeFriend', removeFriend)
+
+// POST send a friend request
+router.post('/:id/addFriend', addFriend)
 
 // Like an article
 router.post('/:id/likeArticle', likeArticle)
