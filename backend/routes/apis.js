@@ -11,7 +11,10 @@ const {
     likeArticle,
     dislikeArticle
 } = require('../controllers/articleController')
-
+const {
+    signIn,
+    createUser
+} = require('../controllers/userController')
 
 const router = express.Router()
 
@@ -45,9 +48,11 @@ router.delete('/:id/comments', deleteComment)
 // UPDATE an article
 router.patch('/:id', updateArticle)
 
+//Post User
+router.post('/createUser', createUser)
 
-
-
+//Post sign in
+router.post('/signIn', signIn)
 
 
 module.exports = router
