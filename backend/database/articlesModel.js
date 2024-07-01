@@ -11,7 +11,7 @@ const articleSchema = new mongoose.Schema({
         required : true
     },
 
-    description : {
+    content : {
         type : String,
         required : true
     },
@@ -19,7 +19,13 @@ const articleSchema = new mongoose.Schema({
     genre : {
         type : String,
         required : true
-    }
+    },
+
+    comments : [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    
+    }]
     
 }, { timestamps : true })
 
