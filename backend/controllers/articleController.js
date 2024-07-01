@@ -62,15 +62,30 @@ const getArticlesSortedByLikes = async (req, res) => {
   const token = extractAuthToken(req);
   // If no token found, respond with 403
   if (!token) {
-      return res.sendStatus(403);
+    return res.sendStatus(403);
   }
   const articles = await Article.find().sort({ likes: -1 });
 
   res.status(200).json(articles)
 }
 
-
-
+//GET ARTICLES SORTED ACCORDING TO GENRE
+const getArticlesSortedByGenre = async (req, res) => {
+  const {genre} = req.body;
+  const token = extractAuthToken(req);
+  // If no token found, respond with 403
+  if (!token) {
+    return res.sendStatus(403);
+  }
+  try {
+    // Query articles based on genre
+    const articles = await Article.find({ genre }).sort({ createdAt: -1 });
+    res.status(200).json(articles);
+  } 
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
 
 //GET my friends articles
@@ -472,5 +487,6 @@ module.exports = {
     likeArticle,
     dislikeArticle,
     getMyFriendsArticles,
-    getArticlesSortedByLikes
+    getArticlesSortedByLikes,
+    getArticlesSortedByGenre
 }
