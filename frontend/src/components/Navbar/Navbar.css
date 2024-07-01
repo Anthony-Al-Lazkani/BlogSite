@@ -23,10 +23,15 @@ header {
 	font-size: 20px;
     padding: 0 2rem;
     color: #5B9BD5;
-    background-color: var(--mainColor); 
+    /* background-color: var(--mainColor);  */
+    background-image: url('../../Images/Wallpaper.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 	width:100%;
-	position: absolute;
-	z-index: 1000;
+	/* position: absolute; */
+	z-index: -2;
+
 }
 
 

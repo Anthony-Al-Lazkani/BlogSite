@@ -1,8 +1,14 @@
 import React from "react";
+import './Blogs.css'
 
 function Blogs() {
     return(
-        <h1>Blogs Page</h1>
+        <>
+            <section className="First-Page">
+                <h1>Enjoy Our Collection Of Latest Blogs !</h1>
+                
+            </section>
+        </>
     )
 }
 
