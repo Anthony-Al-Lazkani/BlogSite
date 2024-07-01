@@ -31,7 +31,8 @@ const usersSchema = new mongoose.Schema({
     },
 
     age : {
-        type: Number
+        type: Number,
+        required: true
     }
 
 }, { timestamps : true })
