@@ -89,10 +89,10 @@ const deleteArticle = async (req, res) => {
 
     if (!article) {
         return res.status(400).json({error : "Sorry ! Article Unavailable"})
+    }
     
-
     res.status(200).json(article)
-}
+
 }
 
 // Delete a comment
@@ -106,7 +106,7 @@ const deleteComment = async (req, res) => {
 
   try {
     // Find the comment and delete it from the Comment collection
-    const deletedComment = await Comment.findByIdAndDelete(id);
+    const deletedComment = await Comment.findById(id);
 
     if (!deletedComment) {
       return res.status(404).json({ error: "Comment not found" });
