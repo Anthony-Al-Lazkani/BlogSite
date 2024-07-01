@@ -6,7 +6,8 @@
 }
  
 body {
-    background: #e0f2f1;
+    height: 100%;
+    width: 100%;
 }
  
 a {
@@ -18,22 +19,22 @@ p {
     color: #e0f2f1;
 }
  
-.header {
+/* .header {
     display: flex;
     position: relative;
     top:0;
     left:0;
     width: 100%;
     height: 100px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, .5);
     backdrop-filter: blur(20px);
     padding: 100px 10%;
     justify-content: space-between;
     align-items: center;
     z-index: 999;
-}
+} */
  
-.Logo {
+/* .Logo {
     font-size: 1.7em;
     user-select: none;
 }
@@ -65,17 +66,17 @@ p {
 .Navbar-links a {
     color: white;
     transition: all .3s ease 0s;
-}
+} */
  
  
-.Navbar-links a:hover,
+/* .Navbar-links a:hover,
 .Navbar-links a.active {
     color: #3090C7;
 }
  
+  */
  
- 
-.Profile-Icon {
+/* .Profile-Icon {
     font-size: 2.3em;
     position: relative;
 }
@@ -108,7 +109,7 @@ p {
     width: 100%;
     left: 0;
 }
- 
+  */
 .Front-Page {
     width: 100%;
     height: 100vh;
@@ -116,7 +117,7 @@ p {
     background-size: cover;
     background-position: center;
     position: relative;
-    z-index:1
+    z-index:100;
 }
  
 .Font-Page-Header-Text {
