@@ -39,27 +39,27 @@ function decodeToken(token) {
     }
 }
 
-//middleware to authenticate the token
-function authenticateToken(req, res, next) {
-    //extract token
-    const token = extractAuthToken(req);
+// //middleware to authenticate the token
+// function authenticateToken(req, res, next) {
+//     //extract token
+//     const token = extractAuthToken(req);
 
-    //if no token found respond with 403 
-    if (!token) {
-        return res.sendStatus(403);
-    }
+//     //if no token found respond with 403 
+//     if (!token) {
+//         return res.sendStatus(403);
+//     }
 
-    // Try to decode the token
-    try {
-        const userId = decodeToken(token);
-        //if token is valid attach it to req object so we can use the id in the functions
-        req.userId = userId;
-        next(); 
-    } catch (error) {
-        // If token is invalid or expired, respond with 403 (Forbidden)
-        return res.sendStatus(403);
-    }
-}
+//     // Try to decode the token
+//     try {
+//         const userId = decodeToken(token);
+//         //if token is valid attach it to req object so we can use the id in the functions
+//         req.userId = userId;
+//         next(); 
+//     } catch (error) {
+//         // If token is invalid or expired, respond with 403 (Forbidden)
+//         return res.sendStatus(403);
+//     }
+// }
 
 //CreateUser
 const createUser = async (req, res) => {
