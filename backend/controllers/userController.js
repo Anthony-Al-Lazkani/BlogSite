@@ -45,10 +45,10 @@ function decodeToken(token) {
     //extract token
     const token = extractAuthToken(req);
 
-    //if no token found respond with 403 
-    if (!token) {
-        return res.sendStatus(403);
-    }
+//     //if no token found respond with 403 
+//     if (!token) {
+//         return res.sendStatus(403);
+//     }
 
     // Try to decode the token
     try {

@@ -11,15 +11,15 @@ import {
 const Footer = () => {
     return (
         <Box>
-            <h1
+            {<h1
                 style={{
-                    color: "green",
-                    textAlign: "center",
+                    color: "#5B9BD5",
+                    textAlign: "left",
                     marginTop: "10px",
                 }}
             >
-                A Computer Science Portal for Geeks!
-            </h1>
+                GROUP A
+            </h1> }
             <FooterContainer>
                 <Row>
                     <Column>
