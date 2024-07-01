@@ -58,6 +58,20 @@ const getMyArticlesSortedByTime = async (req,res) => {
 };
 
 //GET articles sorted by likes
+const getArticlesSortedByLikes = async (req, res) => {
+  const token = extractAuthToken(req);
+  // If no token found, respond with 403
+  if (!token) {
+      return res.sendStatus(403);
+  }
+  const articles = await Article.find().sort({ likes: -1 });
+
+  res.status(200).json(articles)
+}
+
+
+
+
 
 //GET my friends articles
 const getMyFriendsArticles = async (req,res) => {
@@ -346,6 +360,8 @@ const likeArticle = async (req, res) => {
   const { id } = req.params;
 
   const token = extractAuthToken(req);
+  // Log token for debugging
+  console.log('Received token:', token);
 
   // If no token found, respond with 403
   if (!token) {
@@ -455,5 +471,6 @@ module.exports = {
     getComments,
     likeArticle,
     dislikeArticle,
-    getMyFriendsArticles
+    getMyFriendsArticles,
+    getArticlesSortedByLikes
 }

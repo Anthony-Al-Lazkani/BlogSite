@@ -11,7 +11,8 @@ const {
     getComments,
     likeArticle,
     dislikeArticle,
-    getMyFriendsArticles
+    getMyFriendsArticles,
+    getArticlesSortedByLikes
 } = require('../controllers/articleController')
 const {
     signIn,
@@ -46,6 +47,9 @@ router.get('/getMyArticlesSortedByTime', getMyArticlesSortedByTime)
 
 //GET all my friends articles
 router.get('/getMyFriendsArticles', getMyFriendsArticles)
+
+//GET articles sorted by likes
+router.get('/getArticlesSortedByLikes', getArticlesSortedByLikes)
 
 // GET all comments
 router.get('/getComments', getComments)
