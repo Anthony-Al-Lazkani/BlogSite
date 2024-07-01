@@ -2,7 +2,8 @@ const express = require('express')
 const {
     createArticle,
     getArticle,
-    getArticles,
+    getArticlesSortedByTime,
+    getMyArticlesSortedByTime,
     deleteArticle,
     updateArticle,
     createComment,
@@ -32,8 +33,11 @@ router.post('/contact_us', contact_us)
 // GET user
 router.get('/getUser', getUser)
 
-// GET all articles
-router.get('/getArticles', getArticles)
+// GET all articles sorted by time
+router.get('/getArticlesSortedByTime', getArticlesSortedByTime)
+
+//GET my articles sorted by time
+router.get('/getMyArticlesSortedByTime', getMyArticlesSortedByTime)
 
 // GET all comments
 router.get('/getComments', getComments)

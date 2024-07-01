@@ -5,23 +5,61 @@ const mongoose = require('mongoose')
 const { extractAuthToken, decodeToken } = require('./userController');
 
 
-// GET all articles
+// GET all comments
 const getComments = async (req, res) => {
-    const allComments = await Comment.find({}).sort({createdAt : -1})
+  const token = extractAuthToken(req);
+  // If no token found, respond with 403
+  if (!token) {
+      return res.sendStatus(403);
+  }
+  const allComments = await Comment.find({}).sort({createdAt : -1})
 
-    res.status(200).json(allComments)
+  res.status(200).json(allComments)
 }
 
-// GET all comments
-const getArticles = async (req, res) => {
+// GET all articles
+const getArticlesSortedByTime = async (req, res) => {
+  const token = extractAuthToken(req);
+  // If no token found, respond with 403
+  if (!token) {
+      return res.sendStatus(403);
+  }
   const articles = await Article.find({}).sort({createdAt : -1})
 
   res.status(200).json(articles)
 }
 
+//GET my articles
+const getMyArticlesSortedByTime = async (req,res) => {
+  const token = extractAuthToken(req);
+
+  // If no token found, respond with 403
+  if (!token) {
+      return res.sendStatus(403);
+  }
+
+  // Decode the token to get the user ID
+  const userId = decodeToken(token);
+  if (!userId) {
+      return res.sendStatus(403);
+  }
+
+  try{
+    const user = await User.findById(userId);
+    const username = user.username;
+
+    // Find articles where author matches the username
+    const articles = await Article.find({ author: username }).sort({ createdAt: -1 });
+
+    res.status(200).json(articles);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+};
 
 // GET a single article
 const getArticle = async (req, res) => {
+    //article id
     const { id } = req.params
 
     // Check if ID is valid
@@ -230,7 +268,8 @@ const dislikeArticle = async (req, res) => {
 module.exports = {
     createArticle,
     getArticle,
-    getArticles,
+    getArticlesSortedByTime,
+    getMyArticlesSortedByTime,
     deleteArticle,
     updateArticle,
     createComment,
