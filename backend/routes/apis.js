@@ -20,6 +20,18 @@ const {
 
 const router = express.Router()
 
+// POST user
+router.post('/createUser', createUser)
+
+// POST sign in
+router.post('/signIn', signIn)
+
+// POST contact us
+router.post('/contact_us', contact_us)
+
+// GET user
+router.get('/getUser', getUser)
+
 // GET all articles
 router.get('/', getArticles)
 
@@ -35,11 +47,11 @@ router.post('/', createArticle)
 // POST a comment
 router.post('/:id/comments', createComment)
 
-//Like an article
-router.post('/:id/like', likeArticle);
+// Like an article
+router.post('/:id/like', likeArticle)
 
 // Dislike an article
-router.post('/:id/dislike', dislikeArticle);
+router.post('/:id/dislike', dislikeArticle)
 
 // DELETE an article
 router.delete('/:id', deleteArticle)
@@ -49,17 +61,6 @@ router.delete('/:id/comments', deleteComment)
 
 // UPDATE an article
 router.patch('/:id', updateArticle)
-
-//Post User
-router.post('/createUser', createUser)
-
-//Post sign in
-router.post('/signIn', signIn)
-
-//Post contact_us
-router.post('/contact_us',contact_us)
-
-router.post('/getUser',getUser)
 
 
 module.exports = router
