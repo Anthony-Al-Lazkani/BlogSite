@@ -21,14 +21,23 @@ const articleSchema = new mongoose.Schema({
         required : true
     },
 
-    comments : [{
-        type: mongoose.Schema.Types.ObjectId,
+    comments : {
+        type: mongoose.Schema.Types.Array,
         ref: 'Comment'
-    
-    }]
+
+    },
+
+    likes: {
+        type: Number,
+        default: 0
+      },
+      
+      dislikes: {
+        type: Number,
+        default: 0
+      }
     
 }, { timestamps : true })
 
 
 module.exports = mongoose.model('Article', articleSchema)
-

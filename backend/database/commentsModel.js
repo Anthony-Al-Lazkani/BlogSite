@@ -7,6 +7,11 @@ const commentSchema = new mongoose.Schema({
 
     comment: {
         type : String
+    },
+
+    articleId: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'Article'
     }
 
 }, { timestamps : true })
