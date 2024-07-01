@@ -106,7 +106,8 @@ const deleteComment = async (req, res) => {
 
   try {
     // Find the comment and delete it from the Comment collection
-    const deletedComment = await Comment.findById(id);
+    const deletedComment = await Comment.findByIdAndDelete(id);
+    const artID = deletedComment.articleId
 
     if (!deletedComment) {
       return res.status(404).json({ error: "Comment not found" });
@@ -114,8 +115,8 @@ const deleteComment = async (req, res) => {
 
     // Find the article containing the comment and update the comments array
     const updatedArticle = await Article.findByIdAndUpdate(
-      deletedComment.articleId,
-      { $pull: { comments: { _id: id } } },
+      artID,
+      { $pull: { comments: { articleId: artID } } },
       { new: true }
     );
 
