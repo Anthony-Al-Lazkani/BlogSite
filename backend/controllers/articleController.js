@@ -216,6 +216,9 @@ const deleteComment = async (req, res) => {
     return res.sendStatus(403);
   }
 
+  const user = await User.findById(userId);
+  const username = user.username;
+
   try {
     // Find the comment by ID
     const comment = await Comment.findById(id);
@@ -224,7 +227,7 @@ const deleteComment = async (req, res) => {
     }
 
     // Check if the logged-in user is the author of the comment
-    if (comment.author !== userId) {
+    if (comment.author !== username) {
       return res.status(403).json({ error: 'You are not authorized to delete this comment' });
     }
 
