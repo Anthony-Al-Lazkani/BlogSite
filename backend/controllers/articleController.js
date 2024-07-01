@@ -57,6 +57,37 @@ const getMyArticlesSortedByTime = async (req,res) => {
   }
 };
 
+//GET articles sorted by likes
+
+//GET my friends articles
+const getMyFriendsArticles = async (req,res) => {
+  const token = extractAuthToken(req);
+
+  // If no token found, respond with 403
+  if (!token) {
+      return res.sendStatus(403);
+  }
+
+  // Decode the token to get the user ID
+  const userId = decodeToken(token);
+  if (!userId) {
+      return res.sendStatus(403);
+  }
+
+  try{
+    //get friends list
+    const user = await User.findById(userId);
+    const friendsList = user.friends;
+
+    // Get all articles whose author is in the friends list
+    const articles = await Article.find({ author: { $in: friendsList } });
+
+    res.status(200).json(articles);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+};
+
 // GET a single article
 const getArticle = async (req, res) => {
     //article id
@@ -423,5 +454,6 @@ module.exports = {
     deleteComment,
     getComments,
     likeArticle,
-    dislikeArticle
+    dislikeArticle,
+    getMyFriendsArticles
 }

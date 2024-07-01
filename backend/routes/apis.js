@@ -10,7 +10,8 @@ const {
     deleteComment,
     getComments,
     likeArticle,
-    dislikeArticle
+    dislikeArticle,
+    getMyFriendsArticles
 } = require('../controllers/articleController')
 const {
     signIn,
@@ -42,6 +43,9 @@ router.get('/getArticlesSortedByTime', getArticlesSortedByTime)
 
 //GET my articles sorted by time
 router.get('/getMyArticlesSortedByTime', getMyArticlesSortedByTime)
+
+//GET all my friends articles
+router.get('/getMyFriendsArticles', getMyFriendsArticles)
 
 // GET all comments
 router.get('/getComments', getComments)
