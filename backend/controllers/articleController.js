@@ -257,23 +257,58 @@ const deleteComment = async (req, res) => {
 
 // UPDATE an article
 const updateArticle = async (req, res) => {
-    const { id } = req.params
+  const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error : "Sorry ! Article Unavailable"})
-    }
+  const token = extractAuthToken(req);
 
-    const article = await Article.findByIdAndUpdate({_id : id}, {
-        ...req.body
+  // If no token found, respond with 403
+  if (!token) {
+      return res.sendStatus(403);
+  }
 
-    })
+  // Decode the token to get the user ID
+  const userId = decodeToken(token);
+  if (!userId) {
+      return res.sendStatus(403);
+  }
 
-    if (!article) {
-        return res.status(400).json({error : "Sorry ! Article Unavailable"})
-    }
+  try {
+      // Find the user
+      const user = await User.findById(userId);
+      const username = user.username;
 
-    res.status(200).json(article)
-}
+      // Check if article ID is valid
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+          return res.status(404).json({ error: "Article not found" });
+      }
+
+      // Find the article by ID
+      const article = await Article.findById(id);
+
+      // If article not found, return error
+      if (!article) {
+          return res.status(404).json({ error: "Article not found" });
+      }
+
+      // Check if the logged-in user is the author of the article
+      if (article.author !== username) {
+          return res.status(403).json({ error: "You are not authorized to update this article" });
+      }
+
+      // Update the article with the request body
+      const updatedArticle = await Article.findByIdAndUpdate(
+          id,
+          { ...req.body },
+          { new: true }
+      );
+
+      // Return the updated article
+      res.status(200).json(updatedArticle);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+};
+
 
 // Like an article
 const likeArticle = async (req, res) => {
