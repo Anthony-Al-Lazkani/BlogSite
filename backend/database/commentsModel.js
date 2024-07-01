@@ -14,6 +14,10 @@ const commentSchema = new mongoose.Schema({
         ref: 'Article'
     }
 
+    // user: {
+    //     type : 
+    // }
+
 }, { timestamps : true })
 
 module.exports = mongoose.model('Comment', commentSchema)

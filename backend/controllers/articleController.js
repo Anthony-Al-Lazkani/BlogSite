@@ -1,6 +1,8 @@
 const Article = require('../database/articlesModel')
+const User = require('../database/usersModel')
 const Comment = require('../database/commentsModel')
 const mongoose = require('mongoose')
+const { extractAuthToken, decodeToken } = require('./userController');
 
 
 // GET all articles
@@ -39,10 +41,27 @@ const getArticle = async (req, res) => {
 
 // CREATE a new article
 const createArticle = async (req, res) => {
-    const {title, author, content, genre, comments} = req.body
+    const {title, content, genre} = req.body
+
+    const token = extractAuthToken(req);
+
+    // If no token found, respond with 403
+    if (!token) {
+        return res.sendStatus(403);
+    }
+
+    // Decode the token to get the user ID
+    const userId = decodeToken(token);
+    if (!userId) {
+        return res.sendStatus(403);
+    }
+
+    const user = await User.findById(userId);
+
+    const author = user.username
 
     try{
-        const article = await Article.create({title, author, content, genre, comments})
+        const article = await Article.create({title, author, content, genre})
         res.status(200).json(article)
     }catch(error){
         res.status(400).json({error : error.message})
@@ -51,7 +70,25 @@ const createArticle = async (req, res) => {
 
 // CREATE a new comment
 const createComment = async (req, res) => {
-  const { author, comment } = req.body;
+  const { comment } = req.body;
+
+  const token = extractAuthToken(req);
+
+  // If no token found, respond with 403
+  if (!token) {
+      return res.sendStatus(403);
+  }
+
+  // Decode the token to get the user ID
+  const userId = decodeToken(token);
+  if (!userId) {
+      return res.sendStatus(403);
+  }
+
+  const user = await User.findById(userId);
+
+  const author = user.username
+
   const articleId = req.params.id; // Assuming you pass articleId in the URL params
 
   try {
