@@ -1,6 +1,6 @@
 * {
     margin: 0;
-    padding: 50px;
+    padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
@@ -133,33 +133,57 @@ p {
 .Front-Page-Content {
     width: 100%;
     position: absolute;
-    top: 50%;
+    top: 60%;
     transform: translateY(-50%);
     text-align: center;
     color: #000;
+
 }
- 
+
 .Front-Page-Content h1 {
     font-size: 80px;
     margin-top: 80px;
     font-weight: 1000;
 }
- 
-.Front-Page-Content p {
+
+/* .Front-Page-Content p {
     margin: 20px auto;
     font-weight: 600;
     letter-spacing: .5px;
     line-height: 25px;
     color: white;
     font-size: 1em;
+    height: 50px;
+    width: 80%;
+    border: 1px solid lightblue; 
+    border-radius: 120px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: transparent;
+    backdrop-filter: blur(40px);
+    font-weight: 700;    
+    
+} */
+
+ 
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: flex-end; /* Align buttons to the right */
+    margin-left: calc(75%);
+    margin-top: 40px; 
+    width: fit-content; /* Ensure the container takes only necessary width */
 }
- 
- 
+
 .Front-Page-Content button {
     width: 200px;
-    padding: 15px 0;
+    height: 50px; /* Added height to ensure vertical centering */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
     text-align: center;
-    margin: 20px 10px;
+    margin: 10px 0; /* Updated margin to stack buttons vertically */
     border-radius: 25px;
     text-shadow: 1px 1px #000;
     font-weight: bold;
@@ -173,6 +197,7 @@ p {
     position: relative;
     overflow: hidden;
 }
+
  
 .Front-Page-Content button:hover span {
     width: 100%;
@@ -181,6 +206,7 @@ p {
 .Front-Page-Content button:hover {
     border: none;
 }
+
  
 .Front-Page-Content span {
     background: #3090C7;

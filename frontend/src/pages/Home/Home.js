@@ -7,11 +7,17 @@ import Photo1 from '../../Images/hi3.png';
 
 function Home() {
     const history = useNavigate();
-    const goToaboutus = () => {
-        history('/aboutus');
+    const goToBlogs = () => {
+        history('/Blogs');
     };
     const goToLogin = () => {
-        history('/login');
+        history('/Login');
+    };
+    const goToReviews = () => {
+        history('/reviews');
+    };
+    const goToContactUs = () => {
+        history('/Contact');
     };
 
     return (
@@ -23,12 +29,15 @@ function Home() {
                 </div>
                 <div className="Front-Page-Content">
                     <h1 className="Font-Page-Header-Text">Your Story. Your Community. Your Voice.</h1>
-                    <p>Join a vibrant community where your stories come to life. Explore diverse perspectives, engage in meaningful discussions, and share your voice with the world.
-                    </p>
-                    <div>
-                        <button type="button" onClick={goToaboutus}><span></span>LEARN MORE</button>
-                        <button type="button" onClick={goToLogin}><span></span>SUBSCRIBE</button>
-                    </div>
+                    {/* <p>Join a vibrant community where your stories come to life. Explore diverse perspectives, engage in meaningful discussions, and share your voice with the world.
+                    </p> */}
+                    {/* <div className= "button-container">
+                        <button type="button" onClick={goToLogin}><span></span>Login</button>
+                        <button type="button" onClick={goToBlogs}><span></span>Add A Blog</button>
+                        <button type="button" onClick={goToReviews}><span></span>Look At Review</button>
+                        <button type="button" onClick={goToContactUs}><span></span>Contact Us</button>
+
+                    </div> */}
                 </div>
             </section>
 
