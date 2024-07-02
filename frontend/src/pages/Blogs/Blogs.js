@@ -37,7 +37,8 @@ function Blogs() {
     
       const fetchArticles = async () => {
         try {
-             // Assuming you store your token in localStorage
+          const token = localStorage.getItem('authToken'); // Assuming you store your token in localStorage
+          console.log(token)
           const response = await axios.get('http://localhost:4000/api/articles/getArticlesSortedByTime', {
             headers: {
               Authorization: `Bearer ${token}`
@@ -53,7 +54,7 @@ function Blogs() {
           }
         }
       };
-
+      
     return(
             <div className="Home-Page">
 
@@ -87,8 +88,6 @@ function Blogs() {
 
                     </div>
                 </div>
-
-                
             </div>
     )
 }
