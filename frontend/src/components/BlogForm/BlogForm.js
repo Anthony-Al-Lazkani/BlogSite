@@ -4,6 +4,7 @@ import './BlogForm.css'
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike  } from "react-icons/ai";
 import { FaComment, FaRegComment } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import axios from "axios";
 
 function BlogForm({ article }) {
     const DateFetched = article.updatedAt
@@ -48,6 +49,10 @@ function BlogForm({ article }) {
         }
       };
 
+    //   const handleDeleteClick =() => {
+    //     const response = await axios.delete('http://localhost:4000/api/articles/getArticlesSortedByTime')
+    //   }
+
 
     return(
         <div className="Blog">
@@ -87,6 +92,8 @@ function BlogForm({ article }) {
                     )}
                 </div>
             </div>
+
+            {/* <span onClick={handleDeleteClick}>Delete</span> */}
         </div>
     )
 }

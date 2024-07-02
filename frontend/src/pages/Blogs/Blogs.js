@@ -13,12 +13,15 @@ import axios from "axios";
 
 
 
+
 function Blogs() {
 
     const [articles, setArticles] = useState(null)
     const [form, setForm] = useState(false)
     const [icon, setIcon] = useState(false)
     const [error, setError] = useState('');
+    let token =  localStorage.getItem('authToken');
+    console.log(token)
 
 
     const toggleForm = () => {
@@ -34,8 +37,7 @@ function Blogs() {
     
       const fetchArticles = async () => {
         try {
-          const token = localStorage.getItem('authToken');
-          console.log(token) // Assuming you store your token in localStorage
+             // Assuming you store your token in localStorage
           const response = await axios.get('http://localhost:4000/api/articles/getArticlesSortedByTime', {
             headers: {
               Authorization: `Bearer ${token}`
