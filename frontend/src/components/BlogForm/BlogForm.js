@@ -104,6 +104,7 @@ function BlogForm({ article }) {
                     ) : (
                         <AiOutlineLike onClick={handleLike} />
                     )}
+                    <span>{article.likes}</span> {/* Display number of likes */}
                 </div>
                 <div className="Icons">
                     {dislike ? (
@@ -111,6 +112,7 @@ function BlogForm({ article }) {
                     ) : (
                         <AiOutlineDislike onClick={handleDislike} />
                     )}
+                    <span>{article.dislikes}</span> {/* Display number of dislikes */}
                 </div>
                 <div className="Icons">
                     {comment ? (
