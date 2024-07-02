@@ -28,7 +28,7 @@ function Blogs() {
 
     useEffect(()=>{
         const fetchArticle = async () => {
-            const response = await fetch('/api/articles')
+            const response = await fetch('/api/articles/getArticlesSortedByTime')
             const json = await response.json()
 
             if (response.ok) {
