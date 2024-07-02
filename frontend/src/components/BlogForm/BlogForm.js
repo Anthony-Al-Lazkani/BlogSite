@@ -4,9 +4,10 @@ import './BlogForm.css'
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike  } from "react-icons/ai";
 import { FaComment, FaRegComment } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
-import axios from "axios";
+import { useArticlesContext } from "../../hooks/useArticlesContext";
 
 function BlogForm({ article }) {
+    const { dispatch } = useArticlesContext()
     const DateFetched = article.updatedAt
     const date = new Date(DateFetched)
     const fullDate = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear()
@@ -49,9 +50,20 @@ function BlogForm({ article }) {
         }
       };
 
-    //   const handleDeleteClick =() => {
-    //     const response = await axios.delete('http://localhost:4000/api/articles/getArticlesSortedByTime')
-    //   }
+      const handleDeleteClick = async () => {
+        const response = await fetch('/api/articles/'+article._id +'/deleteArticle', {
+            method: 'DELETE'
+        })
+        const json = await response.json()
+
+        if (response.ok) {
+            dispatch({type: 'DELETE_ARTICLE', payload: json})
+        }
+      }
+
+
+
+
 
 
     return(
@@ -92,8 +104,8 @@ function BlogForm({ article }) {
                     )}
                 </div>
             </div>
+            {/* <button  className="DeleteBtn" onClick={handleDeleteClick}>DELETE</button> */}
 
-            {/* <span onClick={handleDeleteClick}>Delete</span> */}
         </div>
     )
 }

@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import React from 'react'
 import './SubmissionForm.css'
+import { useArticlesContext } from '../../hooks/useArticlesContext'
 
 const SubmissionForm = () => {
+  const { dispatch } = useArticlesContext()
+  const token = localStorage.getItem("authToken")
+
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [content, setContent] = useState('')
@@ -14,11 +18,13 @@ const SubmissionForm = () => {
 
     const article = {title, author, content, genre}
     
-    const response = await fetch('/api/articles', {
+    const response = await fetch('/api/articles/createArticle', {
       method: 'POST',
       body: JSON.stringify(article),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+         Authorization: `Bearer ${token}`
+
       }
     })
     const json = await response.json()
@@ -33,6 +39,7 @@ const SubmissionForm = () => {
       setContent('')
       setGenre('')
       console.log('new article added:', json)
+      dispatch({type: 'CREATE_WORKOUT', payload:json})
     }
 
   }

@@ -193,21 +193,21 @@ const createComment = async (req, res) => {
 const deleteArticle = async (req, res) => {
   //article id
   const { id } = req.params
-  const token = extractAuthToken(req);
+  // const token = extractAuthToken(req);
 
-  // If no token found, respond with 403
-  if (!token) {
-      return res.sendStatus(403);
-  }
+  // // If no token found, respond with 403
+  // if (!token) {
+  //     return res.sendStatus(403);
+  // }
 
-  // Decode the token to get the user ID
-  const userId = decodeToken(token);
-  if (!userId) {
-      return res.sendStatus(403);
-  }
+  // // Decode the token to get the user ID
+  // const userId = decodeToken(token);
+  // if (!userId) {
+  //     return res.sendStatus(403);
+  // }
 
-  const user = await User.findById(userId);
-  const username = user.username;
+  // const user = await User.findById(userId);
+  // const username = user.username;
 
 
   // Check if ID is valid 
@@ -223,10 +223,10 @@ const deleteArticle = async (req, res) => {
       return res.status(404).json({ error: 'Article not found' });
   }
 
-  // Check if the logged-in user is the author of the article
-  if (article.author !== username) {
-      return res.status(403).json({ error: 'You are not authorized to delete this article' });
-  }
+  // // Check if the logged-in user is the author of the article
+  // if (article.author !== username) {
+  //     return res.status(403).json({ error: 'You are not authorized to delete this article' });
+  // }
 
   try {
       // Delete the article
