@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;700&display=swap");
+* {
+  font-family: "Titillium Web", sans-serif;
+}
+
+  .Blog {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, .5); */
+    padding: 20px;
+    /* margin-bottom: 20px; */
+    border-bottom: 1px solid lightblue;
+    border-left: none;
+    border-right: none;
+    transition: .6s;
+    margin-bottom: 10px;
+  }
+
+  .Blog:hover {
+    background-color: #f0f8ff;
+    border-radius: 20px; ;
+  }
+
+  .Username {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .Username p {
+    color: lightskyblue;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1em;
+    
+  }
+
+  .Title {
+    text-align: center;
+  }
+
+  .Title p {
+    color: darkslategray;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+
+  .Content p {
+    color: #808080;
+    font-style: italic;
+  }
+
+  .Buttons {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .Icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid lightblue;
+  }

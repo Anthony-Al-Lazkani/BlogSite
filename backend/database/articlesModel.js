@@ -8,12 +8,12 @@ const articleSchema = new mongoose.Schema({
 
     author : {
         type : String,
-        required : true
+        required : false
     },
 
     content : {
         type : String,
-        required : true
+        required : true 
     },
 
     genre : {
