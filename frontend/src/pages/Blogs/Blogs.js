@@ -29,6 +29,7 @@ function Blogs() {
         setForm(!form);
         setIcon(!icon);
     }
+  }, []);
 
 
 
@@ -82,26 +83,10 @@ function Blogs() {
     return(
             <div className="Home-Page">
 
-                <div className="First-Part">
-                    <Sidebar />
-                </div>
-                <div className="Second-Part">
-                    <div className="articles">
-                        {articles && articles.map((article) => (
-                            <BlogForm key={article._id} article={article} />
-                        ))}
-                    </div>
-                </div>
-                <div className="Third-Part">
-                    <div className="PlusIconDiv">
-                        <div className="PlusIcon" onClick={toggleForm}>
-                            {icon ? (
-                                <FaMinus />
-                            ) : (
-                               <FaPlus /> 
-                            )}
-                        </div>
-                    </div>
+  const toggleForm = () => {
+    setIcon(!icon);
+    setForm(!form);
+  };
 
                     <div className="NewArticleForm">
                         {form ? (
@@ -125,5 +110,12 @@ function Blogs() {
     )
 }
 
+        <div className="NewArticleForm">
+          {form ? <SubmissionForm /> : <div></div>}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Blogs
+export default Blogs;
