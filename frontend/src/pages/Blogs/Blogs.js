@@ -13,80 +13,71 @@ import axios from "axios";
 
 
 
-function Blogs() {
+const Blogs = () => {
+  const [articles, setArticles] = useState([]);
+  const [error, setError] = useState('');
+  const [token, setToken] = useState('');
+  const [icon, setIcon] = useState(false);
+  const [form, setForm] = useState(false);
 
-    const [articles, setArticles] = useState(null)
-    const [form, setForm] = useState(false)
-    const [icon, setIcon] = useState(false)
-    const [error, setError] = useState('');
-
-
-    const toggleForm = () => {
-        setForm(!form);
-        setIcon(!icon);
+  useEffect(() => {
+    const storedToken = localStorage.getItem('authToken');
+    if (storedToken) {
+      setToken(storedToken);
+      fetchArticles(storedToken);
+    } else {
+      setError('No authentication token found. Please log in.');
     }
+  }, []);
 
-
-
-    useEffect(() => {
-        fetchArticles();
-      }, []);
-    
-      const fetchArticles = async () => {
-        try {
-          const token = localStorage.getItem('authToken'); // Assuming you store your token in localStorage
-          console.log(token)
-          const response = await axios.get('http://localhost:4000/api/articles/getArticlesSortedByTime', {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-          setArticles(response.data);
-        } catch (err) {
-          console.error("Error fetching articles:", err);
-          if (err.response && err.response.status === 403) {
-            setError('Access denied. You do not have permission to view these articles.');
-          } else {
-            setError('An error occurred while fetching articles.');
-          }
+  const fetchArticles = async (token) => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/articles/getArticlesSortedByTime', {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      };
-      
-    return(
-            <div className="Home-Page">
+      });
+      setArticles(response.data);
+    } catch (err) {
+      console.error("Error fetching articles:", err);
+      if (err.response && err.response.status === 403) {
+        setError('Access denied. You do not have permission to view these articles.');
+      } else {
+        setError('An error occurred while fetching articles.');
+      }
+    }
+  };
 
-                <div className="First-Part">
-                    <Sidebar />
-                </div>
-                <div className="Second-Part">
-                    <div className="articles">
-                        {articles && articles.map((article) => (
-                            <BlogForm key={article._id} article={article} />
-                        ))}
-                    </div>
-                </div>
-                <div className="Third-Part">
-                    <div className="PlusIconDiv">
-                        <div className="PlusIcon" onClick={toggleForm}>
-                            {icon ? (
-                                <FaMinus />
-                            ) : (
-                               <FaPlus /> 
-                            )}
-                        </div>
-                    </div>
+  const toggleForm = () => {
+    setIcon(!icon);
+    setForm(!form);
+  };
 
-                    <div className="NewArticleForm">
-                        {form ? (
-                                  <SubmissionForm />
-                                ) : (
-                                    <div></div>
-                        )}
-                    </div>
-                </div>
-            </div>
-    )
-}
+  return (
+    <div className="Home-Page">
+      <div className="First-Part">
+        <Sidebar />
+      </div>
+      <div className="Second-Part">
+        <div className="articles">
+          {articles && articles.map((article) => (
+            <BlogForm key={article._id} article={article} />
+          ))}
+        </div>
+      </div>
+      <div className="Third-Part">
+        <div className="PlusIconDiv">
+          <div className="PlusIcon" onClick={toggleForm}>
+            {icon ? <FaMinus /> : <FaPlus />}
+          </div>
+        </div>
 
+        <div className="NewArticleForm">
+          {form ? <SubmissionForm /> : <div></div>}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Blogs
+export default Blogs;
