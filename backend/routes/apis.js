@@ -10,13 +10,20 @@ const {
     deleteComment,
     getComments,
     likeArticle,
-    dislikeArticle
+    dislikeArticle,
+    getMyFriendsArticles,
+    getArticlesSortedByLikes,
+    getArticlesSortedByGenre
 } = require('../controllers/articleController')
 const {
     signIn,
     createUser,
     contact_us,
-    getUser
+    getUser,
+    addFriend,
+    acceptFriend,
+    rejectFriend,
+    removeFriend
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -39,6 +46,15 @@ router.get('/getArticlesSortedByTime', getArticlesSortedByTime)
 //GET my articles sorted by time
 router.get('/getMyArticlesSortedByTime', getMyArticlesSortedByTime)
 
+//GET all my friends articles
+router.get('/getMyFriendsArticles', getMyFriendsArticles)
+
+//GET articles sorted by likes
+router.get('/getArticlesSortedByLikes', getArticlesSortedByLikes)
+
+//GET articles sorted by genre
+router.get('/getArticlesSortedByGenre', getArticlesSortedByGenre)
+
 // GET all comments
 router.get('/getComments', getComments)
 
@@ -47,6 +63,18 @@ router.post('/createArticle', createArticle)
 
 // POST a comment
 router.post('/:id/createComment', createComment)
+
+//POST accept a friend request
+router.post('/:id/acceptFriend', acceptFriend)
+
+//DELETE reject a friend request
+router.post('/:id/rejectFriend', rejectFriend)
+
+//DELETE remove a friend
+router.post('/:id/removeFriend', removeFriend)
+
+// POST send a friend request
+router.post('/:id/addFriend', addFriend)
 
 // Like an article
 router.post('/:id/likeArticle', likeArticle)

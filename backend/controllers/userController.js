@@ -171,11 +171,215 @@ const getUser = async (req, res) => {
 };
 
 
+
+const addFriend = async (req, res) => {
+    const { id } = req.params;
+  
+    const token = extractAuthToken(req);
+  
+    // If no token found, respond with 403
+    if (!token) {
+      return res.sendStatus(403);
+    }
+  
+    // Decode the token to get the user ID
+    const userId = decodeToken(token);
+    if (!userId) {
+      return res.sendStatus(403);
+    }
+  
+    try {
+      // Find the user and friend
+      const user = await User.findById(userId);
+      const friend = await User.findById(id);
+  
+      if (!user || !friend) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      // Check if they are already friends
+      if (user.friends.includes(friend.username)) {
+        return res.status(400).json({ error: "Already friends" });
+      }
+      
+      // Check if friend request already sent
+      if (user.pending_friends.includes(friend.username)) {
+        return res.status(400).json({ error: "friend request already sent" });
+      }
+
+      // Add each other as friends
+      friend.pending_friends.push(user.username);
+      
+      // Save the updates to the database
+      await friend.save();
+  
+      return res.status(201).json({ message: "Friend request sent successfully" });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+};
+
+
+
+const acceptFriend = async (req, res) => {
+    const { id } = req.params;
+  
+    const token = extractAuthToken(req);
+  
+    // If no token found, respond with 403
+    if (!token) {
+      return res.sendStatus(403);
+    }
+  
+    // Decode the token to get the user ID
+    const userId = decodeToken(token);
+    if (!userId) {
+      return res.sendStatus(403);
+    }
+  
+    try {
+        // Find the user and friend
+        const user = await User.findById(userId);
+        const friend = await User.findById(id);
+
+        if (!user || !friend) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Check if they are already friends
+        if (user.friends.includes(friend.username)) {
+            return res.status(400).json({ error: "Already friends" });
+        }
+
+        // remove from pending
+        const pendingIndex = friend.pending_friends.indexOf(user.username);
+        if (pendingIndex > -1) {
+            friend.pending_friends.splice(pendingIndex, 1);
+        }
+
+        user.friends.push(friend.username);
+        friend.friends.push(user.username);
+
+        // Save the updates to the database
+        await user.save();
+        await friend.save();
+
+        return res.status(201).json({ message: "Friend added successfully" });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+};
+
+
+const rejectFriend = async (req, res) => {
+    const { id } = req.params;
+  
+    const token = extractAuthToken(req);
+  
+    // If no token found, respond with 403
+    if (!token) {
+      return res.sendStatus(403);
+    }
+  
+    // Decode the token to get the user ID
+    const userId = decodeToken(token);
+    if (!userId) {
+      return res.sendStatus(403);
+    }
+  
+    try {
+        // Find the user and friend
+        const user = await User.findById(userId);
+        const friend = await User.findById(id);
+
+        if (!user || !friend) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Check if they are already friends
+        if (user.friends.includes(friend.username)) {
+            return res.status(400).json({ error: "Already friends" });
+        }
+
+        // remove from pending
+        const pendingIndex = friend.pending_friends.indexOf(user.username);
+        if (pendingIndex > -1) {
+            friend.pending_friends.splice(pendingIndex, 1);
+        }
+
+        // Save the updates to the database
+        await user.save();
+        await friend.save();
+
+        return res.status(201).json({ message: "Friend request rejected successfully" });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+}; 
+
+
+const removeFriend = async (req, res) => {
+    const { id } = req.params;
+  
+    const token = extractAuthToken(req);
+  
+    // If no token found, respond with 403
+    if (!token) {
+      return res.sendStatus(403);
+    }
+  
+    // Decode the token to get the user ID
+    const userId = decodeToken(token);
+    if (!userId) {
+      return res.sendStatus(403);
+    }
+  
+    try {
+        // Find the user and friend
+        const user = await User.findById(userId);
+        const friend = await User.findById(id);
+
+        if (!user || !friend) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Check if they arent friends
+        if (!user.friends.includes(friend.username)) {
+            return res.status(400).json({ error: "You are not friends" });
+        }
+
+        const Index1 = friend.friends.indexOf(user.username);
+        if (Index1 > -1) {
+            friend.friends.splice(Index1, 1);
+        }
+
+        const Index2 = user.friends.indexOf(friend.username);
+        if (Index2 > -1) {
+            user.friends.splice(Index2, 1);
+        }
+
+        // Save the updates to the database
+        await user.save();
+        await friend.save();
+
+        return res.status(201).json({ message: "Friend removed successfully" });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+};
+
+
+  
+
 module.exports = {
     createUser,
     signIn,
     contact_us,
     getUser,
     extractAuthToken, 
-    decodeToken
+    decodeToken,
+    addFriend,
+    acceptFriend,
+    rejectFriend,
+    removeFriend
 }
