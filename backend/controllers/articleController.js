@@ -13,6 +13,7 @@ const getComments = async (req, res) => {
 
 // GET all articles doesnt require log in 
 const getArticlesSortedByTime = async (req, res) => {
+  const token = extractAuthToken(req);
   const articles = await Article.find({}).sort({createdAt : -1})
   res.status(200).json(articles)
 }
