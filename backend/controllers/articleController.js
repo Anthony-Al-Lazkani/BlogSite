@@ -7,12 +7,14 @@ const { extractAuthToken, decodeToken } = require('./userController');
 
 // GET all comments doesnt require log in 
 const getComments = async (req, res) => {
+  const token = extractAuthToken(req);
   const allComments = await Comment.find({}).sort({createdAt : -1})
   res.status(200).json(allComments)
 }
 
 // GET all articles doesnt require log in 
 const getArticlesSortedByTime = async (req, res) => {
+  const token = extractAuthToken(req);
   const articles = await Article.find({}).sort({createdAt : -1})
   res.status(200).json(articles)
 }
@@ -47,12 +49,14 @@ const getMyArticlesSortedByTime = async (req,res) => {
 
 //GET articles sorted by likes doesnt require log in 
 const getArticlesSortedByLikes = async (req, res) => {
+  const token = extractAuthToken(req);
   const articles = await Article.find().sort({ likes: -1 });
   res.status(200).json(articles)
 }
 
 //GET ARTICLES SORTED ACCORDING TO GENRE doesnt require log in 
 const getArticlesSortedByGenre = async (req, res) => {
+  const token = extractAuthToken(req);
   const {genre} = req.body;
   try {
     // Query articles based on genre
@@ -96,6 +100,7 @@ const getMyFriendsArticles = async (req,res) => {
 
 // GET a single article doesnt require log in 
 const getArticle = async (req, res) => {
+  const token = extractAuthToken(req);
     //article id
     const { id } = req.params
 
