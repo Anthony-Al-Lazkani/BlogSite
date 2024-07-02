@@ -2,7 +2,8 @@ const express = require('express')
 const {
     createArticle,
     getArticle,
-    getArticles,
+    getArticlesSortedByTime,
+    getMyArticlesSortedByTime,
     deleteArticle,
     updateArticle,
     createComment,
@@ -11,43 +12,59 @@ const {
     likeArticle,
     dislikeArticle
 } = require('../controllers/articleController')
-
+const {
+    signIn,
+    createUser,
+    contact_us,
+    getUser
+} = require('../controllers/userController')
 
 const router = express.Router()
 
-// GET all articles
-router.get('/', getArticles)
+// POST user
+router.post('/createUser', createUser)
+
+// POST sign in
+router.post('/signIn', signIn)
+
+// POST contact us
+router.post('/contact_us', contact_us)
+
+// GET user
+router.get('/getUser', getUser)
+
+// GET all articles sorted by time
+router.get('/getArticlesSortedByTime', getArticlesSortedByTime)
+
+//GET my articles sorted by time
+router.get('/getMyArticlesSortedByTime', getMyArticlesSortedByTime)
 
 // GET all comments
-router.get('/comments', getComments)
-
-// GET a single article
-router.get('/:id', getArticle)
+router.get('/getComments', getComments)
 
 // POST an article
-router.post('/', createArticle)
+router.post('/createArticle', createArticle)
 
 // POST a comment
-router.post('/:id/comments', createComment)
+router.post('/:id/createComment', createComment)
 
-//Like an article
-router.post('/:id/like', likeArticle);
+// Like an article
+router.post('/:id/likeArticle', likeArticle)
 
 // Dislike an article
-router.post('/:id/dislike', dislikeArticle);
+router.post('/:id/dislikeArticle', dislikeArticle)
+
+// GET a single article
+router.get('/:id/getArticle', getArticle)
 
 // DELETE an article
-router.delete('/:id', deleteArticle)
+router.delete('/:id/deleteArticle', deleteArticle)
 
 // DELETE a comment
-router.delete('/:id/comments', deleteComment)
+router.delete('/:id/deleteComment', deleteComment)
 
 // UPDATE an article
-router.patch('/:id', updateArticle)
-
-
-
-
+router.patch('/:id/updateArticle', updateArticle)
 
 
 module.exports = router
