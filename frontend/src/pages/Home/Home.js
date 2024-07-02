@@ -3,70 +3,72 @@ import './Home.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Photo1 from '../../Images/hi3.png';
-
+import photo from '../../Images/hi3.png'
 function Home() {
     const history = useNavigate();
-    const goToBlogs = () => {
-        history('/Blogs');
-    };
     const goToLogin = () => {
         history('/Login');
     };
-    const goToReviews = () => {
-        history('/reviews');
-    };
-    const goToContactUs = () => {
-        history('/Contact');
-    };
+
 
     return (
         <>
             <section className="Front-Page">
-                <div className="each-slide-effect">
-                    <div style={{ 'backgroundImage': `url(${Photo1})` }}>
-                    </div>
-                </div>
                 <div className="Front-Page-Content">
-                    <h1 className="Font-Page-Header-Text">Your Story. Your Community. Your Voice.</h1>
-                    {/* <p>Join a vibrant community where your stories come to life. Explore diverse perspectives, engage in meaningful discussions, and share your voice with the world.
-                    </p> */}
-                    {/* <div className= "button-container">
-                        <button type="button" onClick={goToLogin}><span></span>Login</button>
-                        <button type="button" onClick={goToBlogs}><span></span>Add A Blog</button>
-                        <button type="button" onClick={goToReviews}><span></span>Look At Review</button>
-                        <button type="button" onClick={goToContactUs}><span></span>Contact Us</button>
-
-                    </div> */}
-                </div>
-            </section>
-
-            <section className="Services">
-                <h1>Services We Offer</h1>
-                <div className="Row">
-                    <div className="Services-Col">
-                        <h3>Create a blog</h3>
-                        <p>Share your unique perspectives, receive valuable feedback, and engage with like-minded individuals. It's a great way to grow personally and professionally while contributing to a vibrant community of writers.
-                        </p>
+                    <div className="Font-Page-Header-Text">
+                        <h1 >Your Story. Your Community. Your <span>Voice</span></h1>
+                        <h3> Share your voice with the world.</h3>
+                        <p>Welcome to GroupA, the ultimate platform for aspiring writers and avid readers. Here, you can effortlessly create and publish your own blogs, sharing your thoughts, stories, and expertise with a global community. Engage with your audience through comments, fostering meaningful conversations and connections. Whether you're a seasoned writer or just starting out, GroupA provides all the tools you need to make your voice heard and build a community around your content. Start your blogging journey today and be a part of a vibrant and supportive network of storytellers. </p>
+                        <button onClick={goToLogin}>LOGIN</button>
                     </div>
-                    <div className="Services-Col">
-                        <h3>Explore Blogs</h3>
-                        <p>Exploring blogs on our platform lets you discover diverse perspectives and gain new insights. Engage with a wide range of topics, connect with passionate writers, and expand your knowledge. It's a great way to stay informed, inspired, and connected with a vibrant community.
-                        </p>
-                    </div>
-                    <div className="Services-Col">
-                        <h3>Give us your feedback</h3>
-                        <p>Your feedback is valuable to us! Please share your thoughts and suggestions to help us improve our platform and better serve your needs. We appreciate hearing from you and strive to create an exceptional experience for our community.</p>
+                    <div className="Front-Page-Image">
+                        <img src = {photo} alt=""></img>
                     </div>
                 </div>
             </section>
 
-            <section className="cta">
-                <h1>Have questions, suggestions, or feedback? We'd love to hear from you! <br />Feel free to reach out to our team by pressing the button below !</h1>
-                <Link to="/ContactUs"><button>CONTACT US</button></Link>
-            </section>
+            <section className="AboutUs">
+            <div class = "image">
+               <img src="https://cdn.pixabay.com/photo/2017/08/26/23/37/business-2684758__340.png">
+               </img>
+            </div>
+
+            <div class = "content">
+                <h2>About Us</h2>
+                <p>Welcome to GroupA, where creativity meets community. We are passionate about providing a platform where individuals can share their thoughts, experiences, and insights through blogs. Whether you're an avid writer, a curious reader, or someone looking to engage with diverse perspectives, GroupA is here to connect you. 
+                Our mission is to foster a vibrant community of bloggers and readers alike, encouraging meaningful discussions and interactions. With user-friendly tools for creating and sharing content, we empower our users to express themselves freely and authentically.</p>
+
+                <ul class = "links">
+                    <li><a href = "#">work</a></li>
+                    <div class = "vertical-line"></div>
+                    <li><a href = "#">service</a></li>
+                    <div class = "vertical-line"></div>
+                    <li><a href = "#">contact</a></li>
+                </ul>
+                <ul class = "icons">
+                    <li>
+                        <i class = "fa fa-twitter"></i>
+                    </li>
+                    <li>
+                        <i class = "fa fa-facebook"></i>
+                    </li>
+                    <li>
+                        <i class = "fa fa-github"></i>
+                    </li>
+                    <li>
+                        <i class = "fa fa-pinterest"></i>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+            
         </>
     );
 }
 
 export default Home;
+
+
+
+
