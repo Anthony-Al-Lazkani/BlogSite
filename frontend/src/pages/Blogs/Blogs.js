@@ -8,6 +8,7 @@ import { FaHome } from "react-icons/fa";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { FaPlus, FaMinus  } from "react-icons/fa";
 import SubmissionForm from "../../components/SubmissionForm/SubmissionForm";
+import axios from "axios";
 
 
 
@@ -17,6 +18,7 @@ function Blogs() {
     const [articles, setArticles] = useState(null)
     const [form, setForm] = useState(false)
     const [icon, setIcon] = useState(false)
+    const [error, setError] = useState('');
 
 
     const toggleForm = () => {
@@ -26,18 +28,28 @@ function Blogs() {
 
 
 
-    useEffect(()=>{
-        const fetchArticle = async () => {
-            const response = await fetch('/api/articles/getArticlesSortedByTime')
-            const json = await response.json()
-
-            if (response.ok) {
-                setArticles(json)
+    useEffect(() => {
+        fetchArticles();
+      }, []);
+    
+      const fetchArticles = async () => {
+        try {
+          const token = localStorage.getItem('authToken'); // Assuming you store your token in localStorage
+          const response = await axios.get('http://localhost:4000/api/articles/getArticlesSortedByTime', {
+            headers: {
+              Authorization: `Bearer ${token}`
             }
+          });
+          setArticles(response.data);
+        } catch (err) {
+          console.error("Error fetching articles:", err);
+          if (err.response && err.response.status === 403) {
+            setError('Access denied. You do not have permission to view these articles.');
+          } else {
+            setError('An error occurred while fetching articles.');
+          }
         }
-
-        fetchArticle()
-    }, [])
+      };
 
     return(
             <div className="Home-Page">
