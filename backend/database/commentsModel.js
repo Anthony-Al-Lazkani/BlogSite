@@ -14,9 +14,6 @@ const commentSchema = new mongoose.Schema({
         ref: 'Article'
     }
 
-    // user: {
-    //     type : 
-    // }
 
 }, { timestamps : true })
 

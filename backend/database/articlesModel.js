@@ -30,12 +30,22 @@ const articleSchema = new mongoose.Schema({
     likes: {
         type: Number,
         default: 0
-      },
-      
-      dislikes: {
+    },
+
+    dislikes:{
         type: Number,
         default: 0
-      }
+    },
+
+    liked_by: {
+        type: [String], // Array of strings
+        default: []     // Default value is an empty array
+    },
+    
+    disliked_by: {
+        type: [String], // Array of strings
+        default: []     // Default value is an empty array
+    },
     
 }, { timestamps : true })
 
