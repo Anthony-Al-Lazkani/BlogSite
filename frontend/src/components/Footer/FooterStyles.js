@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Box = styled.div`
 	padding: 1% 2.5%;
-	background: #004E95;
+	background: #1F4D80;
 	${'' /* position: sticky; */}
 	bottom: 0;
 	width: 100%;
@@ -27,6 +27,7 @@ export const Column = styled.div`
 	text-align: left;
 	margin-left: 60px;
 	margin-top : 20px;
+	
 `;
 
 export const Row = styled.div`
@@ -36,7 +37,7 @@ export const Row = styled.div`
 		minmax(190px, 1fr)
 	);
 	grid-gap: 20px;
-
+	
 	@media (max-width: 1000px) {
 		grid-template-columns: repeat(
 			auto-fill,
@@ -50,17 +51,19 @@ export const FooterLink = styled.a`
 	margin-bottom: 20px;
 	font-size: 18px;
 	text-decoration: none;
+	
 
 	&:hover {
-		color: #FFDB58;
+		color: #fff;
 		transition: 300ms ease-in;
 		padding-left : 10px;
 		font-weight: bold;
-		text-decoration: underline;
 	}
 `;
 
 export const Heading = styled.p`
+	text-decoration: underline;
+	text-underline-offset: 5px;
 	font-size: 24px;
 	color: #fff;
 	margin-bottom: 25px;
