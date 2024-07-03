@@ -21,6 +21,10 @@ function Login() {
             .then(result => {console.log(result)
                 if(result.data.message === "Sign in successful"){
                     localStorage.setItem('authToken', result.data.token);
+                    localStorage.setItem('username', result.data.user.username)
+                    localStorage.setItem('email', result.data.user.email);
+                    localStorage.setItem('friends', result.data.user.friends);
+                    console.log(localStorage)
                     navigate('/')
                 }
                 else if(result.data.message === "Invalid username or password"){
