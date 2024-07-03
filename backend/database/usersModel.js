@@ -21,13 +21,13 @@ const usersSchema = new mongoose.Schema({
     },
 
     friends : {
-        type: [String],
-        default: []
+        type: mongoose.Schema.Types.Array,
+        ref: 'User'
     },
 
     pending_friends : {
-        type: [String],
-        default: []
+        type: mongoose.Schema.Types.Array,
+        ref: 'User'
     }
 
 }, { timestamps : true })

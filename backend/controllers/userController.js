@@ -219,38 +219,50 @@ const addFriend = async (req, res) => {
     }
   
     try {
-      // Find the user and friend
-      const user = await User.findById(userId);
-      const friend = await User.findById(id);
-  
-      if (!user || !friend) {
-        return res.status(404).json({ error: "User not found" });
-      }
+        // Find the user and friend
+        const user = await User.findById(userId);
+        const friend = await User.findById(id);
+    
+        if (!user || !friend) {
+            return res.status(404).json({ error: "User not found" });
+        }
 
-      if (user.username===friend.username){
-        return res.status(404).json({ error: "You cannot add yourself" });
-      }
-  
-      // Check if they are already friends
-      if (user.friends.includes(friend.username)) {
-        return res.status(400).json({ error: "Already friends" });
-      }
-      
-      // Check if friend request already sent
-      if (friend.pending_friends.includes(user.username)) {
-        return res.status(400).json({ error: "friend request already sent" });
-      }
-
-      // Add to pending
-      friend.pending_friends.push(user.username);
-      
-      // Save the updates to the database
-      await friend.save();
-  
-      return res.status(201).json({ message: "Friend request sent successfully" });
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
+        if (user.username===friend.username){
+            return res.status(404).json({ error: "You cannot add yourself" });
+        }
+        // Check if they are already friends
+        let alreadyFriends = false;
+        for (const friendObj of user.friends) {
+        if (friendObj.username === friend.username) {
+            alreadyFriends = true;
+            break; 
+            }
+        }
+        if (alreadyFriends) {
+            return res.status(400).json({ error: "Already friends" });
+        }
+        
+        // Check if friend request already sent
+        let requestSent = false;
+        for (const pendingFriend of friend.pending_friends) {
+            if (pendingFriend.username === user.username) {
+                requestSent = true;
+                break;
+            }
+        }
+        if (requestSent) {
+            return res.status(400).json({ error: "Friend request already sent" });
+        }
+        // Add to pending
+        friend.pending_friends.push({"username":user.username,"id":userId});
+        
+        // Save the updates to the database
+        await friend.save();
+    
+        return res.status(201).json({ message: "Friend request sent successfully" });
+        } catch (error) {
+        return res.status(500).json({ error: error.message });
+        }
 };
 
 
@@ -281,21 +293,35 @@ const acceptFriend = async (req, res) => {
         }
 
         // Check if they are already friends
-        if (user.friends.includes(friend.username)) {
+        let alreadyFriends = false;
+        for (const friendObj of user.friends) {
+        if (friendObj.username === friend.username) {
+            alreadyFriends = true;
+            break; 
+            }
+        }
+        if (alreadyFriends) {
             return res.status(400).json({ error: "Already friends" });
         }
 
-        // remove from pending
-        const pendingIndex = user.pending_friends.indexOf(friend.username);
-        if (pendingIndex > -1) {
-            user.pending_friends.splice(pendingIndex, 1);
-        }
-        else{
-            return res.status(400).json({ error: "You have not recieved a friend request from this user" });
+        // Find the object in pending_friends array
+        let indexToRemove = -1;
+        for (let i = 0; i < user.pending_friends.length; i++) {
+            if (user.pending_friends[i].username === friend.username) {
+                indexToRemove = i;
+                break;
+            }
         }
 
-        user.friends.push(friend.username);
-        friend.friends.push(user.username);
+        // If found, remove the object
+        if (indexToRemove !== -1) {
+            user.pending_friends.splice(indexToRemove, 1);
+        } else {
+            return res.status(400).json({ error: "You have not received a friend request from this user" });
+        }
+        
+        user.friends.push({"username":friend.username,"id":id});
+        friend.friends.push({"username":user.username,"id":userId});
 
         // Save the updates to the database
         await user.save();
@@ -334,24 +360,38 @@ const rejectFriend = async (req, res) => {
         }
 
         // Check if they are already friends
-        if (user.friends.includes(friend.username)) {
+        let alreadyFriends = false;
+        for (const friendObj of user.friends) {
+        if (friendObj.username === friend.username) {
+            alreadyFriends = true;
+            break; 
+            }
+        }
+        if (alreadyFriends) {
             return res.status(400).json({ error: "Already friends" });
         }
 
-        // remove from pending
-        const pendingIndex = user.pending_friends.indexOf(friend.username);
-        if (pendingIndex > -1) {
+        // Find the index of the username in pending_friends array
+        let pendingIndex = -1;
+        for (let i = 0; i < user.pending_friends.length; i++) {
+            if (user.pending_friends[i].username === friend.username) {
+                pendingIndex = i;
+                break;
+            }
+        }
+
+        // Check if the username was found
+        if (pendingIndex !== -1) {
+            // Remove the username from the array
             user.pending_friends.splice(pendingIndex, 1);
-        }
-        else{
-            return res.status(400).json({ error: "You have not recieved a friend request from this user" });
-        }
-
-        // Save the updates to the database
-        await user.save();
-        await friend.save();
-
-        return res.status(201).json({ message: "Friend request rejected successfully" });
+            // Save the updates to the database
+            await user.save();
+            // Send a success response
+            return res.status(200).json({ message: "Friend request removed successfully" });
+        } else {
+            // If the username was not found, return an error response
+            return res.status(400).json({ error: "You have not received a friend request from this user" });
+        };
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -365,13 +405,13 @@ const removeFriend = async (req, res) => {
   
     // If no token found, respond with 403
     if (!token) {
-      return res.sendStatus(403);
+        return res.sendStatus(403);
     }
   
     // Decode the token to get the user ID
     const userId = decodeToken(token);
     if (!userId) {
-      return res.sendStatus(403);
+        return res.sendStatus(403);
     }
   
     try {
@@ -383,19 +423,31 @@ const removeFriend = async (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
 
-        // Check if they arent friends
-        if (!user.friends.includes(friend.username)) {
+        // Check if they are friends
+        let isFriend1 = false;
+        let isFriend2 = false;
+
+        // Loop through user's friends to find friend
+        for (let i = 0; i < user.friends.length; i++) {
+            if (user.friends[i].username === friend.username) {
+                user.friends.splice(i, 1);
+                isFriend1 = true;
+                break;
+            }
+        }
+
+        // Loop through friend's friends to find user
+        for (let j = 0; j < friend.friends.length; j++) {
+            if (friend.friends[j].username === user.username) {
+                friend.friends.splice(j, 1);
+                isFriend2 = true;
+                break;
+            }
+        }
+
+        // If they are not friends
+        if (!isFriend1 || !isFriend2) {
             return res.status(400).json({ error: "You are not friends" });
-        }
-
-        const Index1 = friend.friends.indexOf(user.username);
-        if (Index1 > -1) {
-            friend.friends.splice(Index1, 1);
-        }
-
-        const Index2 = user.friends.indexOf(friend.username);
-        if (Index2 > -1) {
-            user.friends.splice(Index2, 1);
         }
 
         // Save the updates to the database
@@ -404,9 +456,10 @@ const removeFriend = async (req, res) => {
 
         return res.status(201).json({ message: "Friend removed successfully" });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 };
+
 
 
   
