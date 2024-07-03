@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaBell } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { VscAccount } from "react-icons/vsc";
 import "./Navbar.css"
+import Notifications from "../Notification/Notification";
 
 function Navbar1() {
     const navRef = useRef();
     const navigate = useNavigate();
+    const [showNotifications, setShowNotifications] = useState(false);
 
     const showNavbar = () => {
         navRef.current.classList.toggle("responsive_nav");
@@ -17,10 +19,15 @@ function Navbar1() {
         localStorage.removeItem('username')
         localStorage.removeItem('email')
         localStorage.removeItem('friends')
+        localStorage.removeItem('friendsRequest')
         navigate('/login'); 
     };
 
     const isLoggedIn = !!localStorage.getItem('authToken');
+
+    const toggleNotifications = () => {
+        setShowNotifications(!showNotifications);
+    };
 
     return (
         <header>
@@ -34,6 +41,7 @@ function Navbar1() {
                     <>
                         <a href="/Profile"><VscAccount/></a>
                         <button onClick={handleLogout} className="btn btn-primary">Logout</button>
+                        <button onClick={toggleNotifications} className="btn btn-secondary"><FaBell /></button>
                     </>
                 )}
                 <button
@@ -47,6 +55,7 @@ function Navbar1() {
                 onClick={showNavbar}>
                 <FaBars />
             </button>
+            {showNotifications && <Notifications />}
         </header>
     );
 }

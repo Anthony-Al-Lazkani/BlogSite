@@ -24,6 +24,7 @@ function Login() {
                     localStorage.setItem('username', result.data.user.username)
                     localStorage.setItem('email', result.data.user.email);
                     localStorage.setItem('friends', result.data.user.friends);
+                    localStorage.setItem('friendsRequest',result.data.user.pending_friends)
                     console.log(localStorage)
                     navigate('/')
                 }

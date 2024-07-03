@@ -191,6 +191,7 @@ function BlogForm({ article }) {
                     ) : (
                         <FaRegComment onClick={toggleComment} />
                     )}
+                    <span>{article.comments.length}</span>
                 </div>
             </div>
             {/* <button  className="DeleteBtn" onClick={handleDeleteClick}>DELETE</button> */}
