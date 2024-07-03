@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import "./Navbar.css"
@@ -27,7 +27,7 @@ function Navbar1() {
                 <a href="/Contact">Contact Us</a>
                 {!isLoggedIn && <a href="/Login">Login</a>}
                 {isLoggedIn && (
-                    <button onClick={handleLogout} className="btn btn-primary">Logout</button>
+                        <button onClick={handleLogout} className="btn btn-primary">Logout</button>
                 )}
                 <button
                     className="nav-btn nav-close-btn"
