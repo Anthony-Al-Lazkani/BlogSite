@@ -4,11 +4,31 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import photo from '../../Images/hi3.png'
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
+import './scripts';
+import './review1'; 
+import './review2'; 
+
+
 function Home() {
     const history = useNavigate();
     const goToLogin = () => {
         history('/Login');
     };
+
+    // const reviews = [review1, review2];
+
+    const properties = {
+        prevArrow: <div style={{ visibility: 'hidden' }}></div>,
+        nextArrow: <div style={{ visibility: 'hidden' }}></div>,
+        autoplay: true,
+        duration: 5000,
+        transitionDuration: 2000,
+        onChange: () => { }, // Your onChange function
+        onStartChange: () => { } // Your onStartChange function
+    };
+
 
 
     return (
@@ -27,7 +47,33 @@ function Home() {
                 </div>
             </section>
 
-            <section className="AboutUs">
+
+           {/* <section className="Reviews">
+            <Slide {...properties} >
+                        {reviews.map((review, index) => (
+                            <div key={index} className="each-slide-effect">
+                                <div style={{ 'background': url(${image}) }}>
+                                </div>
+                            </div>
+                        ))}
+            </Slide> */}
+
+            {/* <section className="Review">
+                <div className="wrapper">
+                    <Slide {...properties} >
+                            {reviews.map((review, index) => (
+                                <div key={index} className="each-slide-effect">
+                                    </div>
+                            ))}
+                    </Slide>
+                <button id="prev">&lt;</button>
+                <button id="next">&gt;</button>
+                </div>
+            </section> */}
+
+
+
+            {/* <section className="AboutUs">
             <div class = "image">
                <img src="https://cdn.pixabay.com/photo/2017/08/26/23/37/business-2684758__340.png">
                </img>
@@ -39,11 +85,11 @@ function Home() {
                 Our mission is to foster a vibrant community of bloggers and readers alike, encouraging meaningful discussions and interactions. With user-friendly tools for creating and sharing content, we empower our users to express themselves freely and authentically.</p>
 
                 <ul class = "links">
-                    <li><a href = "#">work</a></li>
+                    <li><a href = "/Home">Since 2024</a></li>
                     <div class = "vertical-line"></div>
-                    <li><a href = "#">service</a></li>
+                    <li><a href = "mailto:anthonylazkani.22@gmail.com">Join Us</a></li>
                     <div class = "vertical-line"></div>
-                    <li><a href = "#">contact</a></li>
+                    <li><a href = "/Contact">Contact us</a></li>
                 </ul>
                 <ul class = "icons">
                     <li>
@@ -60,7 +106,7 @@ function Home() {
                     </li>
                 </ul>
             </div>
-        </section>
+        </section> */}
 
             
         </>
