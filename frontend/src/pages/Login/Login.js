@@ -15,26 +15,27 @@ function Login() {
     const [password,setPassword] = useState('')
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post("http://localhost:4000/api/articles/signIn", { username, password });
-            if (response.data.message === "Sign in successful") {
-                localStorage.setItem('authToken', response.data.token);
-                navigate('/');
-                setUsername(''); // Clear username field
-                setPassword(''); // Clear password field
-            } else if (response.data.message === "Invalid username or password") {
-                alert("Wrong username or password");
-            } else {
-                alert("Failed to sign in");
-            }
-        } catch (error) {
-            console.error('Error logging in:', error);
-            alert("Failed to sign in. Please try again.");
+    const  handleSubmit = (e)=>{
+        e.preventDefault()
+            axios.post("http://localhost:4000/api/articles/signIn",{ username,password})
+            .then(result => {console.log(result)
+                if(result.data.message === "Sign in successful"){
+                    localStorage.setItem('authToken', result.data.token);
+                    localStorage.setItem('username', result.data.user.username)
+                    localStorage.setItem('email', result.data.user.email);
+                    localStorage.setItem('friends', result.data.user.friends);
+                    console.log(localStorage)
+                    navigate('/')
+                }
+                else if(result.data.message === "Invalid username or password"){
+                    alert( "Wrong username or password")
+                }
+                else{
+                    alert("Failed to SignIn")
+                }
+            })
+            .catch(err=> console.log(err)) 
         }
-    };
-    
 
 
     const togglePasswordVisibility = () => {

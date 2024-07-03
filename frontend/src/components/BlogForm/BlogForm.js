@@ -34,21 +34,77 @@ function BlogForm({ article }) {
         setComment(!comment);
     };
 
-    const handleLike = () => {
-        if (!like) {
-          setLike(true);
-          setDislike(false);
-        } else {
-          setLike(false);
+    const handleLike = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem('authToken'); // Retrieve token from localStorage or wherever it's stored
+            if (!token) {
+                console.error('No token found. User not authenticated.');
+                return;
+            }
+    
+            const response = await axios.post(
+                `http://localhost:4000/api/articles/${article._id}/likeArticle`,
+                {}, // Empty object or any data you need to send
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+    
+            const updatedArticle = response.data; // Assuming the response returns the updated article with likes
+            // Update frontend state or handle as needed
+            setLike(true); // Update the like state
+            setDislike(false); // Ensure dislike state is false when liking
+    
+            // Optionally update the article data in your state or context
+            // setArticles(updatedArticle); 
+    
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                console.error('Unauthorized. Please log in to like the article.');
+                // Handle unauthorized error (e.g., redirect to login page)
+            } else {
+                console.error('Error liking article:', error);
+            }
         }
-    };
+    };    
 
-    const handleDislike = () => {
-        if (!dislike) {
-          setDislike(true);
-          setLike(false);
-        } else {
-          setDislike(false);
+    const handleDislike = async(e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem('authToken'); // Retrieve token from localStorage or wherever it's stored
+            if (!token) {
+                console.error('No token found. User not authenticated.');
+                return;
+            }
+    
+            const response = await axios.post(
+                `http://localhost:4000/api/articles/${article._id}/dislikeArticle`,
+                {}, // Empty object or any data you need to send
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+    
+            const updatedArticle = response.data; // Assuming the response returns the updated article with likes
+            // Update frontend state or handle as needed
+            setDislike(true); // Update the dislike state
+            setLike(false); // Ensure like state is false when liking
+    
+            // Optionally update the article data in your state or context
+            // setArticles(updatedArticle); 
+    
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                console.error('Unauthorized. Please log in to like the article.');
+                // Handle unauthorized error (e.g., redirect to login page)
+            } else {
+                console.error('Error liking article:', error);
+            }
         }
     };
 
