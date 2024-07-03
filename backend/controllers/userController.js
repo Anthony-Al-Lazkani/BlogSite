@@ -196,6 +196,10 @@ const addFriend = async (req, res) => {
       if (!user || !friend) {
         return res.status(404).json({ error: "User not found" });
       }
+
+      if (user.username===friend.username){
+        return res.status(404).json({ error: "You cannot add yourself" });
+      }
   
       // Check if they are already friends
       if (user.friends.includes(friend.username)) {
