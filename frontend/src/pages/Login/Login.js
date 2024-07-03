@@ -20,7 +20,7 @@ function Login() {
             axios.post("http://localhost:4000/api/articles/signIn",{ username,password})
             .then(result => {console.log(result)
                 if(result.data.message === "Sign in successful"){
-                    localStorage.setItem('authToken', response.data.token);
+                    localStorage.setItem('authToken', result.data.token);
                     navigate('/')
                 }
                 else if(result.data.message === "Invalid username or password"){
