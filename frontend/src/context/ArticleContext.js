@@ -10,7 +10,7 @@ export const articlesReducer = (state, action) => {
             }
         case 'CREATE_ARTICLE': 
             return {
-                articles:[action.payload, ...state.articles]
+                articles:[action.payload, ...state.articles] 
             }
 
         case 'DELETE_ARTICLE':
@@ -25,7 +25,7 @@ export const articlesReducer = (state, action) => {
 
 export const ArticlesContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(articlesReducer, {
-        articles:null
+        articles:[]
     })
     return(
         <ArticlesContext.Provider value={{...state, dispatch}}>

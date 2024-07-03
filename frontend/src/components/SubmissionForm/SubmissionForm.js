@@ -2,6 +2,7 @@ import { useState } from 'react'
 import React from 'react'
 import './SubmissionForm.css'
 import { useArticlesContext } from '../../hooks/useArticlesContext'
+import axios from 'axios'
 
 const SubmissionForm = () => {
   const { dispatch } = useArticlesContext()
@@ -18,29 +19,27 @@ const SubmissionForm = () => {
 
     const article = {title, author, content, genre}
     
-    const response = await fetch('/api/articles/createArticle', {
-      method: 'POST',
-      body: JSON.stringify(article),
-      headers: {
-        'Content-Type': 'application/json',
-         Authorization: `Bearer ${token}`
-
+    const response = await axios.post(
+      '/api/articles/createArticle', 
+      {
+        ...article
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
       }
-    })
-    const json = await response.json()
+    );
 
-    if (!response.ok) {
-      setError(json.error)
-    }
-    if (response.ok) {
       setError(null)
       setTitle('')
       setAuthor('')
       setContent('')
       setGenre('')
-      console.log('new article added:', json)
-      dispatch({type: 'CREATE_WORKOUT', payload:json})
-    }
+      // console.log('new article added:', json)
+      dispatch({type: 'CREATE_ARTICLE', payload:response.data})
+
 
   }
 

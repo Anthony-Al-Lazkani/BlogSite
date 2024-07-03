@@ -122,9 +122,9 @@ const createArticle = async (req, res) => {
     const token = extractAuthToken(req);
 
     // If no token found, respond with 403
-    if (!token) {
-        return res.sendStatus(403);
-    }
+    // if (!token) {
+    //     return res.sendStatus(403);
+    // }
 
     // Decode the token to get the user ID
     const userId = decodeToken(token);
