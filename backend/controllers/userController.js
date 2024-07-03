@@ -203,7 +203,7 @@ const addFriend = async (req, res) => {
       }
       
       // Check if friend request already sent
-      if (user.pending_friends.includes(friend.username)) {
+      if (friend.pending_friends.includes(user.username)) {
         return res.status(400).json({ error: "friend request already sent" });
       }
 
@@ -252,9 +252,9 @@ const acceptFriend = async (req, res) => {
         }
 
         // remove from pending
-        const pendingIndex = friend.pending_friends.indexOf(user.username);
+        const pendingIndex = user.pending_friends.indexOf(friend.username);
         if (pendingIndex > -1) {
-            friend.pending_friends.splice(pendingIndex, 1);
+            user.pending_friends.splice(pendingIndex, 1);
         }
         else{
             return res.status(400).json({ error: "You have not recieved a friend request from this user" });
