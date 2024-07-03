@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Links } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import "./Navbar.css"
 
 function Navbar1() {
@@ -10,7 +10,19 @@ function Navbar1() {
 		navRef.current.classList.toggle(
 			"responsive_nav"
 		);
+
+	
 	};
+
+	const navigate = useNavigate();
+
+    const handleLogout = () => {
+        // Assuming you clear the authentication token stored in localStorage
+        localStorage.removeItem('authToken');
+        
+        // Redirect to login page or home page after logout
+        navigate('/login'); 
+    };
 
 	return (
 		<header>
@@ -20,6 +32,7 @@ function Navbar1() {
 				<a href="/Blogs">Blogs</a>
 				<a href="/Contact">Contact Us</a>
 				<a href="/Login">Login</a>
+				<button onClick={handleLogout} className="btn btn-primary">Logout</button>
 				<button
 					className="nav-btn nav-close-btn"
 					onClick={showNavbar}>

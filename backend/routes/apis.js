@@ -2,52 +2,97 @@ const express = require('express')
 const {
     createArticle,
     getArticle,
-    getArticles,
+    getArticlesSortedByTime,
+    getMyArticlesSortedByTime,
     deleteArticle,
     updateArticle,
     createComment,
     deleteComment,
     getComments,
     likeArticle,
-    dislikeArticle
+    dislikeArticle,
+    getMyFriendsArticles,
+    getArticlesSortedByLikes,
+    getArticlesSortedByGenre
 } = require('../controllers/articleController')
-
+const {
+    signIn,
+    createUser,
+    contact_us,
+    getUser,
+    addFriend,
+    acceptFriend,
+    rejectFriend,
+    removeFriend
+} = require('../controllers/userController')
 
 const router = express.Router()
 
-// GET all articles
-router.get('/', getArticles)
+// POST user
+router.post('/createUser', createUser)
+
+// POST sign in
+router.post('/signIn', signIn)
+
+// POST contact us
+router.post('/contact_us', contact_us)
+
+// GET user
+router.get('/getUser', getUser)
+
+// GET all articles sorted by time
+router.get('/getArticlesSortedByTime', getArticlesSortedByTime)
+
+//GET my articles sorted by time
+router.get('/getMyArticlesSortedByTime', getMyArticlesSortedByTime)
+
+//GET all my friends articles
+router.get('/getMyFriendsArticles', getMyFriendsArticles)
+
+//GET articles sorted by likes
+router.get('/getArticlesSortedByLikes', getArticlesSortedByLikes)
+
+//GET articles sorted by genre
+router.get('/getArticlesSortedByGenre', getArticlesSortedByGenre)
 
 // GET all comments
-router.get('/comments', getComments)
-
-// GET a single article
-router.get('/:id', getArticle)
+router.get('/getComments', getComments)
 
 // POST an article
-router.post('/', createArticle)
+router.post('/createArticle', createArticle)
 
 // POST a comment
-router.post('/:id/comments', createComment)
+router.post('/:id/createComment', createComment)
 
-//Like an article
-router.post('/:id/like', likeArticle);
+//POST accept a friend request
+router.post('/:id/acceptFriend', acceptFriend)
+
+//DELETE reject a friend request
+router.post('/:id/rejectFriend', rejectFriend)
+
+//DELETE remove a friend
+router.post('/:id/removeFriend', removeFriend)
+
+// POST send a friend request
+router.post('/:id/addFriend', addFriend)
+
+// Like an article
+router.post('/:id/likeArticle', likeArticle)
 
 // Dislike an article
-router.post('/:id/dislike', dislikeArticle);
+router.post('/:id/dislikeArticle', dislikeArticle)
+
+// GET a single article
+router.get('/:id/getArticle', getArticle)
 
 // DELETE an article
-router.delete('/:id', deleteArticle)
+router.delete('/:id/deleteArticle', deleteArticle)
 
 // DELETE a comment
-router.delete('/:id/comments', deleteComment)
+router.delete('/:id/deleteComment', deleteComment)
 
 // UPDATE an article
-router.patch('/:id', updateArticle)
-
-
-
-
+router.patch('/:id/updateArticle', updateArticle)
 
 
 module.exports = router

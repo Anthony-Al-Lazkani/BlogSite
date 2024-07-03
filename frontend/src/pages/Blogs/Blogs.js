@@ -8,15 +8,22 @@ import { FaHome } from "react-icons/fa";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { FaPlus, FaMinus  } from "react-icons/fa";
 import SubmissionForm from "../../components/SubmissionForm/SubmissionForm";
+import { useArticlesContext } from "../../hooks/useArticlesContext";
+import axios from "axios";
+
+
 
 
 
 
 function Blogs() {
 
-    const [articles, setArticles] = useState(null)
+    // const [articles, setArticles] = useState(null)
     const [form, setForm] = useState(false)
     const [icon, setIcon] = useState(false)
+    const { articles, dispatch } = useArticlesContext()
+  
+
 
 
     const toggleForm = () => {
@@ -28,12 +35,13 @@ function Blogs() {
 
     useEffect(()=>{
         const fetchArticle = async () => {
-            const response = await fetch('/api/articles')
-            const json = await response.json()
+            const response = await axios.get('/api/articles/getArticlesSortedByTime')
+            // const json = await response.json()
+            dispatch({type: 'SET_ARTICLES', payload:response.data})
 
-            if (response.ok) {
-                setArticles(json)
-            }
+            // if (response.ok) {
+            //     setArticles(json)
+            // }
         }
 
         fetchArticle()
