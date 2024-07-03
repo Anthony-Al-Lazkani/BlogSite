@@ -122,14 +122,14 @@ const createArticle = async (req, res) => {
     const token = extractAuthToken(req);
 
     // If no token found, respond with 403
-    // if (!token) {
-    //     return res.sendStatus(403);
-    // }
+    if (!token) {
+        return res.sendStatus(403);
+    }
 
     // Decode the token to get the user ID
     const userId = decodeToken(token);
     if (!userId) {
-        return res.sendStatus(403);
+      return res.sendStatus(403);
     }
 
     const user = await User.findById(userId);
@@ -137,10 +137,14 @@ const createArticle = async (req, res) => {
     const author = user.username
 
     try{
-        const article = await Article.create({title, author, content, genre})
-        res.status(200).json(article)
+      // Validate that all fields are provided and not empty
+      if (!title || !content || !genre) {
+        return res.status(400).json({ message: 'All fields (title, content, genre) are required' });
+      }     
+      const article = await Article.create({title, author, content, genre})
+      res.status(200).json(article)
     }catch(error){
-        res.status(400).json({error : error.message})
+      res.status(400).json({error : error.message})
     }
 }
 
@@ -152,13 +156,13 @@ const createComment = async (req, res) => {
 
   // If no token found, respond with 403
   if (!token) {
-      return res.sendStatus(403);
+    return res.sendStatus(403);
   }
 
   // Decode the token to get the user ID
   const userId = decodeToken(token);
   if (!userId) {
-      return res.sendStatus(403);
+    return res.sendStatus(403);
   }
 
   const user = await User.findById(userId);
@@ -172,6 +176,11 @@ const createComment = async (req, res) => {
     const article = await Article.findById(articleId);
     if (!article) {
       return res.status(404).json({ error: 'Article not found' });
+    }
+
+    // Validate that the comment is provided and not empty
+    if (!comment) {
+      return res.status(400).json({ message: 'Comment cannot be empty' });
     }
 
     // Create the comment
