@@ -25,13 +25,13 @@ p {
 }
  
 .Front-Page {
-    min-height: 780px;
+    min-height: 100vh;
     width: 100%;
     padding: 0 8%;
     padding-top: 8rem; 
     display: flex;
     align-items: center; 
-    justify-content: space-around;
+    justify-content: space-between;
     background-image: url('../../Images/ContactBackground.jpg');
 }
 
@@ -114,12 +114,15 @@ p {
 
 
 .Front-Page-Image {
-    width: 2000px; /* Adjust width as needed */
+    width: 500px; /* Adjust width as needed */
     height: 500px; /* Adjust height as needed */
     display: flex;
     margin-left: -550px; /* Adjust margin-left as needed */
     margin-top: -100px; /* Adjust margin-top as needed */
     padding: 10px; /* Ensure proper padding */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .Front-Page-Image img {
@@ -135,103 +138,6 @@ p {
 .Front-Page-Image:hover {
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
 }
-
-
-/* REVIEWS */
-
-  .Review {
-    background-color: #0a69ed;
-    min-height: 780px;
-    width: 100%;
-    padding: 0 8%;
-    padding-top: 8rem; 
-    display: flex;
-    align-items: center; 
-    justify-content: space-around;
-  }
-  .wrapper {
-    background-color: #ffffff;
-    width: 80vw;
-    max-width: 41em;
-    min-height: 25em;
-    border-radius: 0.6em;
-    transform: translate(0, -10%);
-    left: 50%; 
-    top: 50%;  
-    box-shadow: 0 1.8em 3em rgba(1, 17, 39, 0.15);
-    display: flex;
-    /* align-items: center; 
-    justify-content: space-around; */
-  }
-
-/* .wrapper-1 {
-    width: 85%;
-    height: 100%;
-    position: relative;
-    margin: auto;
-    padding: 1.8em 1.2em;
-}
-
-  .wrapper-1 h1{
-     margin-bottom: 20px; 
-     font-size: 2.5rem;
-     line-height: 0.5rem; 
-     font-weight: 700;
-     letter-spacing: 1px; 
-     color: #000;
-     text-align: center;
-  }
-
-  .Review h2 {
-    color: #2d3d67;
-    font-size: 1.5em;
-    text-align: center;
-  }
-
-  .Review p{
-    color: #000;
-    text-align: center;
-    font-size: 0.9em;
-    line-height: 2em;
-    letter-spacing: 0.05em;
-    width: 30vw;
-
-  } */
-
-  .wrapper button {
-    font-size: 1.8em;
-    height: 2.2em;
-    width: 2.2em;
-    background-color: #ffffff;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    border: none;
-    color: #0a69ed;
-    box-shadow: 0 0 1em rgba(1, 17, 39, 0.25);
-    cursor: pointer;
-    border-radius: 50%;
-  }
-  button#next {
-    right: -1.1em;
-  }
-  button#prev {
-    left: -1.1em;
-  }
-  .wrapper-1 img {
-    display: block;
-    margin: 1.8em auto 1.25em auto;
-    border-radius: 50%;
-    width: 4.4em;
-  }
-
-  @media screen and (max-width: 650px) {
-    .wrapper {
-      font-size: 14px;
-    }
-  }
-
 
 
 
@@ -250,7 +156,6 @@ body{
 .AboutUs {
     font-family: 'Playfair Display', serif;
     background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
 
     align-content: center;
     min-height: 100vh;
@@ -263,15 +168,7 @@ body{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 12px
 }
-.image{
-    /* background-color: #12192c; */
-    display: flex;
-    border-radius: 12px 0 0 12px;
-}
-.image img{
-height:50vh;
-margin:50px auto
-}
+
 .content{
     /* background-color: #12192c; */
     display: flex;
@@ -399,3 +296,39 @@ margin:50px auto
     font-weight: bold;
   } 
 
+
+/* Home.css */
+.wrapper {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .testimonial-slide {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .testimonial-slide img {
+    max-width: 100px;
+    border-radius: 50%;
+    margin: 20px 0;
+  }
+  
+  .testimonial-slide h3 {
+    margin: 10px 0 5px;
+  }
+  
+  .testimonial-slide h6 {
+    color: #888;
+    margin-bottom: 20px;
+  }
+  
+  .Reviews {
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
