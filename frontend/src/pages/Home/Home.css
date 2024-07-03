@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -137,17 +137,124 @@ p {
 }
 
 
+/* REVIEWS */
+
+  .Review {
+    background-color: #0a69ed;
+    min-height: 780px;
+    width: 100%;
+    padding: 0 8%;
+    padding-top: 8rem; 
+    display: flex;
+    align-items: center; 
+    justify-content: space-around;
+  }
+  .wrapper {
+    background-color: #ffffff;
+    width: 80vw;
+    max-width: 41em;
+    min-height: 25em;
+    border-radius: 0.6em;
+    transform: translate(0, -10%);
+    left: 50%; 
+    top: 50%;  
+    box-shadow: 0 1.8em 3em rgba(1, 17, 39, 0.15);
+    display: flex;
+    /* align-items: center; 
+    justify-content: space-around; */
+  }
+
+/* .wrapper-1 {
+    width: 85%;
+    height: 100%;
+    position: relative;
+    margin: auto;
+    padding: 1.8em 1.2em;
+}
+
+  .wrapper-1 h1{
+     margin-bottom: 20px; 
+     font-size: 2.5rem;
+     line-height: 0.5rem; 
+     font-weight: 700;
+     letter-spacing: 1px; 
+     color: #000;
+     text-align: center;
+  }
+
+  .Review h2 {
+    color: #2d3d67;
+    font-size: 1.5em;
+    text-align: center;
+  }
+
+  .Review p{
+    color: #000;
+    text-align: center;
+    font-size: 0.9em;
+    line-height: 2em;
+    letter-spacing: 0.05em;
+    width: 30vw;
+
+  } */
+
+  .wrapper button {
+    font-size: 1.8em;
+    height: 2.2em;
+    width: 2.2em;
+    background-color: #ffffff;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    border: none;
+    color: #0a69ed;
+    box-shadow: 0 0 1em rgba(1, 17, 39, 0.25);
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  button#next {
+    right: -1.1em;
+  }
+  button#prev {
+    left: -1.1em;
+  }
+  .wrapper-1 img {
+    display: block;
+    margin: 1.8em auto 1.25em auto;
+    border-radius: 50%;
+    width: 4.4em;
+  }
+
+  @media screen and (max-width: 650px) {
+    .wrapper {
+      font-size: 14px;
+    }
+  }
+
+
+
+
+
+/* ABOUT US */
 body{
     font-family: 'Playfair Display', serif;
     display: grid;
     background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    background-image: url('../../Images/ContactBackground.jpg');
 
     align-content: center;
     min-height: 100vh;
 }
 
 .AboutUs {
+    font-family: 'Playfair Display', serif;
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+
+    align-content: center;
+    min-height: 100vh;
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     min-height: 70vh;
@@ -157,7 +264,7 @@ body{
     border-radius: 12px
 }
 .image{
-    background-color: #12192c;
+    /* background-color: #12192c; */
     display: flex;
     border-radius: 12px 0 0 12px;
 }
@@ -166,13 +273,13 @@ height:50vh;
 margin:50px auto
 }
 .content{
-    background-color: #12192c;
+    /* background-color: #12192c; */
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     border-radius: 0  12px 12px 0;
-    color: #fff;
+    color: #000;
 }
 .content h2{
     text-transform: uppercase;
@@ -194,7 +301,7 @@ margin:50px auto
     text-align: center;
     margin: 0 auto;
     line-height: 1.7;
-    color:#ffffff
+    color:#000
 }
 .links{
     margin: 15px 0;
