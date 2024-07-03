@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const { use } = require('../routes/apis');
+const { validationResult, body } = require('express-validator');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -43,39 +44,68 @@ function decodeToken(token) {
 
 
 //CreateUser
-const createUser = async (req, res) => {
-    try{
-        //taking the info passed from the user
-        const {username,email,password} = req.body;
+const createUser =[ 
+    // Validation and sanitization
+    body('username')
+        .trim()
+        .isLength({ min: 3 })
+        .escape()
+        .withMessage('Username must be at least 3 characters long')
+        .custom(value => !/\s/.test(value))
+        .withMessage('Username must not contain spaces'),
+    
+    body('email')
+        .isEmail()
+        .normalizeEmail()
+        .withMessage('Invalid email address')
+        .custom(value => !/\s/.test(value))
+        .withMessage('Email must not contain spaces'),
+    
+    body('password')
+        .isLength({ min: 6 })
+        .withMessage('Password must be at least 6 characters long')
+        .custom(value => !/\s/.test(value))
+        .withMessage('Password must not contain spaces'),
 
-        //checking for uniqueness of username and email
-        const existingUser = await User.findOne({username: username});
-        if (existingUser){
-            return res.status(400).json({message: 'Invalid parameter'});
+    async (req, res) => {
+            // Handle validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
         }
-        const existingEmail = await User.findOne({email:email});
-        if (existingEmail){
-            return res.status(400).json({message: 'Invalid parameter'});
+        try{
+            //taking the info passed from the user
+            const {username,email,password} = req.body;
+
+            //checking for uniqueness of username and email
+            const existingUser = await User.findOne({username: username});
+            if (existingUser){
+                return res.status(400).json({message: 'Invalid parameter'});
+            }
+            const existingEmail = await User.findOne({email:email});
+            if (existingEmail){
+                return res.status(400).json({message: 'Invalid parameter'});
+            }
+
+            //hashing the password
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+            
+            //creating new user
+            const user = await User.create({username,email,password:hashedPassword})
+            
+            // Generate JWT token
+            const token = createToken(user._id);
+
+            //successful sign-up
+            res.status(201).json({message: 'Create user successful', token, user: user})
         }
-
-        //hashing the password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        
-        //creating new user
-        const user = await User.create({username,email,password:hashedPassword})
-        
-        // Generate JWT token
-        const token = createToken(user._id);
-
-        //successful sign-up
-        res.status(201).json({message: 'Create user successful', token, user: user})
+        catch (error) {
+            //failed sign-up
+            res.status(500).json({ message: 'Error creating user', error: error.message });
+        }
     }
-    catch (error) {
-        //failed sign-up
-        res.status(500).json({ message: 'Error creating user', error: error.message });
-    }
-}
+];
 
 //SignIn
 const signIn = async (req,res) => {
