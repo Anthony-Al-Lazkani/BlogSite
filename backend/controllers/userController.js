@@ -305,9 +305,12 @@ const rejectFriend = async (req, res) => {
         }
 
         // remove from pending
-        const pendingIndex = friend.pending_friends.indexOf(user.username);
+        const pendingIndex = user.pending_friends.indexOf(friend.username);
         if (pendingIndex > -1) {
-            friend.pending_friends.splice(pendingIndex, 1);
+            user.pending_friends.splice(pendingIndex, 1);
+        }
+        else{
+            return res.status(400).json({ error: "You have not recieved a friend request from this user" });
         }
 
         // Save the updates to the database
