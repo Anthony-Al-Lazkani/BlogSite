@@ -82,12 +82,72 @@
     justify-content: center;
     align-items: center;
     color: gray;
-    transition: .7s;
+    transition: .6s;
     font-size: 20px;
+    opacity: 0.2;
 
   }
 
   .deleteBtn:hover {
     color: red;
     font-size: 22px;
+    opacity: 1;
+  }
+
+
+  .CommentsSection {
+    max-height: 300px;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 35px;
+    border-top: 1px solid lightblue;
+    overflow-y: auto;
+
+  }
+
+  .Comment-Title {
+    display: flex ;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .Comment-Title h3 {
+    font-size: 20px;
+  }
+
+  .Comment {
+    height: auto;
+    align-items: center;
+    display: flex;
+    padding: 0 20px;
+    margin-top: 10px;
+    width: 100%;
+    border-bottom: 1px solid lightblue;
+    justify-content: space-between;
+    border-radius: 15px;
+  
+  }
+
+  .Comment:hover {
+    background-color: #ffff
+  }
+
+  .Comment p {
+    font-size: 12px;
+  }
+
+  .Comment h6 {
+    font-size: 14px;
+  }
+
+
+  .Comment-Btn {
+    width: 100%;
+    border: 1px solid yellow;
+    margin-top: 15px;
   }

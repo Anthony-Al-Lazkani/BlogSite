@@ -21,6 +21,12 @@ function BlogForm({ article }) {
     const [comment, setComment] = useState(false);
     const [newComment, setNewComment] = useState('');
 
+    const [isVisible, setIsVisible] = useState(false);
+
+    const toggleCommentSection = () => {
+        setIsVisible(!isVisible);
+    };
+
 
     const toggleLike = () => {
         setLike(!like);
@@ -198,19 +204,21 @@ function BlogForm({ article }) {
 
             {comment && (
                 <div className="CommentsSection">
-                    <h3>Comments:</h3>
+                    <div className="Comment-Title">
+                        <h3>Comments:</h3>
+                    </div>
                     {article.comments.length > 0 ? (
                         article.comments.map(comment => (
                             <div key={comment._id} className="Comment">
-                                <p><strong>{comment.author}:</strong> {comment.comment}</p>
-                                <p><em>{new Date(comment.createdAt).toLocaleString()}</em></p>
+                                <h6><strong>{comment.author}</strong> {comment.comment}</h6>
+                                <p>{new Date(comment.createdAt).toLocaleString()}</p>
                             </div>
                         ))
                     ) : (
                         <p>No comments yet.</p>
                     )}
                     {/* Add comment form */}
-                    <form onSubmit={handleCommentSubmit}>
+                    <form onSubmit={handleCommentSubmit} className="Comment-Btn">
                         <input
                             type="text"
                             value={newComment}

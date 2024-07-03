@@ -16,20 +16,31 @@ import axios from "axios";
 
 
 
+
+
 function Blogs() {
 
     // const [articles, setArticles] = useState(null)
     const [form, setForm] = useState(false)
     const [icon, setIcon] = useState(false)
     const { articles, dispatch } = useArticlesContext()
+    const isLoggedIn = !!localStorage.getItem('authToken');
+    const token = localStorage.getItem('authToken')
+    console.log(token)
   
 
 
 
     const toggleForm = () => {
-        setForm(!form);
-        setIcon(!icon);
+        if (!isLoggedIn){
+            alert("You need to Sign In First !")
+        }else {
+            setForm(!form);
+            setIcon(!icon);
+        }
     }
+
+
 
 
 
@@ -63,7 +74,7 @@ function Blogs() {
                 <div className="Third-Part">
                     <div className="PlusIconDiv">
                         <div className="PlusIcon" onClick={toggleForm}>
-                            {icon ? (
+                            {icon  ? (
                                 <FaMinus />
                             ) : (
                                <FaPlus /> 
@@ -79,8 +90,6 @@ function Blogs() {
                         )}
                     </div>
                 </div>
-
-                
             </div>
     )
 }

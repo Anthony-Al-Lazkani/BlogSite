@@ -4,10 +4,13 @@ import './SubmissionForm.css'
 import { useArticlesContext } from '../../hooks/useArticlesContext'
 import axios from 'axios'
 
+
+
+
+
 const SubmissionForm = () => {
   const { dispatch } = useArticlesContext()
   const token = localStorage.getItem("authToken")
-
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [content, setContent] = useState('')
@@ -43,6 +46,7 @@ const SubmissionForm = () => {
 
   }
 
+
   return (
     <form className="FormShape" onSubmit={handleSubmit}> 
 
@@ -70,6 +74,8 @@ const SubmissionForm = () => {
         <button>Share</button>
         {error && <div className="error">{error}</div>}
     </div>
+
+
     </form>
   )
 }
