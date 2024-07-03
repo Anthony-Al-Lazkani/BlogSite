@@ -379,14 +379,19 @@ const likeArticle = async (req, res) => {
 
       // Check if user has already liked the article
       const likedIndex = article.liked_by.indexOf(username);
+      const disLikedIndex = article.disliked_by.indexOf(username);
       if (likedIndex === -1) {
-          // If user hasn't liked the article, add like and username to liked_by array
-          article.likes += 1;
-          article.liked_by.push(username);
+        // If user hasn't liked the article, add like and username to liked_by array
+        article.likes += 1;
+        article.liked_by.push(username);
+        if (disLikedIndex!==-1){
+          article.disliked_by.splice(disLikedIndex, 1);
+          article.dislikes-=1
+        }
       } else {
-          // If user has already liked the article, remove like and username from liked_by array
-          article.likes -= 1;
-          article.liked_by.splice(likedIndex, 1);
+        // If user has already liked the article, remove like and username from liked_by array
+        article.likes -= 1;
+        article.liked_by.splice(likedIndex, 1);
       }
 
       // Save the updated article
@@ -425,7 +430,7 @@ const dislikeArticle = async (req, res) => {
     // Find the user by their username
     const user = await User.findById(userId);
     const username = user.username;
-
+    const likedIndex = article.liked_by.indexOf(username);
     // Check if the user has already disliked the article
     if (article.disliked_by.includes(username)) {
       // If user has already disliked, remove the dislike
@@ -436,6 +441,10 @@ const dislikeArticle = async (req, res) => {
       // If user has not disliked, add the dislike
       article.dislikes += 1;
       article.disliked_by.push(username);
+      if (likedIndex!==-1){
+        article.liked_by.splice(likedIndex, 1);
+        article.likes-=1
+      }
     }
 
     await article.save();
