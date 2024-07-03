@@ -1,19 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './BlogForm.css';
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from "react-icons/ai";
 import { FaComment, FaRegComment } from "react-icons/fa";
-import axios from 'axios';
+import { FaPlus, FaTrash} from "react-icons/fa";
+import { useArticlesContext } from "../../hooks/useArticlesContext";
+import axios from "axios";
+
+
+
 
 function BlogForm({ article }) {
-    const DateFetched = article.updatedAt;
-    const date = new Date(DateFetched);
-    const fullDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-    const fullHour = date.getHours() + ":" + date.getMinutes();
+    const { dispatch } = useArticlesContext()
+    const DateFetched = article.updatedAt
+    const date = new Date(DateFetched)
+    const fullDate = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear()
+    const fullHour = date.getHours() + ":" + date.getMinutes()
 
     const [like, setLike] = useState(false);
     const [dislike, setDislike] = useState(false);
     const [comment, setComment] = useState(false);
     const [newComment, setNewComment] = useState('');
+
 
     const toggleLike = () => {
         setLike(!like);
@@ -101,6 +108,14 @@ function BlogForm({ article }) {
         }
     };
 
+    const deleteArticle = async () => {
+        const response = await axios.delete('/api/articles/' + article._id + '/deleteArticle')
+        console.log(response.data)
+        // const json = await response.json()
+        dispatch({type: 'DELETE_ARTICLE', payload:article._id})
+    }
+
+
     const handleCommentChange = (e) => {
         setNewComment(e.target.value);
     };
@@ -178,6 +193,8 @@ function BlogForm({ article }) {
                     )}
                 </div>
             </div>
+            {/* <button  className="DeleteBtn" onClick={handleDeleteClick}>DELETE</button> */}
+
 
             {comment && (
                 <div className="CommentsSection">
@@ -205,6 +222,12 @@ function BlogForm({ article }) {
                     </form>
                 </div>
             )}
+
+            <div className="deleteBtnDiv">
+                <div className="deleteBtn" onClick={deleteArticle}>
+                    <FaTrash />
+                </div>
+            </div>
         </div>
     );
 }

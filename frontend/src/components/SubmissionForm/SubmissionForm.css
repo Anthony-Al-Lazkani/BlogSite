@@ -29,21 +29,22 @@
     outline: none;
     border: none;
     padding: 10px;
-    background: #293846;
+    background: lightblue;
     transition: 1s;
     margin-left: 5px;
     animation: Submission-Animation 1.5s 1;
     margin-top: 10px;
     text-align: center;
+    font-size: 15px;
 
   }
 
   .Inputs input:focus {
     background-color: lightblue;
-    width: 100%;
+    width: 80%;
   }
   .Inputs input::placeholder {
-    color: white;
+    color: black;
   }
 
 
@@ -93,12 +94,14 @@
     padding: 10px;
     animation: TextBox-Animation 1.5s 1;
     transition: 1s;
-    background-color: #293846;
+    background-color: lightblue;
     text-align: center;
+    font-size: 15px;
   }
 
   .TextBox::placeholder {
-    color: white;
+    color: black;
+    font-size: 15px;
   }
   .TextBox:focus {
     width: 100%;
