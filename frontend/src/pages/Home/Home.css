@@ -15,14 +15,14 @@ body {
     width: 100%;
 }
  
-a {
+/* a {
     text-decoration: none;
     cursor: pointer;
 }
  
 p {
     color: #000;
-}
+} */
  
 .Front-Page {
     min-height: 100vh;
@@ -117,8 +117,8 @@ p {
     width: 500px; /* Adjust width as needed */
     height: 500px; /* Adjust height as needed */
     display: flex;
-    margin-left: -550px; /* Adjust margin-left as needed */
-    margin-top: -100px; /* Adjust margin-top as needed */
+    /* margin-left: px; Adjust margin-left as needed */
+    /* margin-top: -100px; Adjust margin-top as needed */
     padding: 10px; /* Ensure proper padding */
     background-position: center;
     background-repeat: no-repeat;
