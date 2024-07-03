@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './BlogForm.css';
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from "react-icons/ai";
 import { FaComment, FaRegComment } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTrash} from "react-icons/fa";
 import { useArticlesContext } from "../../hooks/useArticlesContext";
+import axios from "axios";
+
+
+
 
 function BlogForm({ article }) {
     const { dispatch } = useArticlesContext()
@@ -16,6 +20,7 @@ function BlogForm({ article }) {
     const [dislike, setDislike] = useState(false);
     const [comment, setComment] = useState(false);
     const [newComment, setNewComment] = useState('');
+
 
     const toggleLike = () => {
         setLike(!like);
@@ -47,19 +52,12 @@ function BlogForm({ article }) {
         }
     };
 
-      const handleDeleteClick = async () => {
-        const response = await fetch('/api/articles/'+article._id +'/deleteArticle', {
-            method: 'DELETE'
-        })
-        const json = await response.json()
-
-        if (response.ok) {
-            dispatch({type: 'DELETE_ARTICLE', payload: json})
-        }
-      }
-
-
-
+    const deleteArticle = async () => {
+        const response = await axios.delete('/api/articles/' + article._id + '/deleteArticle')
+        console.log(response.data)
+        // const json = await response.json()
+        dispatch({type: 'DELETE_ARTICLE', payload:article._id})
+    }
 
 
     const handleCommentChange = (e) => {
@@ -168,6 +166,12 @@ function BlogForm({ article }) {
                     </form>
                 </div>
             )}
+
+            <div className="deleteBtnDiv">
+                <div className="deleteBtn" onClick={deleteArticle}>
+                    <FaTrash />
+                </div>
+            </div>
         </div>
     );
 }
