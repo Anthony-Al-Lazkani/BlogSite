@@ -24,7 +24,8 @@ const {
     acceptFriend,
     rejectFriend,
     removeFriend,
-    getAllusers
+    getAllusers,
+    CanceladdFriend
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -98,5 +99,7 @@ router.patch('/:id/updateArticle', updateArticle)
 //GET all users 
 router.get('/getAllusers' , getAllusers)
 
+// POST Cancel a friend request
+router.post('/:id/CanceladdFriend', CanceladdFriend)
 
 module.exports = router

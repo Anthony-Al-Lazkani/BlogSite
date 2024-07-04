@@ -65,6 +65,7 @@ function Notifications() {
             );
 
             // Optionally, update the state to remove the accepted friend request
+            localStorage.removeItem('requestSent')
             const updatedRequests = friendRequests.filter(request => request.id !== friend.id);
             setFriendRequests(updatedRequests);
             localStorage.setItem('friendsRequest', JSON.stringify(updatedRequests));
