@@ -122,14 +122,14 @@ const createArticle = async (req, res) => {
     const token = extractAuthToken(req);
 
     // If no token found, respond with 403
-    // if (!token) {
-    //     return res.sendStatus(403);
-    // }
+    if (!token) {
+        return res.sendStatus(403);
+    }
 
     // Decode the token to get the user ID
     const userId = decodeToken(token);
     if (!userId) {
-        return res.sendStatus(403);
+      return res.sendStatus(403);
     }
 
     const user = await User.findById(userId);
@@ -137,10 +137,14 @@ const createArticle = async (req, res) => {
     const author = user.username
 
     try{
-        const article = await Article.create({title, author, content, genre})
-        res.status(200).json(article)
+      // Validate that all fields are provided and not empty
+      if (!title || !content || !genre) {
+        return res.status(400).json({ message: 'All fields (title, content, genre) are required' });
+      }     
+      const article = await Article.create({title, author, content, genre})
+      res.status(200).json(article)
     }catch(error){
-        res.status(400).json({error : error.message})
+      res.status(400).json({error : error.message})
     }
 }
 
@@ -152,13 +156,13 @@ const createComment = async (req, res) => {
 
   // If no token found, respond with 403
   if (!token) {
-      return res.sendStatus(403);
+    return res.sendStatus(403);
   }
 
   // Decode the token to get the user ID
   const userId = decodeToken(token);
   if (!userId) {
-      return res.sendStatus(403);
+    return res.sendStatus(403);
   }
 
   const user = await User.findById(userId);
@@ -172,6 +176,11 @@ const createComment = async (req, res) => {
     const article = await Article.findById(articleId);
     if (!article) {
       return res.status(404).json({ error: 'Article not found' });
+    }
+
+    // Validate that the comment is provided and not empty
+    if (!comment) {
+      return res.status(400).json({ message: 'Comment cannot be empty' });
     }
 
     // Create the comment
@@ -380,14 +389,19 @@ const likeArticle = async (req, res) => {
 
       // Check if user has already liked the article
       const likedIndex = article.liked_by.indexOf(username);
+      const disLikedIndex = article.disliked_by.indexOf(username);
       if (likedIndex === -1) {
-          // If user hasn't liked the article, add like and username to liked_by array
-          article.likes += 1;
-          article.liked_by.push(username);
+        // If user hasn't liked the article, add like and username to liked_by array
+        article.likes += 1;
+        article.liked_by.push(username);
+        if (disLikedIndex!==-1){
+          article.disliked_by.splice(disLikedIndex, 1);
+          article.dislikes-=1
+        }
       } else {
-          // If user has already liked the article, remove like and username from liked_by array
-          article.likes -= 1;
-          article.liked_by.splice(likedIndex, 1);
+        // If user has already liked the article, remove like and username from liked_by array
+        article.likes -= 1;
+        article.liked_by.splice(likedIndex, 1);
       }
 
       // Save the updated article
@@ -426,7 +440,7 @@ const dislikeArticle = async (req, res) => {
     // Find the user by their username
     const user = await User.findById(userId);
     const username = user.username;
-
+    const likedIndex = article.liked_by.indexOf(username);
     // Check if the user has already disliked the article
     if (article.disliked_by.includes(username)) {
       // If user has already disliked, remove the dislike
@@ -437,6 +451,10 @@ const dislikeArticle = async (req, res) => {
       // If user has not disliked, add the dislike
       article.dislikes += 1;
       article.disliked_by.push(username);
+      if (likedIndex!==-1){
+        article.liked_by.splice(likedIndex, 1);
+        article.likes-=1
+      }
     }
 
     await article.save();

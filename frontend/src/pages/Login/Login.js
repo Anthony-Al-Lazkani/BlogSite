@@ -23,7 +23,10 @@ function Login() {
                     localStorage.setItem('authToken', result.data.token);
                     localStorage.setItem('username', result.data.user.username)
                     localStorage.setItem('email', result.data.user.email);
-                    localStorage.setItem('friends', result.data.user.friends);
+                    const FriendsArrayString = JSON.stringify(result.data.user.friends)
+                    localStorage.setItem('friends', FriendsArrayString);
+                    const RequestsArrayString = JSON.stringify(result.data.user.pending_friends);
+                    localStorage.setItem('friendsRequest',RequestsArrayString)
                     console.log(localStorage)
                     navigate('/')
                 }
