@@ -520,6 +520,37 @@ const removeFriend = async (req, res) => {
     }
 };
 
+const getFriendsNumber = async (req, res) => {
+    const { id } = req.params;
+  
+    const token = extractAuthToken(req);
+  
+    // If no token found, respond with 403
+    if (!token) {
+      return res.sendStatus(403);
+    }
+  
+    // Decode the token to get the user ID
+    const userId = decodeToken(token);
+    if (!userId) {
+      return res.sendStatus(403);
+    }
+  
+    try {
+        // Find the user and friend
+        const user = await User.findById(userId);
+    
+        //Count friends number
+        let counter = 0;
+        for (const friendObj of user.friends) {
+            counter+=1;
+        }
+        return res.status(200).json({ "friend nb":counter });
+        } catch (error) {
+        return res.status(500).json({ error: error.message });
+        }
+};
+
 
 
   
@@ -536,5 +567,6 @@ module.exports = {
     rejectFriend,
     removeFriend,
     getAllusers,
-    CanceladdFriend
+    CanceladdFriend,
+    getFriendsNumber
 }
