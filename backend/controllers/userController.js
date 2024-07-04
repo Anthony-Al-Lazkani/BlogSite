@@ -12,11 +12,6 @@ require('dotenv').config();
 //JWT key
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// GET all articles doesnt require log in 
-const getAllusers = async (req, res) => {
-    const users = await User.find({}).sort({createdAt : -1})
-    res.status(200).json(users)
-  }
 
 //function to create token for a user
 function createToken(userId) {
@@ -179,6 +174,13 @@ const contact_us = async (req,res) => {
 
 };
 
+
+// GET all users
+const getAllusers = async (req, res) => {
+    const users = await User.find({}).sort({createdAt : -1})
+    res.status(200).json(users)
+}
+
 const getUser = async (req, res) => {
     const token = extractAuthToken(req);
 
@@ -311,13 +313,13 @@ const CanceladdFriend = async (req, res) => {
             return res.status(400).json({ error: "Already friends" });
         }
         
-        // Add to pending
+        // remove from pending
         friend.pending_friends.pull({"username":user.username,"id":userId});
         
         // Save the updates to the database
         await friend.save();
     
-        return res.status(201).json({ message: "Friend request sent successfully" });
+        return res.status(201).json({ message: "Friend request removed successfully" });
         } catch (error) {
         return res.status(500).json({ error: error.message });
         }
