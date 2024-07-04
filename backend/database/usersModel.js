@@ -28,6 +28,11 @@ const usersSchema = new mongoose.Schema({
     pending_friends : {
         type: mongoose.Schema.Types.Array,
         ref: 'User'
+    },
+
+    requests_sent: {
+        type: mongoose.Schema.Types.Array,
+        ref: 'User'
     }
 
 }, { timestamps : true })

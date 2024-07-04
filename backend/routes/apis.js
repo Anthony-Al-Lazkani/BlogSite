@@ -25,7 +25,8 @@ const {
     rejectFriend,
     removeFriend,
     getAllusers,
-    CanceladdFriend
+    CanceladdFriend,
+    getFriendsNumber
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -83,6 +84,9 @@ router.post('/:id/rejectFriend', rejectFriend)
 
 //DELETE remove a friend
 router.post('/:id/removeFriend', removeFriend)
+
+//GET friend number
+router.get('/:id/getFriendsNumber', getFriendsNumber)
 
 // Like an article
 router.post('/:id/likeArticle', likeArticle)
