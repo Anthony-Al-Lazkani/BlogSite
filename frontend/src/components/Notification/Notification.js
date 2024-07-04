@@ -30,7 +30,13 @@ function Notifications() {
                 }
             );
 
-            // Optionally, update the state to remove the accepted friend request
+            // Update the friends array in local storage
+            const friendsString = localStorage.getItem('friends');
+            const friends = JSON.parse(friendsString) || [];
+            const updatedFriends = [...friends, { username: friend.username, id: friend.id }];
+            localStorage.setItem('friends', JSON.stringify(updatedFriends));
+
+            // Update the state to remove the accepted friend request
             const updatedRequests = friendRequests.filter(request => request.id !== friend.id);
             setFriendRequests(updatedRequests);
             localStorage.setItem('friendsRequest', JSON.stringify(updatedRequests));
@@ -64,8 +70,7 @@ function Notifications() {
                 }
             );
 
-            // Optionally, update the state to remove the accepted friend request
-            localStorage.removeItem('requestSent')
+            // Update the state to remove the declined friend request
             const updatedRequests = friendRequests.filter(request => request.id !== friend.id);
             setFriendRequests(updatedRequests);
             localStorage.setItem('friendsRequest', JSON.stringify(updatedRequests));
@@ -84,7 +89,7 @@ function Notifications() {
         <div className="notifications">
             <h3>Friend Requests</h3>
             {friendRequests.length > 0 ? (
-                friendRequests.map((friend, index) => ( 
+                friendRequests.map((friend, index) => (
                     <div key={index} className="notification-item">
                         <p>{friend.username}</p>
                         <button onClick={() => handleAcceptRequest(friend)}>Accept</button>
