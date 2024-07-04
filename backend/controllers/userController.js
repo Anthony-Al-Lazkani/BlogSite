@@ -263,9 +263,11 @@ const addFriend = async (req, res) => {
         }
         // Add to pending
         friend.pending_friends.push({"username":user.username,"id":userId});
+        user.requests_sent.push({"username":friend.username,"id":id})
         
         // Save the updates to the database
         await friend.save();
+        await user.save();
     
         return res.status(201).json({ message: "Friend request sent successfully" });
         } catch (error) {
@@ -315,9 +317,11 @@ const CanceladdFriend = async (req, res) => {
         
         // remove from pending
         friend.pending_friends.pull({"username":user.username,"id":userId});
+        user.requests_sent.pull({"username":friend.username,"id":id});
         
         // Save the updates to the database
         await friend.save();
+        await user.save();
     
         return res.status(201).json({ message: "Friend request removed successfully" });
         } catch (error) {
@@ -379,6 +383,22 @@ const acceptFriend = async (req, res) => {
         } else {
             return res.status(400).json({ error: "You have not received a friend request from this user" });
         }
+
+        // Find the object in requests_sent array
+        let indexToRemove1 = -1;
+        for (let i = 0; i < friend.requests_sent.length; i++) {
+            if (friend.requests_sent[i].username === user.username) {
+                indexToRemove1 = i;
+                break;
+            }
+        }
+
+        // If found, remove the object
+        if (indexToRemove1 !== -1) {
+            friend.requests_sent.splice(indexToRemove1, 1);
+        } else {
+            return res.status(400).json({ error: "You have not received a friend request from this user" });
+        }
         
         user.friends.push({"username":friend.username,"id":id});
         friend.friends.push({"username":user.username,"id":userId});
@@ -431,6 +451,22 @@ const rejectFriend = async (req, res) => {
             return res.status(400).json({ error: "Already friends" });
         }
 
+        // Find the object in requests_sent array
+        let indexToRemove1 = -1;
+        for (let i = 0; i < friend.requests_sent.length; i++) {
+            if (friend.requests_sent[i].username === user.username) {
+                indexToRemove1 = i;
+                break;
+            }
+        }
+
+        // If found, remove the object
+        if (indexToRemove1 !== -1) {
+            friend.requests_sent.splice(indexToRemove1, 1);
+        } else {
+            return res.status(400).json({ error: "You have not received a friend request from this user" });
+        }
+
         // Find the index of the username in pending_friends array
         let pendingIndex = -1;
         for (let i = 0; i < user.pending_friends.length; i++) {
@@ -446,12 +482,16 @@ const rejectFriend = async (req, res) => {
             user.pending_friends.splice(pendingIndex, 1);
             // Save the updates to the database
             await user.save();
+            await friend.save();
             // Send a success response
             return res.status(200).json({ message: "Friend request removed successfully" });
         } else {
             // If the username was not found, return an error response
             return res.status(400).json({ error: "You have not received a friend request from this user" });
         };
+
+        
+
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
