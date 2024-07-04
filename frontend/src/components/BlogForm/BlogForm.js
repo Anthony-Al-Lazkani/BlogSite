@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import './BlogForm.css';
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from "react-icons/ai";
 import { FaComment, FaRegComment } from "react-icons/fa";
-import { FaPlus, FaTrash} from "react-icons/fa";
+import { FaPlus, FaTrash, FaArrowUp } from "react-icons/fa";
 import { useArticlesContext } from "../../hooks/useArticlesContext";
 import axios from "axios";
 
@@ -146,6 +146,15 @@ function BlogForm({ article }) {
             );
     
             const updatedArticle = response.data; // Assuming the response returns the updated article with comments
+            // Response is messageKey + newComment (from backend)
+
+            const newCmt = response.data.newComment
+            dispatch({type: 'CREATE_COMMENT', payload: newCmt})
+
+            console.log(newCmt)
+            // dispatch({ty pe: 'CREATE_COMMENT', payload: article._id, })
+
+            
             setNewComment(''); // Clear the input field
             // Update the state or handle as needed (e.g., fetch updated data)
             // Example: setArticles(updatedArticle);
@@ -218,7 +227,10 @@ function BlogForm({ article }) {
                         <p>No comments yet.</p>
                     )}
                     {/* Add comment form */}
-                    <form onSubmit={handleCommentSubmit} className="Comment-Btn">
+                </div>
+                
+            )}
+            <form onSubmit={handleCommentSubmit} className="Comment-Btn">
                         <input
                             type="text"
                             value={newComment}
@@ -226,10 +238,8 @@ function BlogForm({ article }) {
                             placeholder="Add a comment..."
                             required
                         />
-                        <button type="submit">Submit</button>
-                    </form>
-                </div>
-            )}
+                        <button type="submit"><FaArrowUp /></button>
+            </form>
 
             <div className="deleteBtnDiv">
                 <div className="deleteBtn" onClick={deleteArticle}>

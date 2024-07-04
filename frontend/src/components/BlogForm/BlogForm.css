@@ -124,12 +124,14 @@
     height: auto;
     align-items: center;
     display: flex;
-    padding: 0 20px;
-    margin-top: 10px;
+    padding: 15px 20px;
+    margin-top: 30px;
     width: 100%;
     border-bottom: 1px solid lightblue;
     justify-content: space-between;
     border-radius: 15px;
+    word-wrap: break-word; /* Break long words */
+    word-break: break-word;
   
   }
 
@@ -148,6 +150,68 @@
 
   .Comment-Btn {
     width: 100%;
-    border: 1px solid yellow;
-    margin-top: 15px;
+    margin-top: 30px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #2F4050;
+    border-radius: 20px;
   }
+
+  .Comment-Btn input {
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    padding: 15px;
+    background-color: #2F4050;
+    color: white;
+  }
+
+  .Comment-Btn input::placeholder {
+    color: white;
+  }
+
+  .Comment-Btn button {
+    border: none;
+    outline: none;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    font-size: 25px;
+    transition: .6s;
+    color: lightblue;
+  }
+
+  .Comment-Btn button:hover {
+    padding-bottom: 10px;
+    color: white;
+  }
+
+
+
+
+  /* Scrollbar styles for WebKit browsers (Chrome, Safari) */
+.CommentsSection::-webkit-scrollbar {
+  display: 8px;
+}
+
+.CommentsSection::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Gray color */
+  border-radius: 4px;
+}
+
+.CommentsSection::-webkit-scrollbar-track {
+  background: transparent; /* Transparent track */
+}
+
+/* Scrollbar styles for Firefox */
+.CommentsSection {
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
