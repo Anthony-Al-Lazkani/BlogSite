@@ -12,6 +12,12 @@ require('dotenv').config();
 //JWT key
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// GET all articles doesnt require log in 
+const getAllusers = async (req, res) => {
+    const users = await User.find({}).sort({createdAt : -1})
+    res.status(200).json(users)
+  }
+
 //function to create token for a user
 function createToken(userId) {
     const payload = {
@@ -474,5 +480,6 @@ module.exports = {
     addFriend,
     acceptFriend,
     rejectFriend,
-    removeFriend
+    removeFriend,
+    getAllusers
 }

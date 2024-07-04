@@ -23,7 +23,8 @@ const {
     addFriend,
     acceptFriend,
     rejectFriend,
-    removeFriend
+    removeFriend,
+    getAllusers
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -93,6 +94,9 @@ router.delete('/:id/deleteComment', deleteComment)
 
 // UPDATE an article
 router.patch('/:id/updateArticle', updateArticle)
+
+//GET all users 
+router.get('/getAllusers' , getAllusers)
 
 
 module.exports = router

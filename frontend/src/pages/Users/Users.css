@@ -1,0 +1,31 @@
+.users {
+    padding: 20px;
+}
+
+.users ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.users li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.users button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.users button:hover {
+    background-color: #45a049;
+}
