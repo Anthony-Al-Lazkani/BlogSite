@@ -34,6 +34,14 @@ header {
 
 }
 
+#Profile-Icon {
+    position: absolute;
+    right: 0;
+    font-size: 40px;
+}
+
+
+
 
 
 nav a {

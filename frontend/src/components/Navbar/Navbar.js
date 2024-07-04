@@ -15,14 +15,7 @@ function Navbar1() {
         navRef.current.classList.toggle("responsive_nav");
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('username')
-        localStorage.removeItem('email')
-        localStorage.removeItem('friends')
-        localStorage.removeItem('friendsRequest')
-        navigate('/login'); 
-    };
+    
 
     const isLoggedIn = !!localStorage.getItem('authToken');
 
@@ -40,10 +33,9 @@ function Navbar1() {
                 {!isLoggedIn && <a href="/Login">Login</a>}
                 {isLoggedIn && (
                     <>
-                        <a href="/Profile"><VscAccount/></a>
-                        <button onClick={handleLogout} className="btn btn-primary">Logout</button>
+                        <a href="/Profile" id="Profile-Icon"><VscAccount/></a>
                         <button onClick={toggleNotifications} className="btn btn-secondary"><FaBell /></button>
-                        <a href="/addFriend">add friends</a>
+                        {/* <a href="/addFriend">add friends</a> */}
                     </>
                 )}
                 <button
