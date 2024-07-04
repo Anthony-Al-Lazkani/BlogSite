@@ -1,6 +1,6 @@
 // To use constants from the .env file
 require('dotenv').config()
-
+const cors = require('cors')
 
 const express = require('express')
 const articleRoutes = require('./routes/apis')
@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 // Middleware to make response as json 
 app.use(express.json())
-
+app.use(cors())
 
 // Routes
 app.use('/api/articles', articleRoutes)

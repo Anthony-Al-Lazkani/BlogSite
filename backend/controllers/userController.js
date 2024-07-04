@@ -12,6 +12,12 @@ require('dotenv').config();
 //JWT key
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// GET all articles doesnt require log in 
+const getAllusers = async (req, res) => {
+    const users = await User.find({}).sort({createdAt : -1})
+    res.status(200).json(users)
+  }
+
 //function to create token for a user
 function createToken(userId) {
     const payload = {
@@ -265,6 +271,58 @@ const addFriend = async (req, res) => {
         }
 };
 
+const CanceladdFriend = async (req, res) => {
+    const { id } = req.params;
+  
+    const token = extractAuthToken(req);
+  
+    // If no token found, respond with 403
+    if (!token) {
+      return res.sendStatus(403);
+    }
+  
+    // Decode the token to get the user ID
+    const userId = decodeToken(token);
+    if (!userId) {
+      return res.sendStatus(403);
+    }
+  
+    try {
+        // Find the user and friend
+        const user = await User.findById(userId);
+        const friend = await User.findById(id);
+    
+        if (!user || !friend) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        if (user.username===friend.username){
+            return res.status(404).json({ error: "You cannot add yourself" });
+        }
+        // Check if they are already friends
+        let alreadyFriends = false;
+        for (const friendObj of user.friends) {
+        if (friendObj.username === friend.username) {
+            alreadyFriends = true;
+            break; 
+            }
+        }
+        if (alreadyFriends) {
+            return res.status(400).json({ error: "Already friends" });
+        }
+        
+        // Add to pending
+        friend.pending_friends.pull({"username":user.username,"id":userId});
+        
+        // Save the updates to the database
+        await friend.save();
+    
+        return res.status(201).json({ message: "Friend request sent successfully" });
+        } catch (error) {
+        return res.status(500).json({ error: error.message });
+        }
+};
+
 
 
 const acceptFriend = async (req, res) => {
@@ -474,5 +532,7 @@ module.exports = {
     addFriend,
     acceptFriend,
     rejectFriend,
-    removeFriend
+    removeFriend,
+    getAllusers,
+    CanceladdFriend
 }

@@ -8,6 +8,8 @@ import SignUp from './pages/SignUp/SignUp';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Contact from './pages/Contact/Contact';
+import Profile from './pages/Profile/Profile';
+import Users from './pages/Users/Users';
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
             <Route path='/Login' element={<Login />} />
             <Route path='/SignUp' element={<SignUp />} />
             <Route path='/Contact' element={<Contact />} />
+            <Route path='/Profile' element={<Profile />} />
+            <Route path="/addFriend" element={<Users />} />
           </Routes>
         </div>
         <Footer />
