@@ -5,6 +5,9 @@ import './Users.css';
 function Users() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const friendsString = localStorage.getItem('friends');
+    const friends = JSON.parse(friendsString) || [];
+    const currentUser = localStorage.getItem('username')
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -37,7 +40,7 @@ function Users() {
                         Authorization: `Bearer ${token}`
                     }
                 }
-            ) .then(result => {console.log(result)})
+            );
 
             console.log('Friend request sent successfully.');
         } catch (error) {
@@ -50,6 +53,11 @@ function Users() {
         }
     };
 
+    // Filter users to exclude those who are already friends
+    const filteredUsers = users.filter(user => 
+        !friends.some(friend => friend.id === user._id) && user.username !== currentUser
+    );
+
     return (
         <div className="users">
             <h2>All Users</h2>
@@ -57,7 +65,7 @@ function Users() {
                 <p>Loading users...</p>
             ) : (
                 <ul>
-                    {users.map(user => (
+                    {filteredUsers.map(user => (
                         <li key={user._id}>
                             <span>{user.username}</span>
                             <button onClick={() => handleAddFriend(user._id)}>Add Friend</button>

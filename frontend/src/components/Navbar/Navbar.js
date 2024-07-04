@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { VscAccount } from "react-icons/vsc";
 import "./Navbar.css"
 import Notifications from "../Notification/Notification";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Navbar1() {
     const navRef = useRef();
@@ -42,6 +43,7 @@ function Navbar1() {
                         <a href="/Profile"><VscAccount/></a>
                         <button onClick={handleLogout} className="btn btn-primary">Logout</button>
                         <button onClick={toggleNotifications} className="btn btn-secondary"><FaBell /></button>
+                        <a href="/addFriend">add friends</a>
                     </>
                 )}
                 <button
