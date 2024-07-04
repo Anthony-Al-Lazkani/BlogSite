@@ -46,26 +46,26 @@ function decodeToken(token) {
 //CreateUser
 const createUser =[ 
     // Validation and sanitization
-    body('username')
-        .trim()
-        .isLength({ min: 3 })
-        .escape()
-        .withMessage('Username must be at least 3 characters long')
-        .custom(value => !/\s/.test(value))
-        .withMessage('Username must not contain spaces'),
+     body('username')
+         .trim()
+         .isLength({ min: 3 })
+         .escape()
+         .withMessage('Username must be at least 3 characters long')
+         .custom(value => !/\s/.test(value))
+         .withMessage('Username must not contain spaces'),
     
-    body('email')
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Invalid email address')
-        .custom(value => !/\s/.test(value))
-        .withMessage('Email must not contain spaces'),
+     body('email')
+         .isEmail()
+         .normalizeEmail()
+         .withMessage('Invalid email address')
+         .custom(value => !/\s/.test(value))
+         .withMessage('Email must not contain spaces'),
     
-    body('password')
-        .isLength({ min: 6 })
-        .withMessage('Password must be at least 6 characters long')
-        .custom(value => !/\s/.test(value))
-        .withMessage('Password must not contain spaces'),
+     body('password')
+         .isLength({ min: 6 })
+         .withMessage('Password must be at least 6 characters long')
+         .custom(value => !/\s/.test(value))
+         .withMessage('Password must not contain spaces'),
 
     async (req, res) => {
             // Handle validation errors
