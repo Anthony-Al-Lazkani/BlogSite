@@ -87,13 +87,15 @@ function Notifications() {
 
     return (
         <div className="notifications">
-            <h3>Friend Requests</h3>
+            <h3>Pending Requests</h3>
             {friendRequests.length > 0 ? (
                 friendRequests.map((friend, index) => (
                     <div key={index} className="notification-item">
                         <p>{friend.username}</p>
-                        <button onClick={() => handleAcceptRequest(friend)}>Accept</button>
-                        <button onClick={() => handleDeclineRequest(friend)}>Decline</button>
+                        <div className="AcceptRejectButon">
+                            <button onClick={() => handleAcceptRequest(friend)} className='AcceptButton'>Accept</button>
+                            <button onClick={() => handleDeclineRequest(friend)} className='RejectButton'>Decline</button>
+                        </div>
                     </div>
                 ))
             ) : (

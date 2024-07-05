@@ -41,8 +41,42 @@ header {
 }
 
 
+.AddFriend  {
+    position: absolute;
+    right: 10%;
+    background-color: transparent;
+    color: white;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    transition: .6s;
+}
+
+.AddFriend:hover {
+    animation: ring 1s ease-in-out;
+    animation-iteration-count: infinite;
+    background-color: rgba(200,200,200, .4);
+}
 
 
+@keyframes ring {
+    0% { transform: rotate(0); }
+    10% { transform: rotate(15deg); }
+    20% { transform: rotate(-10deg); }
+    30% { transform: rotate(5deg); }
+    40% { transform: rotate(-5deg); }
+    50% { transform: rotate(3deg); }
+    60% { transform: rotate(-3deg); }
+    70% { transform: rotate(2deg); }
+    80% { transform: rotate(-2deg); }
+    90% { transform: rotate(1deg); }
+    100% { transform: rotate(0); }
+}
 
 nav a {
     margin: 0 2rem;

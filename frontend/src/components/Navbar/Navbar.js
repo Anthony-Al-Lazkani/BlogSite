@@ -5,6 +5,8 @@ import { VscAccount } from "react-icons/vsc";
 import "./Navbar.css"
 import Notifications from "../Notification/Notification";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaUserPlus } from "react-icons/fa";
+
 
 function Navbar1() {
     const navRef = useRef();
@@ -34,8 +36,8 @@ function Navbar1() {
                 {isLoggedIn && (
                     <>
                         <a href="/Profile" id="Profile-Icon"><VscAccount/></a>
-                        <button onClick={toggleNotifications} className="btn btn-secondary"><FaBell /></button>
-                        <a href="/addFriend">add friends</a> 
+                        <button onClick={toggleNotifications} className="AddFriend"><FaBell /></button>
+                        <a href="/addFriend"><FaUserPlus /></a> 
                     </>
                 )}
                 <button
