@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import { VscAccount } from "react-icons/vsc";
@@ -9,25 +8,24 @@ function Profile() {
     const username = localStorage.getItem('username');
     const email = localStorage.getItem('email');
     const friendsString = localStorage.getItem('friends');
-    const friends = JSON.parse(friendsString);
+    const friends = JSON.parse(friendsString) || [];
 
-    //State to hold the photo
+    // State to hold the photo
     const [profilePhoto, setProfilePhoto] = useState(null);
-
 
     const navigate = useNavigate();
 
-    //Function for Logout
+    // Function for Logout
     const handleLogout = () => {
         localStorage.removeItem('authToken');
-        localStorage.removeItem('username')
-        localStorage.removeItem('email')
-        localStorage.removeItem('friends')
-        localStorage.removeItem('friendsRequest')
-        navigate('/login'); 
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
+        localStorage.removeItem('friends');
+        localStorage.removeItem('friendsRequest');
+        navigate('/login');
     };
 
-    //Boolean for logged in
+    // Boolean for logged in
     const isLoggedIn = !!localStorage.getItem('authToken');
 
     const onClose = () => {
@@ -51,7 +49,7 @@ function Profile() {
             <div className="ProfileDivision">
                 <div className="Left-Section">
                     <div className="Profile-Photo">
-                    {profilePhoto ? (
+                        {profilePhoto ? (
                             <img src={profilePhoto} alt="Profile" />
                         ) : (
                             <label htmlFor="upload-button" className="upload-label">
@@ -73,14 +71,13 @@ function Profile() {
 
                     <div className="Followers">
                         <FaUserCheck />
-                        <p>Nb of Followers</p>
+                        <p>{friends.length} Friends</p>
                     </div>
 
                     <div className="LogoutButton">
                         <a href="#"><button onClick={handleLogout}>Sign Out</button></a>
                     </div>
                 </div>
-
 
                 <div className="Right-Section">
                     <div className='Close-Div'>
@@ -104,19 +101,17 @@ function Profile() {
 
                         <div className="Information">
                             <span>Friends</span>
-                            <p> {friends && friends.length > 0 ? (
+                            {friends.length > 0 ? (
                                 <ul>
-                                {friends.map((friend, index) => (
-                                <li key={index}>{friend.username}</li>
-                                ))}
-                            </ul>
+                                    {friends.map((friend, index) => (
+                                        <li key={index}>{friend.username}</li>
+                                    ))}
+                                </ul>
                             ) : (
                                 <p>No friends available</p>
-                        )}</p>
+                            )}
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

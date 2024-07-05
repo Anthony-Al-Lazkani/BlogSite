@@ -6,6 +6,7 @@ function Users() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [requestSent, setRequestSent] = useState({});
+    const [searchTerm, setSearchTerm] = useState("");
     const friendsString = localStorage.getItem('friends');
     const friends = JSON.parse(friendsString) || [];
     const friendsRequestsString = localStorage.getItem('friendsRequest');
@@ -100,12 +101,21 @@ function Users() {
     };
 
     const filteredUsers = users.filter(user =>
-        !friends.some(friend => friend.id === user._id) && user.username !== currentUser
+        !friends.some(friend => friend.id === user._id) && 
+        user.username !== currentUser &&
+        user.username.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
         <div className="users">
             <h2>All Users</h2>
+            <input
+                type="text"
+                placeholder="Search users..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-bar"
+            />
             {loading ? (
                 <p>Loading users...</p>
             ) : (
