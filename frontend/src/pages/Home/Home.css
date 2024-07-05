@@ -159,23 +159,24 @@ p {
   }
 
 
-/*About Us*/
 .AboutUs {
     height: 100vh;
     width: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     
 }
 
-.section {
-    height: 100vh;
+.sectionAboutUs {
+    height: 100%;
     width: 100%;
     background-color: #eae6f9;
     align-items: center;
     justify-content: space-between;
 }
 
-.containter{
+.AboutUscontainer{
     width: 100%;
     display: block;
     margin: auto; 
@@ -204,7 +205,7 @@ p {
     transition: .6s;
 }
 
-.content-section .title h1{
+.content-section .AboutUsTitle h1{
     margin-top: 30px;
     text-transform: uppercase; 
     font-size: 50px; 
@@ -261,7 +262,7 @@ p {
 }
 
 @media screen and (max-width:768px){
-    .container{
+    .AboutUscontainer{
         width:80%;
         display: block;
         margin:auto;
@@ -280,6 +281,4 @@ p {
         display:block;
         margin:auto;
     }
-    
 }
-

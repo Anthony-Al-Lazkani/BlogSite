@@ -56,7 +56,6 @@ header {
     border-radius: 50%;
     transition: .6s;
 }
-
 .AddFriend:hover {
     animation: ring 1s ease-in-out;
     animation-iteration-count: infinite;

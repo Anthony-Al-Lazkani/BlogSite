@@ -39,7 +39,7 @@ function Navbar1() {
 
     return (
         <header>
-            <h3>GROUP A</h3>
+            <h3>BLOGAWAY</h3>
             <nav ref={navRef}>
                 <a href="/">Home</a>
                 <a href="/Blogs">Blogs</a>

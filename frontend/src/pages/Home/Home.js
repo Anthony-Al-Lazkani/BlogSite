@@ -85,11 +85,11 @@ function Home() {
       </section>
 
 
-    <section className="AboutUs">
-        <div className="section">
-            <div className="container">
+    {/* <section className="AboutUs">
+        <div className="sectionAboutUs">
+            <div className="AboutUscontainer">
                 <div className="content-section">
-                    <div className="title">
+                    <div className="AboutUsTitle">
                         <h1>About Us</h1>
                     </div>
                     <div className="content">
@@ -117,11 +117,9 @@ function Home() {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
     </>
   );
 }
 
-export default Home;
-
-//hi
+export default Home;

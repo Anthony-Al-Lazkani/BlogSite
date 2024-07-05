@@ -52,26 +52,28 @@ function Blogs() {
             </div>
             <div className="Second-Part">
                 <div className="filters">
-                    <input 
-                        type="text" 
-                        placeholder="Search articles..." 
-                        value={search} 
-                        onChange={(e) => setSearch(e.target.value)} 
-                        className="search-bar"
-                    />
-                    <select 
-                        value={filterGenre} 
-                        onChange={(e) => setFilterGenre(e.target.value)} 
-                        className="genre-filter"
-                    >
-                        <option value="">All Genres</option>
-                        <option value="Action">Action</option>
-                        <option value="Romance">Romance</option>
-                        <option value="Lifestyle">Lifestyle</option>
-                        <option value="Travel">Travel</option>
-                        <option value="Education">Education</option>
-                        {/* Add more genres as needed */}
-                    </select>
+                    <div className="RowDiv">
+                        <input 
+                            type="text" 
+                            placeholder="Search articles..." 
+                            value={search} 
+                            onChange={(e) => setSearch(e.target.value)} 
+                            className="search-bar"
+                        />
+                        <select 
+                            value={filterGenre} 
+                            onChange={(e) => setFilterGenre(e.target.value)} 
+                            className="genre-filter"
+                        >
+                            <option value="">All Genres</option>
+                            <option value="Action">Action</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Lifestyle">Lifestyle</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Education">Education</option>
+                            {/* Add more genres as needed */}
+                        </select>
+                    </div>
                     <label className="friends-filter">
                         <input 
                             type="checkbox" 

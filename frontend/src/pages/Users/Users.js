@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Users.css';
 
+
 function Users() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -108,14 +109,15 @@ function Users() {
 
     return (
         <div className="users">
-            <h2>All Users</h2>
-            <input
-                type="text"
-                placeholder="Search users..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-bar"
-            />
+            <div className="Search-Bar-Div">
+                <input
+                    type="text"
+                    placeholder="Search For Users..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-bar"
+                />
+            </div>
             {loading ? (
                 <p>Loading users...</p>
             ) : (
