@@ -35,7 +35,7 @@ function Navbar1() {
                     <>
                         <a href="/Profile" id="Profile-Icon"><VscAccount/></a>
                         <button onClick={toggleNotifications} className="btn btn-secondary"><FaBell /></button>
-                        {/* <a href="/addFriend">add friends</a> */}
+                        <a href="/addFriend">add friends</a> 
                     </>
                 )}
                 <button
