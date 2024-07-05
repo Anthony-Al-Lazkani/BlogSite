@@ -2,20 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import { VscAccount } from "react-icons/vsc";
-import { FaUserCheck } from "react-icons/fa";
+import { FaUserCheck, FaUserMinus } from "react-icons/fa";
+import axios from 'axios';
 
 function Profile() {
     const username = localStorage.getItem('username');
     const email = localStorage.getItem('email');
     const friendsString = localStorage.getItem('friends');
-    const friends = JSON.parse(friendsString) || [];
+    const [friends, setFriends] = useState(JSON.parse(friendsString) || []);
 
-    // State to hold the photo
     const [profilePhoto, setProfilePhoto] = useState(null);
-
     const navigate = useNavigate();
 
-    // Function for Logout
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         localStorage.removeItem('username');
@@ -25,14 +23,6 @@ function Profile() {
         navigate('/login');
     };
 
-    // Boolean for logged in
-    const isLoggedIn = !!localStorage.getItem('authToken');
-
-    const onClose = () => {
-        navigate('/');
-    };
-
-    // Function to handle photo upload
     const handlePhotoUpload = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -41,6 +31,35 @@ function Profile() {
         };
         if (file) {
             reader.readAsDataURL(file);
+        }
+    };
+
+    const removeFriend = async (friendId) => {
+        try {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                console.error('No token found. User not authenticated.');
+                return;
+            }
+
+            const response = await axios.post(
+                `http://localhost:4000/api/articles/${friendId}/removeFriend`,
+                {}, // Empty body for POST request
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            console.log(response.data.message);
+
+            const updatedFriends = friends.filter(friend => friend.id !== friendId);
+            setFriends(updatedFriends);
+            localStorage.setItem('friends', JSON.stringify(updatedFriends));
+
+        } catch (error) {
+            console.error('Error removing friend:', error);
         }
     };
 
@@ -81,7 +100,7 @@ function Profile() {
 
                 <div className="Right-Section">
                     <div className='Close-Div'>
-                        <span onClick={onClose}>&times;</span>
+                        <span onClick={() => navigate('/')}>&times;</span>
                     </div>
 
                     <div className="Title">
@@ -104,7 +123,12 @@ function Profile() {
                             {friends.length > 0 ? (
                                 <ul>
                                     {friends.map((friend, index) => (
-                                        <li key={index}>{friend.username}</li>
+                                        <li key={index}>
+                                            {friend.username}
+                                            <button onClick={() => removeFriend(friend.id)}>
+                                                <FaUserMinus />
+                                            </button>
+                                        </li>
                                     ))}
                                 </ul>
                             ) : (
