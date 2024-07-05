@@ -32,7 +32,7 @@ function Login() {
                     console.log(localStorage)
                     navigate('/')
                 }
-                else if(result.data.message === "Invalid username or password"){
+                else if(result.response.data.message === "Invalid username or password"){
                     alert( "Wrong username or password")
                 }
                 else{
