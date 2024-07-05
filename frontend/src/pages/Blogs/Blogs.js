@@ -14,8 +14,11 @@ function Blogs() {
     const [icon, setIcon] = useState(false);
     const { articles, dispatch } = useArticlesContext();
     const isLoggedIn = !!localStorage.getItem('authToken');
-    const token = localStorage.getItem('authToken');
-    const [search, setSearch] = useState(""); // State for search input
+    const [search, setSearch] = useState("");
+    const [filterGenre, setFilterGenre] = useState("");
+    const [showFriendsBlogs, setShowFriendsBlogs] = useState(false);
+    const friendsString = localStorage.getItem('friends');
+    const friends = JSON.parse(friendsString) || [];
 
     const toggleForm = () => {
         if (!isLoggedIn) {
@@ -34,11 +37,13 @@ function Blogs() {
         fetchArticle();
     }, [dispatch]);
 
-    // Filter articles based on search input
-    const filteredArticles = articles.filter(article => 
-        article.title.toLowerCase().includes(search.toLowerCase()) || 
-        article.content.toLowerCase().includes(search.toLowerCase())
-    );
+    // Filter articles based on search input, genre, and friends' blogs
+    const filteredArticles = articles.filter(article => {
+        const matchesSearch = article.title.toLowerCase().includes(search.toLowerCase()) || article.content.toLowerCase().includes(search.toLowerCase());
+        const matchesGenre = article.genre.toLowerCase().includes(filterGenre.toLowerCase()) || article.genre.toLowerCase().includes(filterGenre.toLowerCase());
+        const isFriendsBlog = showFriendsBlogs ? friends.some(friend => friend.username === article.author) : true;
+        return matchesSearch && matchesGenre && isFriendsBlog;
+    });
 
     return (
         <div className="Home-Page">
@@ -46,13 +51,36 @@ function Blogs() {
                 <Sidebar />
             </div>
             <div className="Second-Part">
-                <input 
-                    type="text" 
-                    placeholder="Search articles..." 
-                    value={search} 
-                    onChange={(e) => setSearch(e.target.value)} 
-                    className="search-bar"
-                />
+                <div className="filters">
+                    <input 
+                        type="text" 
+                        placeholder="Search articles..." 
+                        value={search} 
+                        onChange={(e) => setSearch(e.target.value)} 
+                        className="search-bar"
+                    />
+                    <select 
+                        value={filterGenre} 
+                        onChange={(e) => setFilterGenre(e.target.value)} 
+                        className="genre-filter"
+                    >
+                        <option value="">All Genres</option>
+                        <option value="Action">Action</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Education">Education</option>
+                        {/* Add more genres as needed */}
+                    </select>
+                    <label className="friends-filter">
+                        <input 
+                            type="checkbox" 
+                            checked={showFriendsBlogs} 
+                            onChange={(e) => setShowFriendsBlogs(e.target.checked)} 
+                        />
+                        Show Friends' Blogs
+                    </label>
+                </div>
                 <div className="articles">
                     {filteredArticles && filteredArticles.map((article) => (
                         <BlogForm key={article._id} article={article} />
