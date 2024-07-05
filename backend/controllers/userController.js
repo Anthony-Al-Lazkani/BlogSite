@@ -12,11 +12,6 @@ require('dotenv').config();
 //JWT key
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// GET all articles doesnt require log in 
-const getAllusers = async (req, res) => {
-    const users = await User.find({}).sort({createdAt : -1})
-    res.status(200).json(users)
-  }
 
 //function to create token for a user
 function createToken(userId) {
@@ -52,26 +47,26 @@ function decodeToken(token) {
 //CreateUser
 const createUser =[ 
     // Validation and sanitization
-    body('username')
-        .trim()
-        .isLength({ min: 3 })
-        .escape()
-        .withMessage('Username must be at least 3 characters long')
-        .custom(value => !/\s/.test(value))
-        .withMessage('Username must not contain spaces'),
+     body('username')
+         .trim()
+         .isLength({ min: 3 })
+         .escape()
+         .withMessage('Username must be at least 3 characters long')
+         .custom(value => !/\s/.test(value))
+         .withMessage('Username must not contain spaces'),
     
-    body('email')
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Invalid email address')
-        .custom(value => !/\s/.test(value))
-        .withMessage('Email must not contain spaces'),
+     body('email')
+         .isEmail()
+         .normalizeEmail()
+         .withMessage('Invalid email address')
+         .custom(value => !/\s/.test(value))
+         .withMessage('Email must not contain spaces'),
     
-    body('password')
-        .isLength({ min: 6 })
-        .withMessage('Password must be at least 6 characters long')
-        .custom(value => !/\s/.test(value))
-        .withMessage('Password must not contain spaces'),
+     body('password')
+         .isLength({ min: 6 })
+         .withMessage('Password must be at least 6 characters long')
+         .custom(value => !/\s/.test(value))
+         .withMessage('Password must not contain spaces'),
 
     async (req, res) => {
             // Handle validation errors
@@ -179,6 +174,13 @@ const contact_us = async (req,res) => {
 
 };
 
+
+// GET all users
+const getAllusers = async (req, res) => {
+    const users = await User.find({}).sort({createdAt : -1})
+    res.status(200).json(users)
+}
+
 const getUser = async (req, res) => {
     const token = extractAuthToken(req);
 
@@ -261,9 +263,11 @@ const addFriend = async (req, res) => {
         }
         // Add to pending
         friend.pending_friends.push({"username":user.username,"id":userId});
+        user.requests_sent.push({"username":friend.username,"id":id})
         
         // Save the updates to the database
         await friend.save();
+        await user.save();
     
         return res.status(201).json({ message: "Friend request sent successfully" });
         } catch (error) {
@@ -311,13 +315,15 @@ const CanceladdFriend = async (req, res) => {
             return res.status(400).json({ error: "Already friends" });
         }
         
-        // Add to pending
+        // remove from pending
         friend.pending_friends.pull({"username":user.username,"id":userId});
+        user.requests_sent.pull({"username":friend.username,"id":id});
         
         // Save the updates to the database
         await friend.save();
+        await user.save();
     
-        return res.status(201).json({ message: "Friend request sent successfully" });
+        return res.status(201).json({ message: "Friend request removed successfully" });
         } catch (error) {
         return res.status(500).json({ error: error.message });
         }
@@ -377,6 +383,22 @@ const acceptFriend = async (req, res) => {
         } else {
             return res.status(400).json({ error: "You have not received a friend request from this user" });
         }
+
+        // Find the object in requests_sent array
+        let indexToRemove1 = -1;
+        for (let i = 0; i < friend.requests_sent.length; i++) {
+            if (friend.requests_sent[i].username === user.username) {
+                indexToRemove1 = i;
+                break;
+            }
+        }
+
+        // If found, remove the object
+        if (indexToRemove1 !== -1) {
+            friend.requests_sent.splice(indexToRemove1, 1);
+        } else {
+            return res.status(400).json({ error: "You have not received a friend request from this user" });
+        }
         
         user.friends.push({"username":friend.username,"id":id});
         friend.friends.push({"username":user.username,"id":userId});
@@ -429,6 +451,22 @@ const rejectFriend = async (req, res) => {
             return res.status(400).json({ error: "Already friends" });
         }
 
+        // // Find the object in requests_sent array
+        // let indexToRemove1 = -1;
+        // for (let i = 0; i < friend.requests_sent.length; i++) {
+        //     if (friend.requests_sent[i].username === user.username) {
+        //         indexToRemove1 = i;
+        //         break;
+        //     }
+        // }
+
+        // // If found, remove the object
+        // if (indexToRemove1 !== -1) {
+        //     friend.requests_sent.splice(indexToRemove1, 1);
+        // } else {
+        //     return res.status(400).json({ error: "You have not received a friend request from this user" });
+        // }
+
         // Find the index of the username in pending_friends array
         let pendingIndex = -1;
         for (let i = 0; i < user.pending_friends.length; i++) {
@@ -444,12 +482,16 @@ const rejectFriend = async (req, res) => {
             user.pending_friends.splice(pendingIndex, 1);
             // Save the updates to the database
             await user.save();
+            await friend.save();
             // Send a success response
             return res.status(200).json({ message: "Friend request removed successfully" });
         } else {
             // If the username was not found, return an error response
             return res.status(400).json({ error: "You have not received a friend request from this user" });
         };
+
+        
+
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -518,6 +560,37 @@ const removeFriend = async (req, res) => {
     }
 };
 
+const getFriendsNumber = async (req, res) => {
+    const { id } = req.params;
+  
+    const token = extractAuthToken(req);
+  
+    // If no token found, respond with 403
+    if (!token) {
+      return res.sendStatus(403);
+    }
+  
+    // Decode the token to get the user ID
+    const userId = decodeToken(token);
+    if (!userId) {
+      return res.sendStatus(403);
+    }
+  
+    try {
+        // Find the user and friend
+        const user = await User.findById(userId);
+    
+        //Count friends number
+        let counter = 0;
+        for (const friendObj of user.friends) {
+            counter+=1;
+        }
+        return res.status(200).json({ "friend nb":counter });
+        } catch (error) {
+        return res.status(500).json({ error: error.message });
+        }
+};
+
 
 
   
@@ -534,5 +607,6 @@ module.exports = {
     rejectFriend,
     removeFriend,
     getAllusers,
-    CanceladdFriend
+    CanceladdFriend,
+    getFriendsNumber
 }

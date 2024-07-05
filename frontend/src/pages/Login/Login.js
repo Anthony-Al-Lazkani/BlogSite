@@ -27,6 +27,8 @@ function Login() {
                     localStorage.setItem('friends', FriendsArrayString);
                     const RequestsArrayString = JSON.stringify(result.data.user.pending_friends);
                     localStorage.setItem('friendsRequest',RequestsArrayString)
+                    const RequestsSentArrayString = JSON.stringify(result.data.user.requests_sent);
+                    localStorage.setItem('requestsSent',RequestsSentArrayString)
                     console.log(localStorage)
                     navigate('/')
                 }

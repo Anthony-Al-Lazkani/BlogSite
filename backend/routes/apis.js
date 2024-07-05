@@ -25,7 +25,8 @@ const {
     rejectFriend,
     removeFriend,
     getAllusers,
-    CanceladdFriend
+    CanceladdFriend,
+    getFriendsNumber
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -60,11 +61,20 @@ router.get('/getArticlesSortedByGenre', getArticlesSortedByGenre)
 // GET all comments
 router.get('/getComments', getComments)
 
+//GET all users 
+router.get('/getAllusers' , getAllusers)
+
 // POST an article
 router.post('/createArticle', createArticle)
 
 // POST a comment
 router.post('/:id/createComment', createComment)
+
+// POST send a friend request
+router.post('/:id/addFriend', addFriend)
+
+// POST Cancel a friend request
+router.post('/:id/CanceladdFriend', CanceladdFriend)
 
 //POST accept a friend request
 router.post('/:id/acceptFriend', acceptFriend)
@@ -75,8 +85,8 @@ router.post('/:id/rejectFriend', rejectFriend)
 //DELETE remove a friend
 router.post('/:id/removeFriend', removeFriend)
 
-// POST send a friend request
-router.post('/:id/addFriend', addFriend)
+//GET friend number
+router.get('/:id/getFriendsNumber', getFriendsNumber)
 
 // Like an article
 router.post('/:id/likeArticle', likeArticle)
@@ -96,10 +106,5 @@ router.delete('/:id/deleteComment', deleteComment)
 // UPDATE an article
 router.patch('/:id/updateArticle', updateArticle)
 
-//GET all users 
-router.get('/getAllusers' , getAllusers)
-
-// POST Cancel a friend request
-router.post('/:id/CanceladdFriend', CanceladdFriend)
 
 module.exports = router
