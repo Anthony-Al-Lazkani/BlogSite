@@ -202,7 +202,7 @@ const createComment = async (req, res) => {
 const deleteArticle = async (req, res) => {
   //article id
   const { id } = req.params
-  // const token = extractAuthToken(req);
+  const token = extractAuthToken(req);
 
    // If no token found, respond with 403
    if (!token) {

@@ -1,167 +1,95 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import './BlogForm.css';
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from "react-icons/ai";
-import { FaComment, FaRegComment } from "react-icons/fa";
-import { FaPlus, FaTrash, FaArrowUp } from "react-icons/fa";
-import { useArticlesContext } from "../../hooks/useArticlesContext";
+import { FaComment, FaRegComment, FaTrash, FaArrowUp } from "react-icons/fa";
 import axios from "axios";
 
 function BlogForm({ article }) {
-    const { dispatch } = useArticlesContext()
-    const DateFetched = article.updatedAt
-    const date = new Date(DateFetched)
-    const fullDate = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear()
-    const fullHour = date.getHours() + ":" + date.getMinutes()
-
     const [like, setLike] = useState(false);
     const [dislike, setDislike] = useState(false);
-    const [comment, setComment] = useState(false);
+    const [commentVisible, setCommentVisible] = useState(false);
     const [newComment, setNewComment] = useState('');
+    const [error, setError] = useState('');
 
-    const [isVisible, setIsVisible] = useState(false);
-
-    const toggleCommentSection = () => {
-        setIsVisible(!isVisible);
-    };
-
-
-    const toggleLike = () => {
-        setLike(!like);
-    };
-
-    const toggleDislike = () => {
-        setDislike(!dislike);
-    };
-
-    const toggleComment = () => {
-        setComment(!comment);
-    };
-
-    const handleLike = async (e) => {
-        e.preventDefault();
+    const handleLike = async () => {
         try {
-            const token = localStorage.getItem('authToken'); // Retrieve token from localStorage or wherever it's stored
-            if (!token) {
-                console.error('No token found. User not authenticated.');
-                return;
-            }
-    
+            const token = localStorage.getItem('authToken');
+            if (!token) throw new Error('No token found. User not authenticated.');
+
             const response = await axios.post(
                 `http://localhost:4000/api/articles/${article._id}/likeArticle`,
-                {}, // Empty object or any data you need to send
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+                {},
+                { headers: { Authorization: `Bearer ${token}` } }
             );
-    
-            const updatedArticle = response.data; // Assuming the response returns the updated article with likes
-            // Update frontend state or handle as needed
-            setLike(true); // Update the like state
-            setDislike(false); // Ensure dislike state is false when liking
-    
-            // Optionally update the article data in your state or context
-            // setArticles(updatedArticle); 
-    
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                console.error('Unauthorized. Please log in to like the article.');
-                // Handle unauthorized error (e.g., redirect to login page)
-            } else {
-                console.error('Error liking article:', error);
-            }
-        }
-    };    
 
-    const handleDislike = async(e) => {
-        e.preventDefault();
-        try {
-            const token = localStorage.getItem('authToken'); // Retrieve token from localStorage or wherever it's stored
-            if (!token) {
-                console.error('No token found. User not authenticated.');
-                return;
-            }
-    
-            const response = await axios.post(
-                `http://localhost:4000/api/articles/${article._id}/dislikeArticle`,
-                {}, // Empty object or any data you need to send
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
-    
-            const updatedArticle = response.data; // Assuming the response returns the updated article with likes
-            // Update frontend state or handle as needed
-            setDislike(true); // Update the dislike state
-            setLike(false); // Ensure like state is false when liking
-    
-            // Optionally update the article data in your state or context
-            // setArticles(updatedArticle); 
-    
+            setLike(true);
+            setDislike(false);
+            // Update article likes in parent component or context
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                console.error('Unauthorized. Please log in to like the article.');
-                // Handle unauthorized error (e.g., redirect to login page)
-            } else {
-                console.error('Error liking article:', error);
-            }
+            setError('Error liking article. Please try again.');
+            console.error('Error liking article:', error);
         }
     };
 
-    const deleteArticle = async () => {
-        const response = await axios.delete('/api/articles/' + article._id + '/deleteArticle')
-        console.log(response.data)
-        // const json = await response.json()
-        dispatch({type: 'DELETE_ARTICLE', payload:article._id})
-    }
+    const handleDislike = async () => {
+        try {
+            const token = localStorage.getItem('authToken');
+            if (!token) throw new Error('No token found. User not authenticated.');
 
+            const response = await axios.post(
+                `http://localhost:4000/api/articles/${article._id}/dislikeArticle`,
+                {},
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
 
-    const handleCommentChange = (e) => {
-        setNewComment(e.target.value);
+            setDislike(true);
+            setLike(false);
+            // Update article dislikes in parent component or context
+        } catch (error) {
+            setError('Error disliking article. Please try again.');
+            console.error('Error disliking article:', error);
+        }
+    };
+
+    const handleDelete = async () => {
+        try {
+            const token = localStorage.getItem('authToken');
+            if (!token) throw new Error('No token found. User not authenticated.');
+
+            const response = await axios.delete(
+                `http://localhost:4000/api/articles/${article._id}/deleteArticle`,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            if (response.status === 200) {
+                console.log('article deleted') // Remove article from state or context
+            } else {
+                setError('Error deleting article. Please try again.');
+                console.error('Delete article failed:', response.data);
+            }
+        } catch (error) {
+            setError('Error deleting article. Please try again.');
+            console.error('Error deleting article:', error);
+        }
     };
 
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         try {
-            const token = localStorage.getItem('authToken'); // Retrieve token from localStorage or wherever it's stored
-            if (!token) {
-                console.error('No token found. User not authenticated.');
-                return;
-            }
-    
+            const token = localStorage.getItem('authToken');
+            if (!token) throw new Error('No token found. User not authenticated.');
+
             const response = await axios.post(
                 `http://localhost:4000/api/articles/${article._id}/createComment`,
                 { comment: newComment },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+                { headers: { Authorization: `Bearer ${token}` } }
             );
-    
-            const updatedArticle = response.data; // Assuming the response returns the updated article with comments
-            // Response is messageKey + newComment (from backend)
 
-            const newCmt = response.data.newComment
-            dispatch({type: 'CREATE_COMMENT', payload: newCmt})
-
-            console.log(newCmt)
-            // dispatch({ty pe: 'CREATE_COMMENT', payload: article._id, })
-
-            
-            setNewComment(''); // Clear the input field
-            // Update the state or handle as needed (e.g., fetch updated data)
-            // Example: setArticles(updatedArticle);
+            setNewComment('');
+            // Update article comments in parent component or context
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                console.error('Unauthorized. Please log in to add comments.');
-                // Handle unauthorized error (e.g., redirect to login page)
-            } else {
-                console.error('Error adding comment:', error);
-            }
+            setError('Error adding comment. Please try again.');
+            console.error('Error adding comment:', error);
         }
     };
 
@@ -169,7 +97,7 @@ function BlogForm({ article }) {
         <div className="Blog">
             <div className="Username">
                 <p>{article.author}</p>
-                <p>{fullDate} at {fullHour}</p>
+                <p>{new Date(article.updatedAt).toLocaleDateString()} at {new Date(article.updatedAt).toLocaleTimeString()}</p>
             </div>
 
             <div className="Title">
@@ -181,39 +109,23 @@ function BlogForm({ article }) {
             </div>
 
             <div className="Buttons">
-                <div className="Icons">
-                    {like ? (
-                        <AiFillLike onClick={handleLike} />
-                    ) : (
-                        <AiOutlineLike onClick={handleLike} />
-                    )}
-                    <span>{article.likes}</span> {/* Display number of likes */}
+                <div className="Icons" onClick={handleLike}>
+                    {like ? <AiFillLike /> : <AiOutlineLike />}
+                    <span>{article.likes.length}</span>
                 </div>
-                <div className="Icons">
-                    {dislike ? (
-                        <AiFillDislike onClick={handleDislike} />
-                    ) : (
-                        <AiOutlineDislike onClick={handleDislike} />
-                    )}
-                    <span>{article.dislikes}</span> {/* Display number of dislikes */}
+                <div className="Icons" onClick={handleDislike}>
+                    {dislike ? <AiFillDislike /> : <AiOutlineDislike />}
+                    <span>{article.dislikes.length}</span>
                 </div>
-                <div className="Icons">
-                    {comment ? (
-                        <FaComment onClick={toggleComment} />
-                    ) : (
-                        <FaRegComment onClick={toggleComment} />
-                    )}
+                <div className="Icons" onClick={() => setCommentVisible(!commentVisible)}>
+                    {commentVisible ? <FaComment /> : <FaRegComment />}
                     <span>{article.comments.length}</span>
                 </div>
             </div>
-            {/* <button  className="DeleteBtn" onClick={handleDeleteClick}>DELETE</button> */}
 
-
-            {comment && (
+            {commentVisible && (
                 <div className="CommentsSection">
-                    <div className="Comment-Title">
-                        <h3>Comments:</h3>
-                    </div>
+                    <h3>Comments:</h3>
                     {article.comments.length > 0 ? (
                         article.comments.map(comment => (
                             <div key={comment._id} className="Comment">
@@ -224,26 +136,26 @@ function BlogForm({ article }) {
                     ) : (
                         <p>No comments yet.</p>
                     )}
-                    {/* Add comment form */}
-                </div>
-                
-            )}
-            <form onSubmit={handleCommentSubmit} className="Comment-Btn">
+                    <form onSubmit={handleCommentSubmit} className="CommentForm">
                         <input
                             type="text"
                             value={newComment}
-                            onChange={handleCommentChange}
+                            onChange={(e) => setNewComment(e.target.value)}
                             placeholder="Add a comment..."
                             required
                         />
                         <button type="submit"><FaArrowUp /></button>
-            </form>
+                    </form>
+                </div>
+            )}
 
-            <div className="deleteBtnDiv">
-                <div className="deleteBtn" onClick={deleteArticle}>
+            {localStorage.getItem('username') === article.author && (
+                <div className="deleteBtn" onClick={handleDelete}>
                     <FaTrash />
                 </div>
-            </div>
+            )}
+
+            {error && <p className="error-message">{error}</p>}
         </div>
     );
 }
