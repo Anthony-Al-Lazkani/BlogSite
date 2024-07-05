@@ -1,29 +1,41 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { FaBars, FaTimes, FaBell } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { VscAccount } from "react-icons/vsc";
-import "./Navbar.css"
+import "./Navbar.css";
 import Notifications from "../Notification/Notification";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaUserPlus } from "react-icons/fa";
 
+import axios from 'axios';
 
 function Navbar1() {
     const navRef = useRef();
     const navigate = useNavigate();
     const [showNotifications, setShowNotifications] = useState(false);
+    const [notificationCount, setNotificationCount] = useState(0);
 
     const showNavbar = () => {
         navRef.current.classList.toggle("responsive_nav");
     };
-
-    
 
     const isLoggedIn = !!localStorage.getItem('authToken');
 
     const toggleNotifications = () => {
         setShowNotifications(!showNotifications);
     };
+
+    useEffect(() => {
+        const fetchNotifications = () => {
+            const pendingFriendsString = localStorage.getItem('friendsRequest');
+            const pendingFriends = JSON.parse(pendingFriendsString);
+            setNotificationCount(pendingFriends ? pendingFriends.length : 0);
+        };
+
+        if (isLoggedIn) {
+            fetchNotifications();
+        }
+    }, [isLoggedIn]);
 
     return (
         <header>
@@ -51,7 +63,7 @@ function Navbar1() {
                 onClick={showNavbar}>
                 <FaBars />
             </button>
-            {showNotifications && <Notifications />}
+            {showNotifications && <Notifications onNotificationCount={setNotificationCount} />}
         </header>
     );
 }
