@@ -8,8 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-
-
 function SignUp() {
     const [isFocused, setIsFocused] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);

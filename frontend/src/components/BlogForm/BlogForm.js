@@ -6,9 +6,6 @@ import { FaPlus, FaTrash, FaArrowUp } from "react-icons/fa";
 import { useArticlesContext } from "../../hooks/useArticlesContext";
 import axios from "axios";
 
-
-
-
 function BlogForm({ article }) {
     const { dispatch } = useArticlesContext()
     const DateFetched = article.updatedAt
