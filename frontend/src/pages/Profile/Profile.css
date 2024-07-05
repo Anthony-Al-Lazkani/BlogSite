@@ -171,6 +171,7 @@
     margin-bottom: 5%;
     display: flex;
     gap: 5%;
+    overflow: auto;
 }
 
 .Information span {
@@ -188,4 +189,10 @@
 .Information p {
     font-size: 15px;
     font-style: italic;
+}
+
+
+
+.Information ul li {
+    list-style: none;
 }
