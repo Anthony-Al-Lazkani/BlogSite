@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import './BlogForm.css';
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from "react-icons/ai";
 import { FaComment, FaRegComment, FaTrash, FaArrowUp } from "react-icons/fa";
 import axios from "axios";
+import { ArticlesContext } from "../../context/ArticleContext";
+
 
 function BlogForm({ article }) {
     const [like, setLike] = useState(false);
@@ -10,6 +12,7 @@ function BlogForm({ article }) {
     const [commentVisible, setCommentVisible] = useState(false);
     const [newComment, setNewComment] = useState('');
     const [error, setError] = useState('');
+    const { dispatch } = useContext(ArticlesContext);
 
     const handleLike = async () => {
         try {
@@ -20,6 +23,8 @@ function BlogForm({ article }) {
                 `http://localhost:4000/api/articles/${article._id}/likeArticle`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
+
+
             );
 
             setLike(true);
@@ -29,6 +34,7 @@ function BlogForm({ article }) {
             setError('Error liking article. Please try again.');
             console.error('Error liking article:', error);
         }
+
     };
 
     const handleDislike = async () => {
@@ -62,6 +68,7 @@ function BlogForm({ article }) {
             );
 
             if (response.status === 200) {
+                dispatch({type: 'DELETE_ARTICLE', payload : article._id})
                 console.log('article deleted') // Remove article from state or context
             } else {
                 setError('Error deleting article. Please try again.');
@@ -84,6 +91,7 @@ function BlogForm({ article }) {
                 { comment: newComment },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
+            dispatch({type : 'CREATE_COMMENT', payload : {id : article._id , comment : response.data.newComment}})
 
             setNewComment('');
             // Update article comments in parent component or context
@@ -125,7 +133,9 @@ function BlogForm({ article }) {
 
             {commentVisible && (
                 <div className="CommentsSection">
-                    <h3>Comments:</h3>
+                    <div className="Comment-Title">
+                        <h3>Comments:</h3>
+                    </div>
                     {article.comments.length > 0 ? (
                         article.comments.map(comment => (
                             <div key={comment._id} className="Comment">
@@ -136,18 +146,18 @@ function BlogForm({ article }) {
                     ) : (
                         <p>No comments yet.</p>
                     )}
-                    <form onSubmit={handleCommentSubmit} className="CommentForm">
-                        <input
-                            type="text"
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            placeholder="Add a comment..."
-                            required
-                        />
-                        <button type="submit"><FaArrowUp /></button>
-                    </form>
                 </div>
             )}
+                        <form onSubmit={handleCommentSubmit} className="CommentForm">
+                                <input
+                                        type="text" 
+                                        value={newComment}
+                                        onChange={(e) => setNewComment(e.target.value)}
+                                        placeholder="Add a comment..."
+                                        required
+                                    />
+                                        <button type="submit"><FaArrowUp /></button>
+                        </form>
 
             {localStorage.getItem('username') === article.author && (
                 <div className="deleteBtn" onClick={handleDelete}>

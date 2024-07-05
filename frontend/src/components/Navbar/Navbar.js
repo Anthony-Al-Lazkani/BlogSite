@@ -15,6 +15,11 @@ function Navbar1() {
     const [showNotifications, setShowNotifications] = useState(false);
     const [notificationCount, setNotificationCount] = useState(0);
 
+
+
+    
+
+
     const showNavbar = () => {
         navRef.current.classList.toggle("responsive_nav");
     };
@@ -48,7 +53,7 @@ function Navbar1() {
                 {isLoggedIn && (
                     <>
                         <a href="/Profile" id="Profile-Icon"><VscAccount/></a>
-                        <button onClick={toggleNotifications} className="AddFriend"><FaBell /></button>
+                        <button onClick={toggleNotifications} className="AddFriend"><FaBell />{notificationCount}</button>
                         <a href="/addFriend"><FaUserPlus /></a> 
                     </>
                 )}

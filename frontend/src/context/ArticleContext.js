@@ -17,33 +17,35 @@ export const articlesReducer = (state, action) => {
             return {
                 articles:state.articles.filter((w) => w._id!==action.payload)
             }
-        // case 'CREATE_COMMENT':
+        case 'CREATE_COMMENT':
 
-        // // action.payload here is the newComment
-        // const comment =  action.payload;
-        // const articleId = comment.articleId;
+        // action.payload here is the newComment
+        const comment =  action.payload.comment;
+        console.log(comment)
+        const articleId = action.payload.id;
 
-        // const existingArticles = state.articles;
-        // const article = existingArticles.find((a)=>a.articleId === articleId);
-        // console.log(article.comments)
+        const existingArticles = state.articles;
+        // console.log(existingArticles)
+        const article = existingArticles.find((a)=>a._id === articleId);
+        // console.log(article)
 
 
-        // // Update the existingArticles to add the new comment to the article
-        // const NewCommentArray = article.comments
-        // NewCommentArray.push(comment)
-        // article.comments = NewCommentArray
-        // existingArticles.map((a)=>{
-        //     if( a.articleId === articleId) {
-        //         return article
-        //     }else {
-        //         return a
-        //     }
-        // })
+        // Update the existingArticles to add the new comment to the article
+        const NewCommentArray = article.comments
+        // console.log(NewCommentArray)
+        NewCommentArray.push(comment)
+        article.comments = NewCommentArray
+        existingArticles.map((a)=>{
+            if( a._id === articleId) {
+                return article
+            }else {
+                return a
+            }
+        })
         
-        // return {
-        //     articles: existingArticles 
-        // }
-
+        return {
+            articles: existingArticles 
+        }
             default:
                 return state
         }
