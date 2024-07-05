@@ -5,18 +5,18 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-
+    
 }
  
  
-a {
+/* a {
     text-decoration: none;
     cursor: pointer;
 }
  
 p {
     color: #000;
-}
+} */
  
 
 .Front-Page {
@@ -36,8 +36,8 @@ p {
 }
 
 .Front-Page-Image {
-    height: 400px;
-    width: 400px;
+    /* height: 300px;
+    width: 300px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,160 +60,68 @@ p {
     width: 100%;
 }
 
-
-
-
-
-
-
-
-
-
-.AboutUs {
-    font-family: 'Playfair Display', serif;
-    background-color: #4158D0;
-
-    align-content: center;
-    min-height: 100vh;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 70vh;
-    width: 75vw;
-    margin: 0 auto;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 12px
-}
-
-.content{
-    /* background-color: #12192c; */
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 0  12px 12px 0;
-    color: #000;
-}
-.content h2{
-    text-transform: uppercase;
-    font-size: 36px;
-    letter-spacing: 6px;
-    opacity: 0.9;
-}
-.content span{
-    height: 0.5px;
-    width: 80px;
-    background: #777;
-    margin: 30px 0;
-}
-.content p{
-    padding-bottom: 15px;
-    font-weight: 300;
-    opacity: 0.7;
-    width: 60%;
-    text-align: center;
-    margin: 0 auto;
-    line-height: 1.7;
-    color:#000
-}
-.links{
-    margin: 15px 0;
-}
-.links li{
-    border: 2px solid #4158D0;
-    list-style: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    width: 160px;
-    text-align: center;
-}
-.links li a{
-    text-transform: uppercase;
+.Front-Page-Content button {
+    margin-top: 10px; 
+    padding: 8px 30px;
+    width: 150px; 
+    height: 50px; 
+    background: #3090C7;
+    outline: none; 
+    border: none; 
+    font-size: 1.2rem; 
+    font-weight: 600; 
     color: #fff;
-    text-decoration: none;
-}
-.links li:hover{
-    border-color: #C850C0;
-}
-
-.vertical-line{
-    height: 30px;
-    width: 3px;
-    background: #C850C0;
-    margin: 0 auto;
-}
-.icons{
-    display: flex;
-    padding: 15px 0;
-}
-.icons li{
-    display: block;
-    padding: 5px;
-    margin: 5px;
-}
-.icons li i{
-    font-size: 26px;
-    opacity: 0.8;
-}
-.icons li i:hover{
-    color: #C850C0;
-    cursor: pointer;
+    letter-spacing: 1.5px;
+    position: relative; 
+    transition: .6s;
+    border-radius: 50%;
 }
 
-
-/*****************/
-
-@media(max-width: 900px){
-    section{
-        grid-template-columns: 1fr;
-        width: 100%;
-        border-radius: none;
-    }
-    .image{
-        height: 100vh;
-        border-radius: none;
-    }
-    .content{
-        height: 100vh;
-        border-radius: none;
-    }
-    .content h2{
-        font-size: 20px;
-        margin-top: 50px;
-    }
-    .content span{
-        margin: 20px 0;
-    }
-    .content p{
-        font-size: 14px;
-    }
-    .links li a{
-        font-size: 14px;
-    }
-    .links{
-        margin: 5px 0;
-    }
-    .links li{
-        padding: 6px 10px;
-    }
-    .icons li i{
-        font-size: 15px;
-    }
+.Front-Page-Content button:after{
+    position: absolute;
+    content: ""; 
+    height: 100%;
+    width: 100%; 
+    bottom: -5px; 
+    right: -5px;
+    background-color: #000;
+    z-index: -1;
 }
-.credit{
-    text-align: center;
-    color: #000;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  }
-  
-  .credit a{
-    text-decoration: none;
-    color:#000;
-    font-weight: bold;
-  } 
 
+.Front-Page-Content button:hover {
+    background-color: transparent;
+    color: #3090C7;
+}
 
-/* Home.css */
+.Front-Page-Content span {
+    color: #1E5E88;
+}
+
+.Font-Page-Header-Text h1{
+    margin-bottom: 20px; 
+    font-size: 2.5rem;
+    line-height: 0.5rem; 
+    font-weight: 700;
+    letter-spacing: 1px; 
+    color: #000
+}
+
+.Font-Page-Header-Text p{
+   margin: 10px 0; 
+   margin-bottom: 10px;
+   font-size: 1.1rem;
+   width: 65%;
+   color: #000;
+}
+
+.Font-Page-Header-Text h3{
+   letter-spacing: 1px;
+   font-size: 1.5rem; 
+   font-weight: 550;
+   color: #000; 
+}
+
+/* Reviews */
 .wrapper {
     width: 100%;
     max-width: 800px;
@@ -243,12 +151,135 @@ p {
   }
   
   .Reviews {
-    height: 100vh;
+    height: 90vh;
     justify-content: center;
     align-items: center;
     display: flex;
+    background-color: #eae6f9;
   }
 
 
+/*About Us*/
+.AboutUs {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    
+}
 
+.section {
+    height: 100vh;
+    width: 100%;
+    background-color: #eae6f9;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.containter{
+    width: 100%;
+    display: block;
+    margin: auto; 
+    padding-top: 100px;
+    
+}
+
+.content-section{
+    float: left; 
+    width: 55%; 
+}
+
+.image-section{
+    margin-top: 30px;
+    float: right;
+    width: 40%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .3);
+    border-radius: 20px;
+    
+}
+
+.image-section img{
+    width: 100%;
+    height: auto; 
+    border-radius: 20px;
+    transition: .6s;
+}
+
+.content-section .title h1{
+    margin-top: 30px;
+    text-transform: uppercase; 
+    font-size: 50px; 
+}
+
+.content-section .content h3{
+    margin-top: 10px; 
+    color: #5d5d5d;
+    font-size: 21px;
+}
+
+.content-section .content p{
+    margin-top: 10px; 
+    font-family: sans-serif;
+    font-size: 18px; 
+    line-height: 1.5;
+}
+
+
+.content-section .content .button{
+    margin-top: 30px;
+}
+
+.content-section .content .button a{
+    background-color: #3d3d3d;
+    padding:12px 40px;
+    text-decoration: none;
+    color:#fff;
+    font-size: 25px;
+    letter-spacing: 1.5px;
+    border-radius: 18px;
+
+}
+
+.content-section .content .button a:hover{
+    background-color: #3090C7;
+    color:#fff;
+    border-radius: 18px;
+}
+
+.content-section .social{
+    margin: 25px 0;
+    display: flex;
+}
+
+.content-section .social .icons a{
+    font-size: 60px;
+    padding:  0px 10px; 
+    color:#3d3d3d;
+}
+
+.content-section .social .icons a:hover{
+    color:#3090C7;
+}
+
+@media screen and (max-width:768px){
+    .container{
+        width:80%;
+        display: block;
+        margin:auto;
+        padding-top: 50px;
+    }
+    .content-section{
+        float: none;
+        width: 100%;
+        display: block;
+        margin: auto;
+    }
+
+    .image-section{
+        float:none;
+        width:100%;
+        display:block;
+        margin:auto;
+    }
+    
+}
 
