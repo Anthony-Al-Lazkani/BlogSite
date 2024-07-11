@@ -41,7 +41,7 @@
 
   .Inputs input:focus {
     background-color: lightblue;
-    width: 80%;
+    width: 100%;
   }
   .Inputs input::placeholder {
     color: black;

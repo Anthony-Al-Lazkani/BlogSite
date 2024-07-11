@@ -2,34 +2,33 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Users.css';
 
+
 function Users() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [requestSent, setRequestSent] = useState({});
+    const [searchTerm, setSearchTerm] = useState("");
     const friendsString = localStorage.getItem('friends');
     const friends = JSON.parse(friendsString) || [];
+    const friendsRequestsString = localStorage.getItem('friendsRequest');
+    const friendsRequests = JSON.parse(friendsRequestsString) || [];
     const currentUser = localStorage.getItem('username');
+    const requestsSentString = localStorage.getItem('requestsSent');
+    const requestsSentArray = JSON.parse(requestsSentString) || [];
 
     useEffect(() => {
-        // Load requestSent state from localStorage
-        const savedRequestSent = localStorage.getItem('requestSent');
-        if (savedRequestSent) {
-            setRequestSent(JSON.parse(savedRequestSent));
-        }
-
         const fetchUsers = async () => {
             try {
                 const response = await axios.get('/api/articles/getAllusers');
                 setUsers(response.data);
-                // Initialize requestSent state with false for each user if not already in localStorage
-                if (!savedRequestSent) {
-                    const initialRequestSentState = {};
-                    response.data.forEach(user => {
-                        initialRequestSentState[user._id] = false;
-                    });
-                    setRequestSent(initialRequestSentState);
-                    localStorage.setItem('requestSent', JSON.stringify(initialRequestSentState));
-                }
+
+                const initialRequestSentState = {};
+                response.data.forEach(user => {
+                    initialRequestSentState[user._id] = requestsSentArray.some(
+                        request => request.id === user._id
+                    );
+                });
+                setRequestSent(initialRequestSentState);
             } catch (error) {
                 console.error('Error fetching users:', error);
             } finally {
@@ -38,21 +37,22 @@ function Users() {
         };
 
         fetchUsers();
-    }, []);
+    }, [requestsSentArray]);
 
-    const handleAddFriend = async (userId) => {
+    const handleAddFriend = async (userId, username) => {
         try {
             const token = localStorage.getItem('authToken');
             if (!token) {
                 console.error('No token found. User not authenticated.');
                 return;
             }
-    
-            if (!requestSent[userId]) {
-                // Send friend request with necessary data if required by API
+
+            const isRequestSent = requestsSentArray.some(request => request.id === userId);
+
+            if (!isRequestSent) {
                 await axios.post(
                     `http://localhost:4000/api/articles/${userId}/addFriend`,
-                    {}, // Ensure this object contains necessary data if required by your API
+                    {}, 
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -60,11 +60,20 @@ function Users() {
                     }
                 );
                 console.log('Friend request sent successfully.');
+
+                const updatedRequestsSentArray = [
+                    ...requestsSentArray,
+                    { username, id: userId }
+                ];
+                localStorage.setItem('requestsSent', JSON.stringify(updatedRequestsSentArray));
+                setRequestSent(prevState => ({
+                    ...prevState,
+                    [userId]: true
+                }));
             } else {
-                // Cancel friend request
                 await axios.post(
                     `http://localhost:4000/api/articles/${userId}/CanceladdFriend`,
-                    {}, // Ensure this object contains necessary data if required by your API
+                    {}, 
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -72,33 +81,43 @@ function Users() {
                     }
                 );
                 console.log('Friend request canceled.');
-                localStorage.removeItem('requestSent')
+
+                const updatedfriendsRequests = friendsRequests.filter(
+                    request => request.id !== userId
+                );
+                localStorage.setItem('friendsRequest', JSON.stringify(updatedfriendsRequests))
+
+                const updatedRequestsSentArray = requestsSentArray.filter(
+                    request => request.id !== userId
+                );
+                localStorage.setItem('requestsSent', JSON.stringify(updatedRequestsSentArray));
+                setRequestSent(prevState => ({
+                    ...prevState,
+                    [userId]: false
+                }));
             }
-    
-            // Toggle requestSent state for the user
-            const updatedRequestSent = {
-                ...requestSent,
-                [userId]: !requestSent[userId]
-            };
-            setRequestSent(updatedRequestSent);
-            // Update localStorage with updated state
-            localStorage.setItem('requestSent', JSON.stringify(updatedRequestSent));
         } catch (error) {
             console.error('Error sending/canceling friend request:', error);
-            // Handle error here
         }
     };
-    
-    
 
-    // Filter users to exclude those who are already friends and the current user
     const filteredUsers = users.filter(user =>
-        !friends.some(friend => friend.id === user._id) && user.username !== currentUser
+        !friends.some(friend => friend.id === user._id) && 
+        user.username !== currentUser &&
+        user.username.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
         <div className="users">
-            <h2>All Users</h2>
+            <div className="Search-Bar-Div">
+                <input
+                    type="text"
+                    placeholder="Search For Users..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-bar"
+                />
+            </div>
             {loading ? (
                 <p>Loading users...</p>
             ) : (
@@ -106,7 +125,7 @@ function Users() {
                     {filteredUsers.map(user => (
                         <li key={user._id}>
                             <span>{user.username}</span>
-                            <button onClick={() => handleAddFriend(user._id)}>
+                            <button onClick={() => handleAddFriend(user._id, user.username)}>
                                 {requestSent[user._id] ? 'Cancel Request' : 'Add Friend'}
                             </button>
                         </li>

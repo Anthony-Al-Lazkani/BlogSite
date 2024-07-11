@@ -80,14 +80,177 @@
     width: 50px;
     border-radius: 50%;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     color: gray;
-    transition: .7s;
+    transition: .6s;
     font-size: 20px;
-
+    opacity: 0.2;
   }
 
   .deleteBtn:hover {
     color: red;
     font-size: 22px;
+    opacity: 1;
   }
+
+
+  .CommentsSection {
+    max-height: 300px;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 35px;
+    border-top: 1px solid lightblue;
+    overflow-y: auto;
+    border: 1px solid red;
+
+  }
+
+  .Comment-Title {
+    display: flex ;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .Comment-Title h3 {
+    font-size: 20px;
+  }
+
+  .Comment {
+    height: auto;
+    align-items: center;
+    display: flex;
+    padding: 15px 20px;
+    margin-top: 30px;
+    width: 100%;
+    border-bottom: 1px solid lightblue;
+    justify-content: space-between;
+    border-radius: 15px;
+    word-wrap: break-word; /* Break long words */
+    word-break: break-word;
+  
+  }
+
+  .Comment:hover {
+    background-color: #ffff
+  }
+
+  .Comment p {
+    font-size: 12px;
+  }
+
+  .Comment h6 {
+    font-size: 14px;
+  }
+
+
+  .Comment-Btn {
+    width: 100%;
+    margin-top: 30px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #2F4050;
+    border-radius: 20px;
+  }
+
+  .Comment-Btn input {
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    padding: 15px;
+    background-color: #2F4050;
+    color: white;
+  }
+
+  .Comment-Btn input::placeholder {
+    color: white;
+  }
+
+  .Comment-Btn button {
+    border: none;
+    outline: none;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    font-size: 25px;
+    transition: .6s;
+    color: lightblue;
+  }
+
+  .Comment-Btn button:hover {
+    padding-bottom: 10px;
+    color: white;
+  }
+
+
+
+  /* Scrollbar styles for WebKit browsers (Chrome, Safari) */
+.CommentsSection::-webkit-scrollbar {
+  display: 8px;
+}
+
+.CommentsSection::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Gray color */
+  border-radius: 4px;
+}
+
+.CommentsSection::-webkit-scrollbar-track {
+  background: transparent; /* Transparent track */
+}
+
+/* Scrollbar styles for Firefox */
+.CommentsSection {
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+
+.CommentForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  margin-top: 20px;
+}
+
+
+
+.CommentForm input {
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  background:#2F4050;
+  color: white;
+  padding: 10px;
+  display: flex;
+
+}
+
+.CommentForm button {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: lightblue;
+  position: absolute;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .7s;
+}
+
+.CommentForm button:hover { 
+  padding-bottom: 5px;
+}

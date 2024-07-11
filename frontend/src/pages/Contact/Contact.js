@@ -1,4 +1,4 @@
-import React from "react";
+import {React , useState} from "react";
 import './Contact.css'
 import { FaPhone } from "react-icons/fa6";
 import { IoMailOutline } from "react-icons/io5";
@@ -6,9 +6,20 @@ import { FaInstagram } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
-
+import axios from "axios";
 
 function Contact() {
+
+    const [email, setEmail] = useState('');
+
+    const  handleSubmit = (e)=>{
+        e.preventDefault()
+            axios.post("http://localhost:4000/api/articles/contact_us",{email})
+            .then(result => {console.log(result)})
+            .catch(err=> console.log(err)) 
+        }
+    
+
     return(
         <div className="ContactContainer">
             <div className="ContactRectangle">
@@ -60,7 +71,7 @@ function Contact() {
                         <div className="Icon-Contact">
                             <FiMail />
                         </div>
-                        <input type="email" required maxLength={40} placeholder="Email"/>
+                        <input type="email" onChange={(e)=>{setEmail(e.target.value)}} required maxLength={40} placeholder="Email"/>
                     </form>
 
 
@@ -96,7 +107,7 @@ function Contact() {
                     </textarea>
 
 
-                    <button className="Contact-Button">
+                    <button onClick={handleSubmit} className="Contact-Button">
                         Send
                     </button>
                 </div>

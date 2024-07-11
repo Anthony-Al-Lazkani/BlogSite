@@ -451,21 +451,21 @@ const rejectFriend = async (req, res) => {
             return res.status(400).json({ error: "Already friends" });
         }
 
-        // Find the object in requests_sent array
-        let indexToRemove1 = -1;
-        for (let i = 0; i < friend.requests_sent.length; i++) {
-            if (friend.requests_sent[i].username === user.username) {
-                indexToRemove1 = i;
-                break;
-            }
-        }
+        // // Find the object in requests_sent array
+        // let indexToRemove1 = -1;
+        // for (let i = 0; i < friend.requests_sent.length; i++) {
+        //     if (friend.requests_sent[i].username === user.username) {
+        //         indexToRemove1 = i;
+        //         break;
+        //     }
+        // }
 
-        // If found, remove the object
-        if (indexToRemove1 !== -1) {
-            friend.requests_sent.splice(indexToRemove1, 1);
-        } else {
-            return res.status(400).json({ error: "You have not received a friend request from this user" });
-        }
+        // // If found, remove the object
+        // if (indexToRemove1 !== -1) {
+        //     friend.requests_sent.splice(indexToRemove1, 1);
+        // } else {
+        //     return res.status(400).json({ error: "You have not received a friend request from this user" });
+        // }
 
         // Find the index of the username in pending_friends array
         let pendingIndex = -1;

@@ -8,8 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-
-
 function SignUp() {
     const [isFocused, setIsFocused] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -24,6 +22,15 @@ function SignUp() {
             axios.post("http://localhost:4000/api/articles/createUser",{ username, email, password})
             .then(result => {console.log(result)
                 if(result.data.message === "Create user successful"){
+                    localStorage.setItem('authToken', result.data.token);
+                    localStorage.setItem('username', result.data.user.username)
+                    localStorage.setItem('email', result.data.user.email);
+                    const FriendsArrayString = JSON.stringify(result.data.user.friends)
+                    localStorage.setItem('friends', FriendsArrayString);
+                    const RequestsArrayString = JSON.stringify(result.data.user.pending_friends);
+                    localStorage.setItem('friendsRequest',RequestsArrayString)
+                    console.log(localStorage)
+                    navigate('/')
                     navigate('/')
                 }
                 else if(result.data.message === "Invalid parameter"){
