@@ -7,108 +7,48 @@ import {
     FooterLink,
     Heading,
 } from "./FooterStyles";
- 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+
 const Footer = () => {
     return (
         <Box>
-            <h1
-                style={{
-                    color: "green",
-                    textAlign: "center",
-                    marginTop: "10px",
-                }}
-            >
-                A Computer Science Portal for Geeks!
+            <h1 style={{ color: "#5B9BD5", textAlign: "left", marginTop: "10px" }}>
+                GROUP A
             </h1>
             <FooterContainer>
                 <Row>
                     <Column>
-                        <Heading>About Us</Heading>
-                        <FooterLink href="#">
-                            Aim
-                        </FooterLink>
-                        <FooterLink href="#">
-                            Vision
-                        </FooterLink>
-                        <FooterLink href="#">
-                            Testimonials
-                        </FooterLink>
+                        <Heading>Menu</Heading>
+                        <FooterLink href="/Home">Home</FooterLink>
+                        <FooterLink href="/Blogs">Blogs</FooterLink>
+                        <FooterLink href="/Contact">Contact Us</FooterLink>
+                        <FooterLink href="/Login">Login</FooterLink>
                     </Column>
                     <Column>
                         <Heading>Services</Heading>
-                        <FooterLink href="#">
-                            Writing
-                        </FooterLink>
-                        <FooterLink href="#">
-                            Internships
-                        </FooterLink>
-                        <FooterLink href="#">
-                            Coding
-                        </FooterLink>
-                        <FooterLink href="#">
-                            Teaching
-                        </FooterLink>
+                        <FooterLink href="/Blogs">Write a Blog</FooterLink>
+                        <FooterLink href="/Contact">Give a feedback</FooterLink>
+                        <FooterLink href="/Blogs">Navigate Blogs</FooterLink>
                     </Column>
                     <Column>
                         <Heading>Contact Us</Heading>
-                        <FooterLink href="#">
-                            Uttar Pradesh
+                        <FooterLink href="tel: +961-78-808-441">
+                            <FontAwesomeIcon icon={faPhone} style={{ marginRight: "8px" }} />
+                            Phone Number
                         </FooterLink>
-                        <FooterLink href="#">
-                            Ahemdabad
+                        <FooterLink href="mailto:anthonylazkani.22@gmail.com">
+                            <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: "8px" }} />
+                            Email Address
                         </FooterLink>
-                        <FooterLink href="#">
-                            Indore
+                        <FooterLink href="/Contact">
+                            <FontAwesomeIcon icon={faInstagram} style={{ marginRight: "8px" }} />
+                            Instagram
                         </FooterLink>
-                        <FooterLink href="#">
-                            Mumbai
-                        </FooterLink>
-                    </Column>
-                    <Column>
-                        <Heading>Social Media</Heading>
-                        <FooterLink href="#">
-                            <i className="fab fa-facebook-f">
-                                <span
-                                    style={{
-                                        marginLeft: "10px",
-                                    }}
-                                >
-                                    Facebook
-                                </span>
-                            </i>
-                        </FooterLink>
-                        <FooterLink href="#">
-                            <i className="fab fa-instagram">
-                                <span
-                                    style={{
-                                        marginLeft: "10px",
-                                    }}
-                                >
-                                    Instagram
-                                </span>
-                            </i>
-                        </FooterLink>
-                        <FooterLink href="#">
-                            <i className="fab fa-twitter">
-                                <span
-                                    style={{
-                                        marginLeft: "10px",
-                                    }}
-                                >
-                                    Twitter
-                                </span>
-                            </i>
-                        </FooterLink>
-                        <FooterLink href="#">
-                            <i className="fab fa-youtube">
-                                <span
-                                    style={{
-                                        marginLeft: "10px",
-                                    }}
-                                >
-                                    Youtube
-                                </span>
-                            </i>
+                        <FooterLink href="mailto:anthonylazkani.22@gmail.com">
+                            <FontAwesomeIcon icon={faLinkedin} style={{ marginRight: "8px" }} />
+                            Linkedin
                         </FooterLink>
                     </Column>
                 </Row>
